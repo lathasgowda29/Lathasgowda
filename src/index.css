@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-geist: "Geist", sans-serif;
+  --font-source-sans: "Source Sans Pro", sans-serif;
+  --font-hand: "Caveat", cursive;
+
+  --color-cream: #f1f1e6;
+  --color-warm-white: #fffbf6;
+  --color-teal: #0f6378;
+  --color-dark: #1c1f24;
+  --color-dark-bg: #031418;
+  --color-card-blue: #d5dfe3;
+  --color-card-mint: #d9f4ed;
+  --color-card-tan: #e3d5c7;
+  --color-teal-dark: #093b48;
+  --color-teal-mid: #5ea2b9;
+  --color-teal-light: #a2e6fe;
+  --color-caption: #494c50;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card-enter {
+  animation: card-enter 450ms ease-out forwards;
+}
