@@ -724,12 +724,12 @@ const TESTIMONIALS = [
 ];
 
 function TestimonialsSection() {
-  const bannerSvg = new URL("./assets/testimonials/banner.svg", import.meta.url).href;
-  const arrowCircle = new URL("./assets/testimonials/arrow-circle.svg", import.meta.url).href;
+  const base = `${import.meta.env.BASE_URL}assets/testimonials/`;
+  const bannerSvg = `${base}banner.svg`;
+  const arrowCircle = `${base}arrow-circle.svg`;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const t = TESTIMONIALS[currentIndex];
-  const base = "./assets/testimonials/";
   const n = TESTIMONIALS.length;
 
   const goPrev = () => setCurrentIndex((i) => (i - 1 + n) % n);
@@ -763,7 +763,7 @@ function TestimonialsSection() {
       {/* Layer 3: Far-left small avatar (90px, 50% opacity) */}
       <div className="absolute left-[calc(12.5%+82px)] top-[366px] h-[90px] w-[90px] -translate-x-1/2 overflow-hidden rounded-full opacity-50">
         <img
-          src={new URL(`${base}${t.avatars[0]}`, import.meta.url).href}
+          src={`${base}${t.avatars[0]}`}
           alt=""
           className="absolute max-w-none"
           style={t.avatarStyles[0]}
@@ -773,7 +773,7 @@ function TestimonialsSection() {
       {/* Layer 4: Near-left avatar (150px, 70% opacity) */}
       <div className="absolute left-[calc(29.17%+28.67px)] top-[336px] h-[150px] w-[150px] -translate-x-1/2 overflow-hidden rounded-full opacity-70">
         <img
-          src={new URL(`${base}${t.avatars[1]}`, import.meta.url).href}
+          src={`${base}${t.avatars[1]}`}
           alt=""
           className="absolute max-w-none"
           style={t.avatarStyles[1]}
@@ -783,7 +783,7 @@ function TestimonialsSection() {
       {/* Layer 5: Center main avatar (246px) */}
       <div className="absolute left-1/2 top-[336px] h-[246px] w-[246px] -translate-x-1/2 overflow-hidden rounded-full">
         <img
-          src={new URL(`${base}${t.mainImg}`, import.meta.url).href}
+          src={`${base}${t.mainImg}`}
           alt={t.name}
           className="absolute max-w-none"
           style={t.mainImgStyle}
@@ -793,7 +793,7 @@ function TestimonialsSection() {
       {/* Layer 6: Near-right avatar (150px, 70% opacity) */}
       <div className="absolute left-[calc(70.83%-28.17px)] top-[336px] h-[150px] w-[151px] -translate-x-1/2 overflow-hidden rounded-full opacity-70">
         <img
-          src={new URL(`${base}${t.avatars[3]}`, import.meta.url).href}
+          src={`${base}${t.avatars[3]}`}
           alt=""
           className="absolute max-w-none"
           style={t.avatarStyles[3]}
@@ -803,7 +803,7 @@ function TestimonialsSection() {
       {/* Layer 7: Far-right small avatar (90px, 50% opacity) */}
       <div className="absolute left-[calc(87.5%-82px)] top-[366px] h-[90px] w-[90px] -translate-x-1/2 overflow-hidden rounded-full opacity-50">
         <img
-          src={new URL(`${base}${t.avatars[4]}`, import.meta.url).href}
+          src={`${base}${t.avatars[4]}`}
           alt=""
           className="absolute max-w-none"
           style={t.avatarStyles[4]}
