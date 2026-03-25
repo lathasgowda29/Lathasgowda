@@ -38,7 +38,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/13bVlCKwriHreFawiUT0a_gE4Jfl8Hnw6/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
         Resume
       </a>
     </nav>
@@ -51,17 +51,17 @@ function CaseStudyResearchSection() {
   const researchRight = new URL("./assets/case-study-api/research-right.jpg", import.meta.url).href;
 
   return (
-    <section className="mx-auto w-[1280px] overflow-hidden pt-[55px]">
+    <section className="layout-shell px-4 overflow-hidden pt-[55px]">
       <h2 className="mx-auto w-[803px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
         UX approach - What we did
       </h2>
-      <p className="mx-auto mt-[22px] w-[1120px] text-center font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+      <p className="mx-auto mt-[22px] w-full max-w-[1120px] text-center font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
         I tackled key user challenges and refined the automation experience
         through a structured UX approach, grounded in real user feedback,
         behavioral insights, and continuous iteration.
       </p>
 
-      <div className="mx-auto mt-[66px] flex w-[1120px] flex-col gap-5">
+      <div className="mx-auto mt-[66px] flex w-full max-w-[1120px] flex-col gap-5">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
           Research and Discovery
         </h3>
@@ -87,7 +87,7 @@ function CaseStudyResearchSection() {
         </ul>
       </div>
 
-      <div className="relative mx-auto mt-[50px] flex h-[484px] w-[1280px] items-stretch gap-[24px]">
+      <div className="layout-shell relative mt-[50px] flex h-[484px] px-4 items-stretch gap-[24px]">
         <div className="-ml-[80px] h-[484px] w-[380px] shrink-0 overflow-hidden rounded-r-[24px]">
           <img
             src={researchLeft}
@@ -119,10 +119,10 @@ function DefinitionIdeationSection() {
   const iteration1Flow = new URL("./assets/case-study-api/iteration-1-flow.png", import.meta.url).href;
   const iteration2Flow = new URL("./assets/case-study-api/iteration-2-flow.png", import.meta.url).href;
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto flex w-[1120px] flex-col gap-5">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner flex flex-col gap-5">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
-          DEFINITION &amp; IDEATION
+          Definition and Ideation
         </h3>
         <ul className="list-disc pl-[27px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           <li>
@@ -144,7 +144,7 @@ function DefinitionIdeationSection() {
         </ul>
       </div>
 
-      <div className="mx-auto mt-[40px] w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
+      <div className="mx-auto mt-[40px] w-full max-w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
         <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
           Iteration 1
         </h4>
@@ -157,7 +157,7 @@ function DefinitionIdeationSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-[24px] w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
+      <div className="mx-auto mt-[24px] w-full max-w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
         <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
           Iteration 2
         </h4>
@@ -186,7 +186,7 @@ function ProblemCard({ number, title, description, quote, bgColor, children }) {
         <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           {description}
         </p>
-        <p className="w-[430px] font-hand text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+        <p className="w-[430px] font-hand text-[24px] font-normal leading-8 tracking-[0.5px] text-dark">
           {quote}
         </p>
       </div>
@@ -202,8 +202,8 @@ function ProblemCard({ number, title, description, quote, bgColor, children }) {
 
 function WhatWeLearnedSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner">
         <h3 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
           What we learned from users
         </h3>
@@ -215,7 +215,7 @@ function WhatWeLearnedSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[112px] flex w-[1120px] flex-col gap-[120px]">
+      <div className="mx-auto mt-[112px] flex w-full max-w-[1120px] flex-col gap-[120px]">
         <ProblemCard
           number="Problem #1"
           title="Context Loss"
@@ -289,7 +289,7 @@ function RefiningExperienceSection() {
   const planAImg = new URL("./assets/case-study-api/plan-a.png", import.meta.url).href;
   const planBImg = new URL("./assets/case-study-api/plan-b.png", import.meta.url).href;
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
+    <section className="layout-shell px-4 pt-[117px]">
       <div className="text-center">
         <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           The plan
@@ -328,13 +328,13 @@ function RefiningExperienceSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-[80px] w-[1120px]">
+      <div className="mx-auto mt-[80px] w-full max-w-[1120px]">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
           Wireframe
         </h3>
         <p className="mt-4 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           Our early design iterations focused on creating a more structured and
-          intuitive user experience. We explored different UI layouts, and user
+          intuitive user experience. We explored different UI layouts and user
           flows using hand drawn sketches.
         </p>
       </div>
@@ -347,9 +347,9 @@ function RefiningExperienceSection() {
         />
       </div>
 
-      <div className="mx-auto mt-[80px] w-[1120px]">
+      <div className="mx-auto mt-[80px] w-full max-w-[1120px]">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
-          Solution &amp; Implementation
+          Solution and Implementation
         </h3>
         <p className="mt-4 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           After multiple brainstorming sessions, workflow mapping, and
@@ -358,7 +358,7 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] w-[1120px]">
+      <div className="mx-auto mt-[40px] w-full max-w-[1120px]">
         <h4 className="font-geist text-[24px] font-semibold leading-7 text-dark">
           Proposed Plan A
         </h4>
@@ -376,13 +376,13 @@ function RefiningExperienceSection() {
         />
       </div>
 
-      <div className="mx-auto mt-[80px] w-[1120px]">
+      <div className="mx-auto mt-[80px] w-full max-w-[1120px]">
         <h4 className="font-geist text-[24px] font-semibold leading-7 text-dark">
           Proposed Plan B
         </h4>
         <p className="mt-4 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           Embedding API setup directly inside the node, enabling inline
-          configuration, testing, and response mapping without leaving the
+          configuration, testing and response mapping without leaving the
           conversation flow.
         </p>
       </div>
@@ -402,18 +402,18 @@ function ABTestingSection() {
   const braceImg = new URL("./assets/case-study-api/ab-testing-brace.svg", import.meta.url).href;
 
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
+    <section className="layout-shell px-4 pt-[117px]">
       <h3 className="mx-auto w-[1065px] text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
         A/B Testing
       </h3>
-      <p className="mx-auto mt-[20px] w-[1120px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+      <p className="mx-auto mt-[20px] w-full max-w-[1120px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
         Conducted structured A/B testing to compare Plan A (tab-based API setup)
         and Plan B (in-node API configuration). Measured task completion time,
-        error rate, navigation clicks, and user satisfaction through usability
+        error rate, navigation clicks, user satisfaction through usability
         sessions and behavioral analytics.
       </p>
 
-      <div className="mx-auto mt-[48px] flex w-[1120px] items-start gap-4">
+      <div className="mx-auto mt-[48px] flex w-full max-w-[1120px] items-start gap-4">
         <img
           src={braceImg}
           alt=""
@@ -424,7 +424,7 @@ function ABTestingSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[32px] flex w-[1120px] flex-wrap items-start pr-px">
+      <div className="mx-auto mt-[32px] flex w-full max-w-[1120px] flex-wrap items-start pr-px">
         {/* Metric column */}
         <div className="mr-[-1px] flex w-[391px] shrink-0 flex-col pb-px">
           <div className="mb-[-1px] flex h-[61px] items-center rounded-tl-[15px] border border-solid border-dark bg-teal px-[18px] py-[24px]">
@@ -463,7 +463,7 @@ function ABTestingSection() {
         <div className="mr-[-1px] flex w-[345px] shrink-0 flex-col pb-px">
           <div className="mb-[-1px] flex h-[61px] items-center border border-solid border-dark bg-teal px-[18px] py-[24px]">
             <p className="font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white">
-              Plan A(Tab-based)
+              Plan A (Tab-based)
             </p>
           </div>
           <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
@@ -503,12 +503,12 @@ function ABTestingSection() {
           </div>
           <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              35% Reduction in Configuration Errors
+              35% Reduction in configuration errors.
             </p>
           </div>
           <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              40% Fewer Navigation Actions
+              Fewer navigation actions
             </p>
           </div>
           <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
@@ -524,7 +524,7 @@ function ABTestingSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-[60px] flex w-[1120px] flex-col gap-5">
+      <div className="mx-auto mt-[60px] flex w-full max-w-[1120px] flex-col gap-5">
         <h4 className="font-geist text-[24px] font-semibold leading-7 text-dark">
           Key Insights from A/B Testing
         </h4>
@@ -567,8 +567,8 @@ function FromInsightToImpactSection() {
   const chartB = new URL("./assets/case-study-api/output-chart-b.png", import.meta.url).href;
 
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner">
         <h3 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
           From Insight to Impact
         </h3>
@@ -581,7 +581,7 @@ function FromInsightToImpactSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[80px] flex w-[1120px] justify-center gap-[64px]">
+      <div className="mx-auto mt-[80px] flex w-full max-w-[1120px] justify-center gap-[64px]">
         <div className="flex w-[361px] shrink-0 flex-col gap-[20px]">
           <div className="h-[340px] w-full overflow-hidden rounded-[24px]">
             <img
@@ -622,10 +622,10 @@ function DesignProcessSection() {
   const timelineImg = new URL("./assets/case-study-api/design-process-timeline.png", import.meta.url).href;
 
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner">
         <h3 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
-          Design process
+          Design Process
         </h3>
         <div className="mt-3 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           <p>
@@ -646,7 +646,7 @@ function DesignProcessSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-[60px] w-[1120px]">
+      <div className="mx-auto mt-[60px] w-full max-w-[1120px]">
         <img
           src={timelineImg}
           alt="Design process timeline — October to November milestones"
@@ -674,10 +674,10 @@ function MetricCard({ stat, description }) {
 
 function DeploymentIterationSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto flex w-[1120px] flex-col gap-5">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner flex flex-col gap-5">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
-          DEPLOYMENT &amp; ITERATION
+          Deployment and Iteration
         </h3>
         <ul className="list-disc pl-[27px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           <li>
@@ -699,7 +699,7 @@ function DeploymentIterationSection() {
         </ul>
       </div>
 
-      <div className="mx-auto mt-[40px] flex w-[1120px] gap-5">
+      <div className="mx-auto mt-[40px] flex w-full max-w-[1120px] gap-5">
         <MetricCard
           stat="70% Reduction in API Setup Time"
           description="Eliminated tab switching and enabled inline configuration within the builder."
@@ -742,9 +742,9 @@ function FutureRoadmapSection() {
   ];
 
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
+    <section className="layout-shell px-4 pt-[117px]">
       <h3 className="text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
-        Future roadmap
+        Future Roadmap
       </h3>
 
       <div className="mx-auto mt-[80px] flex w-[740px] flex-col gap-[56px]">
@@ -765,8 +765,8 @@ function FutureRoadmapSection() {
 
 function CTABanner() {
   return (
-    <section className="mx-auto w-[1280px] pt-[117px]">
-      <div className="mx-auto flex w-[1120px] flex-col items-start gap-4 rounded-[24px] bg-teal-dark px-[40px] py-[40px]">
+    <section className="layout-shell px-4 pt-[117px]">
+      <div className="layout-inner flex flex-col items-start gap-4 rounded-[24px] bg-teal-dark px-[40px] py-[40px]">
         <h3 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
           Let&rsquo;s Build Better, Together.
         </h3>
@@ -791,9 +791,9 @@ const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45
 
 function Footer() {
   return (
-    <footer className="mx-auto w-[1280px] pb-[40px] pt-[40px]">
-      <div className="mx-auto h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-      <div className="mx-auto mt-[40px] flex w-[1120px] items-center">
+    <footer className="layout-shell px-4 pb-[40px] pt-[40px]">
+      <div className="mx-auto h-px w-full max-w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+      <div className="mx-auto mt-[40px] flex w-full max-w-[1120px] items-center">
         <Link to="/">
           <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
         </Link>
@@ -837,7 +837,7 @@ export default function CaseStudyApi() {
             </div>
 
               <div className="mt-[48px]">
-              <div className="relative mx-auto h-[682px] w-[1120px] overflow-hidden rounded-[24px]">
+              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
                 <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
                   <img
                     src={heroLaptopMockup}
@@ -859,7 +859,7 @@ export default function CaseStudyApi() {
         </div>
       </div>
 
-      <section className="mx-auto flex w-[1280px] flex-col items-center pb-[80px] pt-[120px]">
+      <section className="layout-shell flex px-4 flex-col items-center pb-[80px] pt-[120px]">
         <h1 className="w-[803px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
           Simplified API Node Experience: &ldquo;3x Faster Integrations&rdquo;
           and &ldquo;70% Less Setup Time&rdquo;

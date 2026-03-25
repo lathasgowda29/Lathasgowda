@@ -18,7 +18,9 @@ import gradientCard9 from "./assets/gradient-card-9.png";
 function Navbar() {
   return (
     <nav className="mx-auto flex h-[60px] w-[589px] items-center rounded-[70px] bg-white px-6 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)]">
-      <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
+      <Link to="/">
+        <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
+      </Link>
 
       <div className="ml-[97px] flex items-center gap-0">
         <a
@@ -27,12 +29,12 @@ function Navbar() {
         >
           Home
         </a>
-        <a
-          href="#"
+        <Link
+          to="/case-studies/gen-ai"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Case studies
-        </a>
+        </Link>
         <Link
           to="/case-studies/about-me"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
@@ -47,7 +49,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/13bVlCKwriHreFawiUT0a_gE4Jfl8Hnw6/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal">
         Resume
       </a>
     </nav>
@@ -74,7 +76,7 @@ function HeroSection() {
   return (
     <div className="flex flex-col items-center">
       <h1 className="w-[824px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
-        Driving product excellence through strategic Design Thinking
+        Driving Product Excellence through Strategic Design Thinking
       </h1>
 
       <p className="mt-[16px] w-[620px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">

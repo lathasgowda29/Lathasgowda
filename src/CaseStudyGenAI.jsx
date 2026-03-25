@@ -56,12 +56,9 @@ function Navbar() {
         >
           Home
         </Link>
-        <a
-          href="#"
-          className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal"
-        >
+        <span className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal">
           Case studies
-        </a>
+        </span>
         <Link
           to="/case-studies/about-me"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
@@ -76,7 +73,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/13bVlCKwriHreFawiUT0a_gE4Jfl8Hnw6/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
         Resume
       </a>
     </nav>
@@ -109,7 +106,7 @@ export default function CaseStudyGenAI() {
             </div>
 
               <div className="mt-[48px]">
-              <div className="relative mx-auto h-[682px] w-[1120px] overflow-hidden rounded-[24px]">
+              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
                 <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
                   <img
                     src={heroLaptopMockup}
@@ -131,8 +128,8 @@ export default function CaseStudyGenAI() {
         </div>
       </div>
 
-      <section className="mx-auto w-[1280px] flex flex-col gap-[70px] pt-[120px] pb-[80px]">
-        <div className="mx-auto flex w-[1120px] flex-col items-center rounded-[24px] bg-card-tan px-[24px] py-[64px]">
+      <section className="layout-shell px-4 flex flex-col gap-[70px] pt-[120px] pb-[80px]">
+        <div className="layout-inner flex flex-col items-center rounded-[24px] bg-card-tan px-[24px] py-[64px]">
           <div className="flex w-[925px] flex-col gap-[20px]">
             <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
               Overview
@@ -150,10 +147,10 @@ export default function CaseStudyGenAI() {
           </div>
         </div>
 
-        <div className="mx-auto flex w-[1120px] flex-col items-center rounded-[24px] bg-card-mint px-[24px] py-[64px]">
+        <div className="layout-inner flex flex-col items-center rounded-[24px] bg-card-mint px-[24px] py-[64px]">
           <div className="flex w-[925px] flex-col gap-[20px]">
             <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
-              Why we reimagined the bot creation experience
+              Why We Reimagined the Bot Creation Experience
             </h2>
             <p className="w-[925px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
               With the rise of generative AI, the expectations around what
@@ -170,15 +167,15 @@ export default function CaseStudyGenAI() {
         </div>
       </section>
 
-      <section className="relative mx-auto w-[1280px] overflow-hidden">
+      <section className="relative layout-shell px-4 overflow-hidden">
         {/* What we wanted to achieve */}
-        <div className="relative mx-auto w-[1120px] pb-[20px] pt-[60px]">
+        <div className="relative layout-inner pb-[20px] pt-[60px]">
           <div className="flex w-[570px] flex-col gap-[20px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               High-level requirements
             </p>
             <h2 className="font-geist text-[48px] font-semibold leading-[54px]">
-              What we wanted to achieve?
+              What We Wanted to Achieve?
             </h2>
             <div className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
               <p>
@@ -247,8 +244,8 @@ export default function CaseStudyGenAI() {
           </div>
         </div>
 
-        {/* Competitive analysis */}
-        <div className="mx-auto flex w-[1120px] items-start justify-between pb-[60px] pt-[80px]">
+        {/* Competitive Analysis */}
+        <div className="layout-inner flex items-start justify-between pb-[60px] pt-[80px]">
           <div className="flex gap-[16px]">
             <div
               className="relative h-[400px] w-[265px] overflow-hidden rounded-[30px] text-white"
@@ -300,7 +297,7 @@ export default function CaseStudyGenAI() {
               Identifying gaps in the market
             </p>
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
-              Competitive analysis
+              Competitive Analysis
             </h3>
             <p className="font-geist text-[18px] font-normal leading-7">
               To validate our direction, we conducted a competitive analysis of
@@ -313,8 +310,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Section 3: MVP Launch */}
-      <section className="mx-auto w-[1280px] pb-[60px]">
-        <div className="mx-auto w-[1120px] pt-[74px]">
+      <section className="layout-shell px-4 pb-[60px]">
+        <div className="layout-inner pt-[74px]">
           <div className="flex flex-col gap-[12px]">
             <p className="font-geist text-[24px] font-normal leading-[28px] text-dark">
               MVP launch
@@ -432,8 +429,8 @@ export default function CaseStudyGenAI() {
         </div>
       </section>
       {/* Phase 1: From Node to Dedicated Authoring Page */}
-      <section className="mx-auto w-[1280px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col items-center gap-[20px] text-center text-dark">
             <p className="font-geist text-[24px] font-normal leading-[32px]">
               Phase 1
@@ -501,7 +498,7 @@ export default function CaseStudyGenAI() {
               <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
                 Understanding
                 <br />
-                real problem &amp; users
+                Real Problem and Users
               </h3>
               <div className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
                 <p>
@@ -580,14 +577,14 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* What Worked and What Didn't */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               High-level requirements
             </p>
             <h2 className="font-geist text-[34px] font-semibold leading-[44px]">
-              What Worked and what didnt
+              What Worked and What didnt
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
               Iteration 2 unlocked flexibility and control, enabling deeper AI
@@ -655,7 +652,7 @@ export default function CaseStudyGenAI() {
                 Possible solution
               </p>
               <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
-                Defining features
+                Defining Features
               </h3>
               <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
                 This iteration confirmed that while a larger space helped, it
@@ -768,8 +765,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Refining the Experience Through User Feedback */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <h2 className="mx-auto text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Refining the Experience Through User
             <br />
@@ -858,8 +855,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Exploring Possible Solutions */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <h2 className="font-geist text-[34px] font-semibold leading-[44px]">
               Exploring Possible Solutions
@@ -944,8 +941,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Final Designs */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Final designs
@@ -984,8 +981,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Validating the Structured Workflow Through Usability Testing */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex items-start gap-[40px]">
             <div className="flex w-[491px] shrink-0 flex-col gap-[20px] text-dark">
               <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
@@ -1032,8 +1029,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Evolution of the AI Builder */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <h2 className="text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Evolution of the AI Builder - Learning, Iterating,
             <br />
@@ -1248,8 +1245,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Phase 3: Scaling Intelligence Beyond the Prompt */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col gap-[12px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Phase 3: Final iteration
@@ -1423,8 +1420,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Post-Launch Performance Tracking */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Post-Launch Performance Tracking
           </h2>
@@ -1524,8 +1521,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Outcome and Impact */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <h2 className="text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Outcome and Impact - What Changed?
             <br />
@@ -1598,8 +1595,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Business Wins */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto w-[1120px] pt-[80px]">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               Business wins
@@ -1695,8 +1692,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* CTA Banner */}
-      <section className="mx-auto w-[1280px] pb-[80px]">
-        <div className="mx-auto flex h-[276px] w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
+      <section className="layout-shell px-4 pb-[80px]">
+        <div className="layout-inner flex h-[276px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
           <h3 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
             Let&apos;s Build Better, Together.
           </h3>
@@ -1714,8 +1711,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Footer */}
-      <footer className="mx-auto w-[1280px] pb-[40px]">
-        <div className="mx-auto w-[1120px]">
+      <footer className="layout-shell px-4 pb-[40px]">
+        <div className="layout-inner">
           <div className="h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
           <div className="mt-[40px] flex items-center justify-between">
             <img src={footerLogo} alt="Logo" className="h-[32px] w-[32px]" />

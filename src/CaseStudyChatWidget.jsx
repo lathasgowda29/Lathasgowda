@@ -60,7 +60,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/13bVlCKwriHreFawiUT0a_gE4Jfl8Hnw6/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
         Resume
       </a>
     </nav>
@@ -69,7 +69,7 @@ function Navbar() {
 
 function OverviewSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[160px]">
+    <section className="layout-shell px-4 pt-[160px]">
       <div className="pl-[178px] pr-[177px]">
         <div className="flex w-[925px] flex-col gap-5">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
@@ -141,8 +141,8 @@ function OverviewSection() {
 
 function LegacyWidgetSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[120px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[120px]">
+      <div className="layout-inner">
         <div className="flex flex-col gap-5">
           <h2 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Legacy Web Widget Interface
@@ -356,8 +356,8 @@ function ErrorStateWidget({ title, description, actionLabel }) {
 
 function NewWebWidgetSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[120px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[120px]">
+      <div className="layout-inner">
         <div className="flex flex-col items-center gap-5">
           <h2 className="text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
             The New Web Widget
@@ -370,10 +370,10 @@ function NewWebWidgetSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-[80px] w-[1120px]">
+      <div className="mx-auto mt-[80px] w-full max-w-[1120px]">
         <div className="flex flex-col gap-5">
           <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
-            Light mode
+            Light Mode
           </h3>
           <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
             A clean and balanced interface that enhances readability and supports
@@ -461,11 +461,11 @@ function DarkWidgetCard({ children }) {
 
 function DarkModeWidgetSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[120px]">
-      <div className="mx-auto w-[1120px]">
+    <section className="layout-shell px-4 pt-[120px]">
+      <div className="layout-inner">
         <div className="flex flex-col gap-5">
           <h3 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
-            Dark mode
+            Dark Mode
           </h3>
           <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
             Dark mode adapts the widget for darker website environments while
@@ -585,7 +585,7 @@ const whatsNextItems = [
 
 function WhatsNextSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[120px]">
+    <section className="layout-shell px-4 pt-[120px]">
       <div className="mx-auto w-[1040px]">
         <div className="flex flex-col items-center gap-[13px] px-8 py-8 text-center">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
@@ -624,8 +624,8 @@ function WhatsNextSection() {
 
 function CtaSection() {
   return (
-    <section className="mx-auto w-[1280px] pt-[120px]">
-      <div className="mx-auto flex h-[276px] w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
+    <section className="layout-shell px-4 pt-[120px]">
+      <div className="layout-inner flex h-[276px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
         <h2 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
           Let&apos;s Build Better, Together.
         </h2>
@@ -646,8 +646,8 @@ function CtaSection() {
 
 function Footer() {
   return (
-    <footer className="mx-auto w-[1280px] pt-[40px] pb-[40px]">
-      <div className="mx-auto w-[1120px]">
+    <footer className="layout-shell px-4 pt-[40px] pb-[40px]">
+      <div className="layout-inner">
         <div className="h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
         <div className="mt-10 flex items-center justify-between">
           <img src={footerLogo} alt="Logo" className="h-8 w-8" />
@@ -675,7 +675,7 @@ export default function CaseStudyChatWidget() {
             </div>
 
             <div className="mt-[48px]">
-              <div className="relative mx-auto h-[682px] w-[1120px] overflow-hidden rounded-[24px]">
+              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
                 <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
                   <img
                     src={heroLaptopMockup}
