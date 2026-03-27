@@ -15,14 +15,61 @@ import gradientCard7 from "./assets/gradient-card-7.png";
 import gradientCard8 from "./assets/gradient-card-8.png";
 import gradientCard9 from "./assets/gradient-card-9.png";
 
+/** Below hero: 80px horizontal padding from viewport; column max 1280px. */
+const HOME_INSET = "px-[80px]";
+const HOME_COLUMN = "mx-auto w-full max-w-[1280px] min-w-0";
+
+/**
+ * Scales fixed Figma-width artboards to fit the column without horizontal scroll.
+ * Outer box height/width match the scaled visual size so layout doesn't collapse.
+ */
+function ScaledArtboard({ designWidth, designHeight, children, className = "" }) {
+  const containerRef = useRef(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => {
+      const w = el.clientWidth;
+      if (w <= 0) return;
+      setScale(Math.min(1, w / designWidth));
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [designWidth]);
+
+  const scaledW = designWidth * scale;
+  const scaledH = designHeight * scale;
+
+  return (
+    <div ref={containerRef} className={`w-full min-w-0 ${className}`}>
+      <div className="mx-auto overflow-hidden" style={{ width: scaledW, height: scaledH }}>
+        <div
+          className="origin-top-left will-change-transform"
+          style={{
+            width: designWidth,
+            height: designHeight,
+            transform: `scale(${scale})`,
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Navbar() {
   return (
-    <nav className="mx-auto flex h-[60px] w-[589px] items-center rounded-[70px] bg-white px-6 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)]">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="ml-[97px] flex items-center gap-0">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
         <a
           href="#"
           className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal transition-opacity duration-200 hover:opacity-80"
@@ -49,7 +96,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal lg:ml-auto">
         Resume
       </a>
     </nav>
@@ -58,13 +105,13 @@ function Navbar() {
 
 function AnnouncementBanner() {
   return (
-    <div className="mx-auto flex h-9 w-[518px] items-center gap-6 rounded-[14px] border border-teal bg-warm-white px-4">
-      <span className="font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark">
+    <div className="mx-auto flex min-h-9 w-full max-w-[518px] flex-col items-start gap-2 rounded-[14px] border border-teal bg-warm-white px-4 py-2 lg:flex-row lg:items-center lg:gap-6 lg:py-0">
+      <span className="min-w-0 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark">
         New AI Bot Builder cut build time and boosted $15M ARR
       </span>
       <Link
         to="/case-studies/Gen AI"
-        className="ml-auto font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal transition-colors duration-200 hover:underline"
+        className="font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal transition-colors duration-200 hover:underline lg:ml-auto"
       >
         View case study →
       </Link>
@@ -74,17 +121,17 @@ function AnnouncementBanner() {
 
 function HeroSection() {
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="w-[824px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
+    <div className="flex flex-col items-center px-0">
+      <h1 className="w-full max-w-[824px] text-center font-geist text-[36px] font-semibold leading-[42px] text-dark lg:text-[48px] lg:leading-[54px]">
         Driving Product Excellence through Strategic Design Thinking
       </h1>
 
-      <p className="mt-[16px] w-[620px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+      <p className="mt-[16px] w-full max-w-[620px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
         Connecting user insights and business vision to craft digital
         experiences that balance user needs with strategic business goals.
       </p>
 
-      <div className="mt-[20px] flex items-center gap-4">
+      <div className="mt-[20px] flex flex-wrap items-center justify-center gap-4">
         <button
           type="button"
           onClick={() => document.getElementById("case-studies")?.scrollIntoView({ behavior: "smooth" })}
@@ -132,24 +179,24 @@ function GradientCard() {
     };
   }, []);
 
-  const currentIndex = imageIndex >= 0 && imageIndex < IMAGE_COUNT ? imageIndex : 0;
-  const currentSrc = gradientCardImages[currentIndex];
-
   return (
-    <div className="relative mx-auto h-[682px] w-[1120px] overflow-hidden rounded-[24px]">
+    <div className="relative mx-auto aspect-[1120/682] w-full min-w-0 max-w-[1120px] overflow-hidden rounded-[24px]">
       <div
         className="absolute inset-0 rounded-[24px]"
         style={{
           backgroundImage: `url("data:image/svg+xml;utf8,<svg viewBox='0 0 1120 682' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-1.0468e-14 53.1 -87.202 -4.3368e-15 560 586)'><stop stop-color='rgba(59,130,152,1)' offset='0'/><stop stop-color='rgba(45,103,120,1)' offset='0.20673'/><stop stop-color='rgba(31,75,88,1)' offset='0.41346'/><stop stop-color='rgba(17,48,56,1)' offset='0.62019'/><stop stop-color='rgba(10,34,40,1)' offset='0.72356'/><stop stop-color='rgba(3,20,24,1)' offset='0.82692'/></radialGradient></defs></svg>")`,
         }}
       />
-      <div className="absolute left-1/2 top-1/2 h-[599px] w-[1024px] -translate-x-1/2 -translate-y-1/2">
-        <img
-          key={currentIndex}
-          alt=""
-          className="pointer-events-none size-full max-w-none object-cover"
-          src={currentSrc}
-        />
+      {/* 16px inset; stacked imgs + opacity crossfade (1s interval unchanged). */}
+      <div className="absolute inset-4 overflow-hidden rounded-[16px]">
+        {gradientCardImages.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${i === imageIndex ? "z-10 opacity-100" : "z-0 opacity-0"}`}
+          />
+        ))}
       </div>
     </div>
   );
@@ -255,7 +302,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
   };
 
   const textContent = (
-    <div className={`flex flex-col ${gap} ${textSide === "left" ? "w-[528px]" : "w-[432px]"}`}>
+    <div className={`flex min-w-0 flex-col ${gap} ${textSide === "left" ? "w-full max-w-[528px] md:w-[528px]" : "w-full max-w-[432px] md:w-[432px]"}`}>
       <h3 className="font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
         {title}
       </h3>
@@ -266,7 +313,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
   );
 
   const imagePlaceholder = (
-    <div className="h-[374px] w-[428px] shrink-0 rounded-[24px] bg-white overflow-hidden">
+    <div className="h-[200px] w-full max-w-[428px] shrink-0 overflow-hidden rounded-[24px] bg-white sm:h-[280px] md:h-[374px] md:w-[428px]">
       {imageSrc ? (
         <img src={imageSrc} alt="" className="h-full w-full object-cover" />
       ) : null}
@@ -275,13 +322,13 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
 
   const cardContent = textSide === "left" ? (
     <>
-      <div className="pl-[64px] pr-[28px]">{textContent}</div>
-      <div className="ml-auto pr-2">{imagePlaceholder}</div>
+      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 pt-2 md:order-1 md:w-auto md:pl-[64px] md:pr-[28px] md:pb-0 md:pt-0">{textContent}</div>
+      <div className="order-1 flex justify-center px-4 pt-4 md:order-2 md:ml-auto md:pr-2 md:pt-0">{imagePlaceholder}</div>
     </>
   ) : (
     <>
-      <div className="pl-2">{imagePlaceholder}</div>
-      <div className="pl-[64px] pr-[64px]">{textContent}</div>
+      <div className="order-1 flex justify-center px-4 pt-4 md:pl-2 md:pt-0">{imagePlaceholder}</div>
+      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 md:pl-[64px] md:pr-[64px] md:pb-0">{textContent}</div>
     </>
   );
 
@@ -311,7 +358,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
               setShowPasswordModal(true);
             }
           }}
-          className={`mx-auto flex h-[390px] w-[1120px] items-center rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)] ${bg}`}
+          className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)] lg:h-[390px] lg:flex-row lg:items-center ${bg}`}
         >
           {cardContent}
         </Link>
@@ -329,7 +376,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
   return (
     <div
       role={comingSoon ? "presentation" : undefined}
-      className={`mx-auto flex h-[390px] w-[1120px] items-center rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] ${comingSoon ? "cursor-not-allowed transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)]" : ""} ${bg}`}
+      className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] lg:h-[390px] lg:flex-row lg:items-center ${comingSoon ? "cursor-not-allowed transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)]" : ""} ${bg}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -353,11 +400,11 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
 
 function CaseStudiesSection() {
   return (
-    <section id="case-studies" className="mx-auto w-[1280px] pb-[24px] pt-[200px]">
-      <h2 className="mx-auto w-[464px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
+    <section id="case-studies" className="w-full pb-[24px] pt-[120px] lg:pt-[200px]">
+      <h2 className="mx-auto w-full max-w-[464px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
         Stories of Design in Action
       </h2>
-      <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+      <p className="mx-auto mt-4 w-full max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
         Browse case studies revealing how design decisions shaped user journeys
         and delivered tangible business value.
       </p>
@@ -484,6 +531,115 @@ const PROCESS_CARDS = [
     useIterationsBg: true,
   },
 ];
+
+function processMainCardBg(card) {
+  return card.mainCardBg || (card.useTealBg ? "#093B48" : "#031418");
+}
+
+/** Desktop 1120×515 card interior — used in scroll-linked dual layers */
+function ProcessDesktopCardFace({ card }) {
+  if (card.layout === "imageRight") {
+    return (
+      <>
+        <div className="flex w-[448px] flex-col gap-5 pl-[80px] pt-[192px] text-white">
+          <h3 className="font-geist text-[24px] font-semibold leading-7">{card.title}</h3>
+          <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">{card.description}</p>
+        </div>
+        <div
+          className={`ml-auto mr-2 mt-2 mb-2 flex h-[499px] w-[428px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] p-3 ${card.imageContainerBg === "teal-mid" ? "bg-teal-mid" : "bg-teal"}`}
+        >
+          <img src={card.image} alt={card.imageAlt} className="size-full rounded-[16px] object-cover" />
+        </div>
+      </>
+    );
+  }
+  return (
+    <>
+      <div
+        className={`m-2 flex h-[499px] w-[428px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] ${card.imageContainerBg === "teal" ? "bg-teal p-2" : card.imageContainerBg === "teal-mid" ? "bg-teal-mid p-2" : card.imageContainerBg === "teal-light" ? "bg-teal-light p-2" : "bg-teal-dark"}`}
+      >
+        <img
+          src={card.image}
+          alt={card.imageAlt}
+          className={card.imageContainerBg === "teal" || card.imageContainerBg === "teal-mid" || card.imageContainerBg === "teal-light" ? "size-full rounded-[16px] object-cover" : "max-h-full max-w-full object-contain"}
+        />
+      </div>
+      <div className="flex w-[413px] flex-col justify-center gap-[21px] pl-[64px] text-white">
+        <h3 className="font-geist text-[24px] font-semibold leading-7">{card.title}</h3>
+        <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">{card.description}</p>
+      </div>
+    </>
+  );
+}
+
+const PROCESS_STACK_GAP_PX = 12;
+const PROCESS_STACK_GAP_MOBILE_PX = 8;
+
+/** Full 1120×579 deck: four back layers + main face (per Figma). */
+function ProcessDeckLayer({ card }) {
+  const c = card;
+  return (
+    <div className="relative h-[579px] w-[1120px] shrink-0">
+      <div
+        className={`absolute left-[64px] top-[66px] h-[513px] w-[992px] rounded-[24px] ${c.useIterationsBg ? "bg-[#093B48]" : c.useImplementBg ? "bg-[#0F6378]" : c.useTealBg ? "bg-[#A2E6FE]" : "bg-teal-light"}`}
+      />
+      <div
+        className={`absolute left-[48px] top-[92px] h-[471px] w-[1024px] rounded-[24px] ${c.useIterationsBg ? "bg-[#0F6378]" : c.useImplementBg ? "bg-[#031418]" : c.useTealBg ? "bg-[#5EA2B9]" : "bg-teal-mid"}`}
+      />
+      <div
+        className={`absolute left-[32px] top-[60px] h-[487px] w-[1056px] rounded-[24px] ${c.useIterationsBg ? "bg-[#031418]" : c.useImplementBg ? "bg-[#A2E6FE]" : c.useTealBg ? "bg-[#0F6378]" : "bg-teal"}`}
+      />
+      <div
+        className={`absolute left-[16px] top-[30px] h-[501px] w-[1088px] rounded-[24px] ${c.useIterationsBg ? "bg-[#A2E6FE]" : c.useImplementBg ? "bg-[#5EA2B9]" : c.useTealBg ? "bg-[#093B48]" : "bg-teal-dark"}`}
+      />
+      <div className="relative z-10 h-[515px] w-[1120px] overflow-hidden rounded-[24px]">
+        <div className="absolute inset-0 rounded-[24px]" style={{ backgroundColor: processMainCardBg(c) }} />
+        <div className="relative z-10 flex h-full w-full flex-row">
+          <ProcessDesktopCardFace card={c} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
+  const yOff = -stackIndex * gapPx;
+  const style =
+    slideIn && stackIndex > 0
+      ? { zIndex: stackIndex + 1, ["--stack-y"]: `${yOff}px` }
+      : { zIndex: stackIndex + 1, transform: `translateY(${yOff}px)` };
+  return (
+    <div
+      className={`absolute inset-x-0 bottom-0 mx-auto w-full max-w-[1120px] overflow-hidden rounded-[24px] will-change-transform ${slideIn && stackIndex > 0 ? "process-stack-slide-in" : ""}`}
+      style={style}
+    >
+      <div className="absolute inset-0 rounded-[24px]" style={{ backgroundColor: processMainCardBg(card) }} />
+      <div className="relative z-10 flex flex-col gap-6 p-6">
+        {card.layout === "imageRight" ? (
+          <>
+            <div className="h-[200px] w-full min-w-0 overflow-hidden rounded-[16px] sm:h-[240px]">
+              <img src={card.image} alt="" className="h-full w-full object-cover" />
+            </div>
+            <div className="flex min-w-0 flex-col gap-3 text-white">
+              <h3 className="font-geist text-[20px] font-semibold leading-7 md:text-[24px]">{card.title}</h3>
+              <p className="font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] md:text-[18px]">{card.description}</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="h-[200px] w-full min-w-0 overflow-hidden rounded-[16px] sm:h-[240px]">
+              <img src={card.image} alt="" className="h-full w-full object-cover" />
+            </div>
+            <div className="flex min-w-0 flex-col gap-3 text-white">
+              <h3 className="font-geist text-[20px] font-semibold leading-7 md:text-[24px]">{card.title}</h3>
+              <p className="font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] md:text-[18px]">{card.description}</p>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function ProcessSection() {
   const [currentCard, setCurrentCard] = useState(0);
@@ -736,6 +892,61 @@ function TestimonialsSection() {
   const goNext = () => setCurrentIndex((i) => (i + 1) % n);
 
   return (
+    <section className="w-full pb-12 pt-8">
+      {/* Below lg: fluid carousel — no absolute overlap */}
+      <div className="flex min-w-0 flex-col items-center gap-6 lg:hidden">
+        <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
+          Words from Collaborators
+        </h2>
+        <p className="max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+          Insights from those who&apos;ve worked together to turn complex
+          challenges into intuitive digital experiences.
+        </p>
+        <div className="relative h-[180px] w-[180px] shrink-0 overflow-hidden rounded-full sm:h-[220px] sm:w-[220px]">
+          <img
+            src={`${base}${t.mainImg}`}
+            alt={t.name}
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+        <p className="text-center font-geist text-[20px] font-semibold leading-8 text-dark sm:text-[24px]">
+          {t.name}
+        </p>
+        <p className="max-w-[90vw] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-caption">
+          {t.role}
+        </p>
+        <p className="max-h-[50vh] w-full max-w-[624px] overflow-y-auto px-1 text-center font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] text-dark sm:text-[18px] whitespace-pre-line">
+          &ldquo;{t.quote.replace(/\n\n/g, "\n")}&rdquo;
+        </p>
+        <div className="flex w-full max-w-sm items-center justify-between gap-4 px-2">
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Previous testimonial"
+            className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none focus:ring-2 focus:ring-teal active:bg-teal/10 sm:h-[72px] sm:w-[72px]"
+          >
+            <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
+            <svg className="relative" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#1c1f24" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next testimonial"
+            className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none focus:ring-2 focus:ring-teal active:bg-teal/10 sm:h-[72px] sm:w-[72px]"
+          >
+            <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
+            <svg className="relative" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4v2z" fill="#1c1f24" />
+            </svg>
+          </button>
+        </div>
+        <div className="h-px w-full max-w-[1120px] rounded-[14px] bg-dark/20 opacity-50" />
+      </div>
+
+    <div className="hidden w-full min-w-0 lg:block">
+    <ScaledArtboard designWidth={1280} designHeight={1000}>
     <section className="relative mx-auto h-[1000px] w-[1280px]">
       {/* Title */}
       <h2 className="absolute left-1/2 top-[124px] w-[464px] -translate-x-1/2 text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
@@ -844,6 +1055,9 @@ function TestimonialsSection() {
       {/* Bottom divider */}
       <div className="absolute left-1/2 top-[958px] h-px w-[1120px] -translate-x-1/2 rounded-[14px] bg-dark/20 opacity-50" />
     </section>
+    </ScaledArtboard>
+    </div>
+    </section>
   );
 }
 
@@ -916,7 +1130,69 @@ function JourneySection() {
     };
   }, []);
 
+  const journeyMobileItems = [
+    {
+      label: "Best designer",
+      body: "Q4 2023 for driving impactful design improvements across Goal Node, API Simplification, & Knowledge Base",
+      photo: photo4,
+    },
+    {
+      label: "Best designer",
+      body: "Q1 2025 for leading design initiatives across Gen AI, Copilot Experience, Website, and Access Control.",
+      photo: photo5,
+    },
+    {
+      label: "Quick designer",
+      body: "Q4 2022 for driving impactful design improvements across Inbox & Studio Builder",
+      photo: photo3,
+    },
+    {
+      label: "Hackathon winner",
+      body: "Winner – Hackathon for conceptualizing and building an innovative Prompt Debugger solution.",
+      photo: photo2,
+    },
+    {
+      label: "Best designer",
+      body: "Q3 2024 for elevating the Inbox experience and enhancing Studio Builder with intuitive, scalable design solutions.",
+      photo: photo1,
+    },
+  ];
+
   return (
+    <section className="w-full pb-16 pt-8">
+      <div className="flex flex-col gap-8 lg:hidden">
+        <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
+          My journey at yellow
+        </h2>
+        <p className="mx-auto max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+          Designing the future of intelligent experiences. In just three years at
+          Yellow.ai, I&apos;ve grown from Designer to Senior Designer —
+          transforming complex systems into intuitive, scalable products. Blending
+          technical depth with bold creativity, I build user-centric solutions that
+          drive real impact, earning four Best Designer awards along the journey.
+        </p>
+        <div className="flex flex-col gap-6">
+          {journeyMobileItems.map((item, idx) => (
+            <article
+              key={idx}
+              className="flex min-w-0 flex-col gap-3 rounded-[24px] border border-teal/25 bg-warm-white p-4 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.08)]"
+            >
+              <p className="font-source-sans text-[18px] font-semibold uppercase leading-normal text-dark">
+                {item.label}
+              </p>
+              <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px] text-dark">
+                {item.body}
+              </p>
+              <div className="h-[160px] w-full min-w-0 overflow-hidden rounded-[12px] sm:h-[200px]">
+                <img src={item.photo} alt="" className="h-full w-full object-cover" />
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+    <div className="hidden w-full min-w-0 lg:block">
+    <ScaledArtboard designWidth={1280} designHeight={960}>
     <section className="relative mx-auto h-[960px] w-[1280px] overflow-hidden">
       {/* Title */}
       <h2 className="absolute left-1/2 top-[85px] w-[464px] -translate-x-1/2 text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
@@ -1048,17 +1324,20 @@ function JourneySection() {
       </div>
       </div>
     </section>
+    </ScaledArtboard>
+    </div>
+    </section>
   );
 }
 
 function CtaSection() {
   return (
-    <section className="mx-auto w-[1280px]">
-      <div className="mx-auto flex h-[276px] w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
-        <h2 className="w-fit whitespace-nowrap font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
+    <section className="w-full">
+      <div className="mx-auto flex min-h-[276px] w-full max-w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-6 py-10 lg:h-[276px] lg:px-10 lg:py-0">
+        <h2 className="w-full max-w-[90vw] font-geist text-[26px] font-semibold leading-[32px] tracking-[0.25px] text-white lg:whitespace-nowrap lg:text-[34px] lg:leading-[44px]">
           Let&apos;s Build Better, Together.
         </h2>
-        <p className="mt-4 w-[368px] font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-white">
+        <p className="mt-4 w-full max-w-[368px] font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-white">
           Every product is unique. That&apos;s why I design tailored solutions
           that align with your goals and deliver real results.
         </p>
@@ -1079,11 +1358,11 @@ const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45
 
 function Footer() {
   return (
-    <footer className="mx-auto w-[1280px] pb-[40px]">
-      <div className="mx-auto my-[40px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-      <div className="flex items-center px-[80px]">
+    <footer className="w-full pb-[40px]">
+      <div className="mx-auto my-[40px] h-px w-full max-w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+      <div className="flex w-full flex-col items-center gap-4 lg:flex-row lg:items-center lg:justify-between">
         <img src={logoUrl} alt="Latha" className="h-8 w-8" />
-        <p className="mx-auto font-['Inter',sans-serif] text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
+        <p className="flex-1 text-center font-['Inter',sans-serif] text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
           Latha © 2026
         </p>
         <div className="flex items-center gap-4">
@@ -1097,14 +1376,15 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero area — full-width with 16px side padding on larger screens */}
-      <div className="relative mx-auto w-[1280px] lg:w-full lg:px-4 lg:pt-4">
-        {/* Cream background — expands with screen, 16px from edges */}
-        <div className="absolute left-[16px] right-[16px] top-[16px] h-[1162px] rounded-t-[24px] bg-cream lg:relative lg:left-0 lg:right-0 lg:top-0 lg:block lg:min-h-[1162px] lg:w-full">
-          {/* Hero content — unchanged */}
-          <div className="relative pl-[16px] pr-[16px] pt-[16px]">
-            <div className="pt-6">
+    <div className="min-h-screen min-w-0 overflow-x-hidden bg-white">
+      {/*
+        Hero: 16px inset from viewport (white gap), then rounded cream panel (#F1F1E6 = bg-cream).
+        Inner px-[64px] aligns text with below-fold HOME_INSET (80px) = 16 + 64.
+      */}
+      <div className="w-full bg-white px-4 pb-4 pt-4">
+        <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
+          <div className={`${HOME_COLUMN} relative min-h-[1162px] px-[64px] pb-8 pt-2`}>
+            <div className="relative w-full overflow-visible pt-6">
               <Navbar />
             </div>
 
@@ -1116,7 +1396,6 @@ export default function Home() {
               <HeroSection />
             </div>
 
-            {/* Gradient card — overlaps the cream panel bottom by ~154px */}
             <div className="mt-[100px]">
               <GradientCard />
             </div>
@@ -1124,14 +1403,15 @@ export default function Home() {
         </div>
       </div>
 
-      {/* All sections below use consistent centered container — fixed spacing, non-responsive */}
-      <div className="mx-auto w-[1280px]">
-        <CaseStudiesSection />
-        <ProcessSection />
-        <TestimonialsSection />
-        <JourneySection />
-        <CtaSection />
-        <Footer />
+      <div className={HOME_INSET}>
+        <div className={HOME_COLUMN}>
+          <CaseStudiesSection />
+          <ProcessSection />
+          <TestimonialsSection />
+          <JourneySection />
+          <CtaSection />
+          <Footer />
+        </div>
       </div>
     </div>
   );

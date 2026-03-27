@@ -6,27 +6,6 @@ import CaseStudyChatWidget from "./CaseStudyChatWidget.jsx";
 import CaseStudyGenAI from "./CaseStudyGenAI.jsx";
 import AboutMe from "./AboutMe.jsx";
 import Loader from "./Loader.jsx";
-import UnsupportedScreen from "./UnsupportedScreen.jsx";
-
-const NARROW_QUERY = "(max-width: 767px)";
-
-function useIsUnsupportedViewport() {
-  const [isNarrow, setIsNarrow] = useState(() =>
-    typeof window !== "undefined"
-      ? window.matchMedia(NARROW_QUERY).matches
-      : false
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia(NARROW_QUERY);
-    const onChange = () => setIsNarrow(mq.matches);
-    onChange();
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  return isNarrow;
-}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -40,16 +19,6 @@ function App() {
   const [showLoader, setShowLoader] = useState(true);
   const { pathname } = useLocation();
   const isLandingPage = pathname === "/";
-  const isUnsupportedViewport = useIsUnsupportedViewport();
-
-  if (isUnsupportedViewport) {
-    return (
-      <>
-        <ScrollToTop />
-        <UnsupportedScreen />
-      </>
-    );
-  }
 
   return (
     <>

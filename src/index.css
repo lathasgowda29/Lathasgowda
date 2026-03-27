@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap");
 @import "tailwindcss";
 
+#root {
+  min-width: 0;
+}
+
 @theme {
   --font-geist: "Geist", sans-serif;
   --font-source-sans: "Source Sans Pro", sans-serif;
@@ -34,4 +38,27 @@
 
 .animate-card-enter {
   animation: card-enter 450ms ease-out forwards;
+}
+
+/* ProcessSection: new card slides up from bottom into stacked position (--stack-y end transform). */
+@keyframes process-stack-slide {
+  from {
+    transform: translateY(92%);
+  }
+  to {
+    transform: translateY(var(--stack-y, 0px));
+  }
+}
+
+.process-stack-slide-in {
+  animation: process-stack-slide 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Case study pages: constrain content width without editing every section */
+.layout-shell {
+  width: 100%;
+  max-width: 1280px;
+  min-width: 0;
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -44,15 +44,15 @@ import heroLaptopMockup from "./assets/case-study-genai/hero-laptop-mockup.png";
 
 function Navbar() {
   return (
-    <nav className="mx-auto flex h-[60px] w-[589px] items-center rounded-[70px] bg-white px-6 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)]">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="ml-[97px] flex items-center gap-0">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
         <Link
           to="/"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Home
         </Link>
@@ -61,19 +61,24 @@ function Navbar() {
         </span>
         <Link
           to="/case-studies/about-me"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           About me
         </Link>
         <a
           href="mailto:lathalaav6@gmail.com"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Contact
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a
+        href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal lg:ml-auto"
+      >
         Resume
       </a>
     </nav>
@@ -97,28 +102,28 @@ export default function CaseStudyGenAI() {
   const [frontCardIndex, setFrontCardIndex] = useState(0);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen min-w-0 bg-white">
       <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[926px] rounded-t-[24px] bg-cream">
+        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
           <div className="relative px-4 pt-4">
             <div className="pt-6">
               <Navbar />
             </div>
 
-              <div className="mt-[48px]">
-              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
-                <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
+              <div className="mt-[48px] flex justify-center">
+              <div className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px] md:aspect-auto md:h-[682px] md:min-h-[682px]">
+                <div className="absolute left-1/2 top-[22%] w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2 md:top-[148px] md:h-[540px] md:px-0">
                   <img
                     src={heroLaptopMockup}
                     alt="Laptop mockup showing Gen AI interface"
-                    className="block h-full w-full max-w-none object-contain"
+                    className="block h-full w-full max-w-full object-contain"
                   />
                 </div>
-                <div className="absolute left-1/2 top-0 w-[568px] -translate-x-1/2 text-center">
-                  <p className="font-geist text-[24px] font-semibold leading-[34px] text-dark">
+                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 md:px-0">
+                  <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
                     From Long Prompts to Structured AI Workflows : Boosted Adoption by 61%
                   </p>
-                  <p className="mx-auto mt-[8px] w-[560px] font-source-sans text-[16px] font-normal leading-[24px] tracking-[0.5px] text-dark">
+                  <p className="mx-auto mt-[8px] w-full max-w-[560px] font-source-sans text-[15px] font-normal leading-[22px] tracking-[0.5px] text-dark sm:text-[16px] sm:leading-[24px]">
                     Redesigned prompt-heavy interactions into structured AI steps, enabling users to build dynamic conversations faster and with fewer errors.
                   </p>
                 </div>
@@ -128,13 +133,13 @@ export default function CaseStudyGenAI() {
         </div>
       </div>
 
-      <section className="layout-shell px-4 flex flex-col gap-[70px] pt-[120px] pb-[80px]">
-        <div className="layout-inner flex flex-col items-center rounded-[24px] bg-card-tan px-[24px] py-[64px]">
-          <div className="flex w-[925px] flex-col gap-[20px]">
-            <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
+      <section className="layout-shell flex flex-col gap-[70px] px-4 pt-[120px] pb-[80px]">
+        <div className="layout-inner mx-auto flex h-auto min-h-fit w-full max-w-[1120px] flex-col items-center rounded-[24px] bg-card-tan px-[24px] py-[64px]">
+          <div className="flex w-full min-w-0 max-w-[925px] flex-col gap-[20px]">
+            <h2 className="font-geist text-[28px] font-semibold leading-[36px] text-dark md:text-[48px] md:leading-[54px]">
               Overview
             </h2>
-            <p className="w-[925px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            <p className="w-full font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
               Our journey to build smarter bot creation tools began with a
               node-based interface. While it allowed users to visually design
               conversation flows, the experience quickly became limiting. Prompt
@@ -147,12 +152,12 @@ export default function CaseStudyGenAI() {
           </div>
         </div>
 
-        <div className="layout-inner flex flex-col items-center rounded-[24px] bg-card-mint px-[24px] py-[64px]">
-          <div className="flex w-[925px] flex-col gap-[20px]">
-            <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
+        <div className="layout-inner mx-auto flex h-auto min-h-fit w-full max-w-[1120px] flex-col items-center rounded-[24px] bg-card-mint px-[24px] py-[64px]">
+          <div className="flex w-full min-w-0 max-w-[925px] flex-col gap-[20px]">
+            <h2 className="font-geist text-[28px] font-semibold leading-[36px] text-dark md:text-[48px] md:leading-[54px]">
               Why We Reimagined the Bot Creation Experience
             </h2>
-            <p className="w-[925px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            <p className="w-full font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
               With the rise of generative AI, the expectations around what
               chatbots should do changed significantly. Users wanted flexibility,
               adaptability, and human-like responses, but our existing node based
@@ -167,14 +172,14 @@ export default function CaseStudyGenAI() {
         </div>
       </section>
 
-      <section className="relative layout-shell px-4 overflow-hidden">
-        {/* What we wanted to achieve */}
-        <div className="relative layout-inner pb-[20px] pt-[60px]">
-          <div className="flex w-[570px] flex-col gap-[20px] text-dark">
+      <section className="relative layout-shell px-4">
+        {/* What we wanted: stacked cards lg–1279; absolute deck xl+ to avoid overlap at 1024 */}
+        <div className="relative mx-auto w-full max-w-[1120px] min-w-0 pb-[20px] pt-[60px] xl:min-h-[min(520px,90vh)]">
+          <div className="relative z-10 flex w-full min-w-0 max-w-full flex-col gap-[20px] text-dark xl:max-w-[570px]">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               High-level requirements
             </p>
-            <h2 className="font-geist text-[48px] font-semibold leading-[54px]">
+            <h2 className="font-geist text-[28px] font-semibold leading-[36px] md:text-[48px] md:leading-[54px]">
               What We Wanted to Achieve?
             </h2>
             <div className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
@@ -198,8 +203,24 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
+          {/* Stacked cards: default + lg–xl; hidden xl+ when absolute deck shows */}
+          <div className="mt-10 flex flex-col gap-4 xl:hidden">
+            {[
+              { bg: "bg-card-mint", text: CARD_STACK_TEXTS[2] },
+              { bg: "bg-card-blue", text: CARD_STACK_TEXTS[1] },
+              { bg: "bg-cream", text: CARD_STACK_TEXTS[0] },
+            ].map((card, d) => (
+              <div
+                key={d}
+                className={`rounded-[24px] p-5 font-hand text-[22px] leading-8 text-black shadow-sm sm:text-[26px] ${card.bg}`}
+              >
+                &ldquo;{card.text}&rdquo;
+              </div>
+            ))}
+          </div>
+
           <div
-            className="absolute right-[-31px] top-[128px] h-[433px] w-[515px] cursor-pointer"
+            className="absolute right-0 top-[128px] hidden h-[433px] w-[min(100%,515px)] max-w-[515px] cursor-pointer xl:block xl:right-[-12px] min-[1400px]:right-[-31px]"
             onClick={() =>
               setFrontCardIndex((prev) => (prev + 1) % 3)
             }
@@ -216,7 +237,7 @@ export default function CaseStudyGenAI() {
               return (
                 <div
                   key={d}
-                  className={`absolute h-[408px] w-[494px] rounded-[24px] transition-all duration-500 ease-in-out ${card.bg}`}
+                  className={`absolute h-[408px] w-[min(494px,100%)] max-w-[494px] rounded-[24px] transition-all duration-500 ease-in-out ${card.bg}`}
                   style={{
                     left: pos.left,
                     top: pos.top,
@@ -243,12 +264,14 @@ export default function CaseStudyGenAI() {
             })}
           </div>
         </div>
+      </section>
 
-        {/* Competitive Analysis */}
-        <div className="layout-inner flex items-start justify-between pb-[60px] pt-[80px]">
-          <div className="flex gap-[16px]">
+      <section className="relative layout-shell px-4">
+        {/* Competitive Analysis — column to xl so copy is not masked at 1024 */}
+        <div className="mx-auto flex w-full min-w-0 max-w-[1120px] flex-col items-stretch justify-center gap-10 pb-[60px] pt-[80px] xl:flex-row xl:items-start xl:justify-start xl:gap-[80px]">
+          <div className="relative flex min-w-0 shrink-0 flex-col gap-4 sm:flex-row sm:justify-center sm:gap-[16px]">
             <div
-              className="relative h-[400px] w-[265px] overflow-hidden rounded-[30px] text-white"
+              className="relative h-[min(400px,70vh)] w-full min-w-0 max-w-[302px] shrink-0 overflow-hidden rounded-[30px] text-white sm:h-[400px] sm:w-[265px]"
               style={{
                 background:
                   "linear-gradient(-45deg, #E3D5C7 0%, #E40066 100%)",
@@ -270,7 +293,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             <div
-              className="relative h-[400px] w-[302px] overflow-hidden rounded-[30px] text-white"
+              className="relative h-[min(400px,70vh)] w-full min-w-0 max-w-[302px] shrink-0 overflow-hidden rounded-[30px] text-white sm:h-[400px] sm:w-[265px]"
               style={{
                 background:
                   "linear-gradient(-41deg, #D9F4ED 0%, #256EFF 100%)",
@@ -292,11 +315,11 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="flex w-[420px] flex-col gap-[20px] text-dark">
+          <div className="relative flex w-full min-w-0 max-w-[420px] flex-col gap-[20px] text-dark xl:max-w-[min(420px,100%)] xl:min-w-0 xl:shrink">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Identifying gaps in the market
             </p>
-            <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
+            <h3 className="font-geist text-[28px] font-semibold leading-[36px] sm:text-[34px] sm:leading-[44px]">
               Competitive Analysis
             </h3>
             <p className="font-geist text-[18px] font-normal leading-7">
@@ -311,7 +334,7 @@ export default function CaseStudyGenAI() {
 
       {/* Section 3: MVP Launch */}
       <section className="layout-shell px-4 pb-[60px]">
-        <div className="layout-inner pt-[74px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[74px]">
           <div className="flex flex-col gap-[12px]">
             <p className="font-geist text-[24px] font-normal leading-[28px] text-dark">
               MVP launch
@@ -328,11 +351,11 @@ export default function CaseStudyGenAI() {
             </p>
           </div>
 
-          <div className="mt-[46px] flex gap-[15px]">
+          <div className="mt-[46px] flex min-w-0 flex-col gap-[15px] xl:flex-row">
             {/* Left column */}
-            <div className="flex w-[287px] shrink-0 flex-col gap-[11px]">
+            <div className="flex w-full min-w-0 shrink-0 flex-col gap-[11px] xl:w-[287px]">
               <div className="rounded-[24px] bg-card-tan px-[24px] pb-[24px] pt-[40px]">
-                <div className="flex w-[239px] flex-col gap-[12px]">
+                <div className="flex w-full min-w-0 max-w-[239px] flex-col gap-[12px]">
                   <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
                     MVP idea
                   </p>
@@ -350,8 +373,8 @@ export default function CaseStudyGenAI() {
                 </div>
               </div>
 
-              <div className="relative h-[204px] rounded-[24px] bg-card-tan px-[24px] pt-[31px]">
-                <div className="flex w-[231px] flex-col gap-[8px]">
+              <div className="relative min-h-[204px] rounded-[24px] bg-card-tan px-[24px] pt-[31px]">
+                <div className="flex w-full min-w-0 max-w-[231px] flex-col gap-[8px]">
                   <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
                     Launched MVP in
                   </p>
@@ -359,37 +382,37 @@ export default function CaseStudyGenAI() {
                     2 Weeks
                   </p>
                 </div>
-                <p className="mt-[7px] w-[247px] font-source-sans text-[14px] font-normal leading-[18px] tracking-[0.1px] text-[#494c50]">
+                <p className="mt-[7px] w-full max-w-[247px] font-source-sans text-[14px] font-normal leading-[18px] tracking-[0.1px] text-[#494c50]">
                   Fast experimentation to validate the concept.
                 </p>
               </div>
             </div>
 
             {/* Right column */}
-            <div className="flex flex-1 flex-col gap-[15px]">
-              <div className="rounded-[24px] bg-card-tan p-[24px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-[15px]">
+              <div className="min-w-0 rounded-[24px] bg-card-tan p-[24px]">
                 <h3 className="mb-[16px] font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px] text-dark">
                   Brainstorming
                 </h3>
-                <div className="flex gap-[18px]">
+                <div className="flex min-w-0 flex-col gap-[18px] sm:flex-row sm:flex-wrap">
                   <img
                     src={brainstorming1}
                     alt="Team brainstorming session"
-                    className="h-[274px] w-[374px] rounded-[16px] object-cover"
+                    className="h-auto max-h-[274px] w-full min-w-0 max-w-[374px] rounded-[16px] object-cover"
                   />
                   <img
                     src={brainstorming2}
                     alt="Whiteboard ideation"
-                    className="h-[274px] w-[374px] rounded-[16px] object-cover"
+                    className="h-auto max-h-[274px] w-full min-w-0 max-w-[374px] rounded-[16px] object-cover"
                   />
                 </div>
               </div>
 
-              <div className="rounded-[24px] bg-card-tan p-[24px]">
+              <div className="min-w-0 rounded-[24px] bg-card-tan p-[24px]">
                 <h3 className="mb-[20px] font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px] text-dark">
                   Pain Points Identified
                 </h3>
-                <ul className="w-[711px] list-disc pl-[24px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+                <ul className="w-full min-w-0 max-w-none list-disc pl-[24px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
                   <li>
                     <strong>Cramped writing space</strong> : Longer prompts
                     became hard to manage inside a small text field.
@@ -430,12 +453,12 @@ export default function CaseStudyGenAI() {
       </section>
       {/* Phase 1: From Node to Dedicated Authoring Page */}
       <section className="layout-shell px-4">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col items-center gap-[20px] text-center text-dark">
             <p className="font-geist text-[24px] font-normal leading-[32px]">
               Phase 1
             </p>
-            <h2 className="w-[941px] font-geist text-[48px] font-semibold leading-[54px]">
+            <h2 className="w-full max-w-[941px] font-geist text-[48px] font-semibold leading-[54px]">
               From Node to Dedicated Authoring Page
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
@@ -578,7 +601,7 @@ export default function CaseStudyGenAI() {
 
       {/* What Worked and What Didn't */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               High-level requirements
@@ -596,8 +619,8 @@ export default function CaseStudyGenAI() {
 
           {/* Issue cards - staggered grid */}
           <div className="mt-[60px] flex flex-col items-center gap-[24px]">
-            <div className="flex gap-[24px]">
-              <div className="flex h-[256px] w-[269px] flex-col gap-[16px] rounded-[24px] bg-cream p-[24px] text-dark">
+            <div className="flex min-w-0 flex-wrap justify-center gap-[24px]">
+              <div className="flex h-[256px] w-full min-w-0 max-w-[269px] flex-col gap-[16px] rounded-[24px] bg-cream p-[24px] text-dark">
                 <h4 className="font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px]">
                   Overwhelmed by Options
                 </h4>
@@ -605,7 +628,7 @@ export default function CaseStudyGenAI() {
                   The expanded interface felt powerful but intimidating.
                 </p>
               </div>
-              <div className="flex h-[256px] w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-tan p-[24px] text-dark">
+              <div className="flex h-[256px] w-full min-w-0 max-w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-tan p-[24px] text-dark">
                 <h4 className="font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px]">
                   Blank Page Anxiety
                 </h4>
@@ -613,7 +636,7 @@ export default function CaseStudyGenAI() {
                   Users struggled to structure prompts without guidance.
                 </p>
               </div>
-              <div className="flex h-[256px] w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-blue p-[24px] text-dark">
+              <div className="flex h-[256px] w-full min-w-0 max-w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-blue p-[24px] text-dark">
                 <h4 className="font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px]">
                   Disconnected Workflow
                 </h4>
@@ -623,8 +646,8 @@ export default function CaseStudyGenAI() {
                 </p>
               </div>
             </div>
-            <div className="flex gap-[24px]">
-              <div className="flex h-[256px] w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-mint p-[24px] text-dark">
+            <div className="flex min-w-0 flex-wrap justify-center gap-[24px]">
+              <div className="flex h-[256px] w-full min-w-0 max-w-[269px] flex-col gap-[16px] rounded-[24px] bg-card-mint p-[24px] text-dark">
                 <h4 className="font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px]">
                   Low Feature Utilization
                 </h4>
@@ -633,7 +656,7 @@ export default function CaseStudyGenAI() {
                   fully leverage them.
                 </p>
               </div>
-              <div className="flex h-[256px] w-[269px] flex-col gap-[16px] rounded-[24px] bg-cream p-[24px] text-dark">
+              <div className="flex h-[256px] w-full min-w-0 max-w-[269px] flex-col gap-[16px] rounded-[24px] bg-cream p-[24px] text-dark">
                 <h4 className="font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px]">
                   Debugging Was Difficult
                 </h4>
@@ -646,8 +669,8 @@ export default function CaseStudyGenAI() {
           </div>
 
           {/* Defining features + MoSCoW priorities */}
-          <div className="mt-[64px] flex items-start gap-[36px]">
-            <div className="flex w-[570px] shrink-0 flex-col gap-[20px] text-dark">
+          <div className="mt-[64px] flex min-w-0 flex-col items-start gap-[36px] xl:flex-row">
+            <div className="flex w-full min-w-0 max-w-[570px] shrink-0 flex-col gap-[20px] text-dark">
               <p className="font-geist text-[24px] font-normal leading-[28px]">
                 Possible solution
               </p>
@@ -662,7 +685,7 @@ export default function CaseStudyGenAI() {
               </p>
             </div>
 
-            <div className="flex flex-1 flex-col text-dark">
+            <div className="flex min-w-0 flex-1 flex-col text-dark">
               <div className="flex flex-col gap-[12px] pb-[24px]">
                 <h4 className="font-geist text-[24px] font-semibold leading-[28px]">
                   Must-Have
@@ -766,14 +789,14 @@ export default function CaseStudyGenAI() {
 
       {/* Refining the Experience Through User Feedback */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="mx-auto text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Refining the Experience Through User
             <br />
             Feedback
           </h2>
 
-          <div className="mt-[60px] flex justify-center gap-[20px]">
+          <div className="mt-[60px] flex flex-wrap justify-center gap-[20px]">
             {[
               {
                 title: "Step-Based Prompting",
@@ -790,7 +813,7 @@ export default function CaseStudyGenAI() {
             ].map((card) => (
               <div
                 key={card.title}
-                className="flex h-[298px] w-[328px] items-center rounded-[12px] border border-white p-[32px]"
+                className="flex min-h-[298px] w-full min-w-0 max-w-[328px] items-center rounded-[12px] border border-white p-[32px]"
                 style={{
                   background:
                     "linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.6) 100%), #d2d2d3",
@@ -808,8 +831,8 @@ export default function CaseStudyGenAI() {
             ))}
           </div>
 
-          <div className="mt-[80px] flex items-start gap-[40px]">
-            <div className="flex w-[505px] shrink-0 flex-col gap-[20px] text-dark">
+          <div className="mt-[80px] flex min-w-0 flex-col items-start gap-[40px] xl:flex-row">
+            <div className="flex w-full min-w-0 max-w-[505px] shrink-0 flex-col gap-[20px] text-dark">
               <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
                 Understanding the Problem Through Usability Testing
               </h3>
@@ -833,7 +856,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             <div
-              className="flex-1 overflow-hidden rounded-[36px] h-[612px]"
+              className="min-h-[400px] w-full min-w-0 flex-1 overflow-hidden rounded-[36px] xl:h-[612px] xl:min-h-0"
               style={{
                 border: "20px solid rgba(255,255,255,1)",
                 backgroundColor: "#e3d5c7",
@@ -842,11 +865,11 @@ export default function CaseStudyGenAI() {
                   "inset 0px 0px 6px 0px rgba(255,255,255,0.5), 0px 4px 8px 0px rgba(0,0,0,0.25)",
               }}
             >
-              <div className="p-[16px] h-full">
+              <div className="h-full min-h-[360px] p-[16px] xl:min-h-0">
                 <img
                   src={usabilityFeedback}
                   alt="Usability feedback from testing sessions"
-                  className="w-full h-full rounded-[16px] object-cover object-top"
+                  className="h-full w-full rounded-[16px] object-cover object-top"
                 />
               </div>
             </div>
@@ -856,7 +879,7 @@ export default function CaseStudyGenAI() {
 
       {/* Exploring Possible Solutions */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <h2 className="font-geist text-[34px] font-semibold leading-[44px]">
               Exploring Possible Solutions
@@ -870,8 +893,8 @@ export default function CaseStudyGenAI() {
           </div>
 
           {/* Solution #1 */}
-          <div className="mt-[80px] flex items-start gap-[40px]">
-            <div className="flex w-[502px] shrink-0 flex-col gap-[20px] text-dark">
+          <div className="mt-[80px] flex min-w-0 flex-col items-start gap-[40px] xl:flex-row">
+            <div className="flex w-full min-w-0 max-w-[502px] shrink-0 flex-col gap-[20px] text-dark">
               <p className="font-geist text-[24px] font-normal leading-[28px]">
                 Solution #1
               </p>
@@ -887,7 +910,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             <div
-              className="h-[408px] w-[494px] shrink-0 overflow-hidden rounded-[36px] p-[16px]"
+              className="h-auto min-h-[280px] w-full min-w-0 max-w-[494px] shrink-0 overflow-hidden rounded-[36px] p-[16px] xl:h-[408px]"
               style={{
                 border: "20px solid rgba(255,255,255,1)",
                 backgroundColor: "#e3d5c7",
@@ -899,14 +922,14 @@ export default function CaseStudyGenAI() {
               <img
                 src={solution1Flowbuilder}
                 alt="Flow-based prompt builder interface with visual steps and conditions"
-                className="h-full w-full rounded-[16px] object-contain"
+                className="h-full w-full max-h-[368px] rounded-[16px] object-contain xl:max-h-none"
               />
             </div>
           </div>
 
           {/* Solution #2 */}
-          <div className="mt-[80px] flex items-start gap-[40px]">
-            <div className="flex w-[502px] shrink-0 flex-col gap-[20px] text-dark">
+          <div className="mt-[80px] flex min-w-0 flex-col items-start gap-[40px] xl:flex-row">
+            <div className="flex w-full min-w-0 max-w-[502px] shrink-0 flex-col gap-[20px] text-dark">
               <p className="font-geist text-[24px] font-normal leading-[28px]">
                 Solution #2
               </p>
@@ -921,7 +944,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             <div
-              className="h-[408px] w-[494px] shrink-0 overflow-hidden rounded-[36px] p-[16px]"
+              className="h-auto min-h-[280px] w-full min-w-0 max-w-[494px] shrink-0 overflow-hidden rounded-[36px] p-[16px] xl:h-[408px]"
               style={{
                 border: "20px solid rgba(255,255,255,1)",
                 backgroundColor: "#E3D5C7",
@@ -933,7 +956,7 @@ export default function CaseStudyGenAI() {
               <img
                 src={solution2Freeform}
                 alt="Freeform prompt workspace with open writing interface"
-                className="h-full w-full rounded-[16px] object-contain"
+                className="h-full w-full max-h-[368px] rounded-[16px] object-contain xl:max-h-none"
               />
             </div>
           </div>
@@ -942,7 +965,7 @@ export default function CaseStudyGenAI() {
 
       {/* Final Designs */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Final designs
@@ -982,9 +1005,9 @@ export default function CaseStudyGenAI() {
 
       {/* Validating the Structured Workflow Through Usability Testing */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
-          <div className="flex items-start gap-[40px]">
-            <div className="flex w-[491px] shrink-0 flex-col gap-[20px] text-dark">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
+          <div className="flex min-w-0 flex-col items-start gap-[40px] xl:flex-row">
+            <div className="flex w-full min-w-0 max-w-[491px] shrink-0 flex-col gap-[20px] text-dark">
               <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
                 Validating the Structured Workflow Through Usability
                 Testing
@@ -1007,7 +1030,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             <div
-              className="flex-1 overflow-hidden rounded-[36px] h-[611px]"
+              className="min-h-[400px] w-full min-w-0 flex-1 overflow-hidden rounded-[36px] xl:h-[611px] xl:min-h-0"
               style={{
                 border: "20px solid rgba(255,255,255,1)",
                 backgroundColor: "#e3d5c7",
@@ -1016,7 +1039,7 @@ export default function CaseStudyGenAI() {
                   "inset 0px 0px 6px 0px rgba(255,255,255,0.5), 0px 4px 8px 0px rgba(0,0,0,0.25)",
               }}
             >
-              <div className="h-full p-[16px]">
+              <div className="h-full min-h-[360px] p-[16px] xl:min-h-0">
                 <img
                   src={usabilityTestingStructuredWorkflow}
                   alt="Usability testing results for the structured workflow"
@@ -1030,7 +1053,7 @@ export default function CaseStudyGenAI() {
 
       {/* Evolution of the AI Builder */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Evolution of the AI Builder - Learning, Iterating,
             <br />
@@ -1038,9 +1061,9 @@ export default function CaseStudyGenAI() {
           </h2>
 
           {/* Timeline chevrons */}
-          <div className="mt-[60px] flex items-center justify-center">
+          <div className="mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 xl:flex-nowrap xl:gap-y-0">
             {/* Chevron 1: AI Within the Flow */}
-            <div className="relative mr-[-40px] h-[345px] w-[400px] shrink-0 overflow-hidden">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1069,7 +1092,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Chevron 2: Expanding the Canvas */}
-            <div className="relative mr-[-40px] h-[345px] w-[400px] shrink-0 overflow-hidden">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1098,7 +1121,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Chevron 3: User-Aligned AI Builder */}
-            <div className="relative h-[345px] w-[400px] shrink-0 overflow-hidden">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1246,7 +1269,7 @@ export default function CaseStudyGenAI() {
 
       {/* Phase 3: Scaling Intelligence Beyond the Prompt */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col gap-[12px] text-dark">
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Phase 3: Final iteration
@@ -1287,7 +1310,7 @@ export default function CaseStudyGenAI() {
           </div>
 
           <div
-            className="mx-auto mt-[60px] h-[600px] w-[1000px] overflow-hidden rounded-[36px]"
+            className="mx-auto mt-[60px] aspect-[5/3] w-full min-h-[240px] max-w-[1000px] overflow-hidden rounded-[36px]"
             style={{
               border: "20px solid rgba(255,255,255,1)",
               backgroundColor: "rgba(217,244,237,1)",
@@ -1325,7 +1348,7 @@ export default function CaseStudyGenAI() {
           </div>
 
           <div
-            className="mx-auto mt-[60px] h-[600px] w-[1000px] overflow-hidden rounded-[36px]"
+            className="mx-auto mt-[60px] aspect-[5/3] w-full min-h-[240px] max-w-[1000px] overflow-hidden rounded-[36px]"
             style={{
               border: "20px solid rgba(255,255,255,1)",
               backgroundColor: "#E3D5C7",
@@ -1362,7 +1385,7 @@ export default function CaseStudyGenAI() {
           </div>
 
           <div
-            className="mx-auto mt-[60px] h-[600px] w-[1000px] overflow-hidden rounded-[36px]"
+            className="mx-auto mt-[60px] aspect-[5/3] w-full min-h-[240px] max-w-[1000px] overflow-hidden rounded-[36px]"
             style={{
               border: "20px solid rgba(255,255,255,1)",
               backgroundColor: "#97AFB9",
@@ -1399,7 +1422,7 @@ export default function CaseStudyGenAI() {
           </div>
 
           <div
-            className="mx-auto mt-[60px] h-[600px] w-[1000px] overflow-hidden rounded-[36px]"
+            className="mx-auto mt-[60px] aspect-[5/3] w-full min-h-[240px] max-w-[1000px] overflow-hidden rounded-[36px]"
             style={{
               border: "20px solid rgba(255,255,255,1)",
               backgroundColor: "#F1F1E6",
@@ -1421,7 +1444,7 @@ export default function CaseStudyGenAI() {
 
       {/* Post-Launch Performance Tracking */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Post-Launch Performance Tracking
           </h2>
@@ -1522,7 +1545,7 @@ export default function CaseStudyGenAI() {
 
       {/* Outcome and Impact */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Outcome and Impact - What Changed?
             <br />
@@ -1596,7 +1619,7 @@ export default function CaseStudyGenAI() {
 
       {/* Business Wins */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner pt-[80px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <div className="flex flex-col gap-[20px] text-dark">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               Business wins
@@ -1693,7 +1716,7 @@ export default function CaseStudyGenAI() {
 
       {/* CTA Banner */}
       <section className="layout-shell px-4 pb-[80px]">
-        <div className="layout-inner flex h-[276px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
+        <div className="mx-auto flex h-auto min-h-[276px] w-full min-w-0 max-w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-6 py-10 lg:h-[276px] lg:px-10 lg:py-0">
           <h3 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
             Let&apos;s Build Better, Together.
           </h3>
@@ -1711,8 +1734,8 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Footer */}
-      <footer className="layout-shell px-4 pb-[40px]">
-        <div className="layout-inner">
+    <footer className="layout-shell px-4 pb-[40px]">
+      <div className="mx-auto w-full min-w-0 max-w-[1120px]">
           <div className="h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
           <div className="mt-[40px] flex items-center justify-between">
             <img src={footerLogo} alt="Logo" className="h-[32px] w-[32px]" />

@@ -6,39 +6,44 @@ const heroLaptopMockup =
 
 function Navbar() {
   return (
-    <nav className="mx-auto flex h-[60px] w-[589px] items-center rounded-[70px] bg-white px-6 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)]">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="ml-[97px] flex items-center gap-0">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
         <Link
           to="/"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Home
         </Link>
-        <a
-          href="#"
+        <Link
+          to="/case-studies/gen-ai"
           className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal"
         >
           Case studies
-        </a>
+        </Link>
         <Link
           to="/case-studies/about-me"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           About me
         </Link>
         <a
           href="mailto:lathalaav6@gmail.com"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Contact
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a
+        href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal lg:ml-auto"
+      >
         Resume
       </a>
     </nav>
@@ -51,8 +56,8 @@ function CaseStudyResearchSection() {
   const researchRight = new URL("./assets/case-study-api/research-right.jpg", import.meta.url).href;
 
   return (
-    <section className="layout-shell px-4 overflow-hidden pt-[55px]">
-      <h2 className="mx-auto w-[803px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
+    <section className="layout-shell px-4 pt-[55px]">
+      <h2 className="mx-auto w-full max-w-[803px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
         UX approach - What we did
       </h2>
       <p className="mx-auto mt-[22px] w-full max-w-[1120px] text-center font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
@@ -87,27 +92,32 @@ function CaseStudyResearchSection() {
         </ul>
       </div>
 
-      <div className="layout-shell relative mt-[50px] flex h-[484px] px-4 items-stretch gap-[24px]">
-        <div className="-ml-[80px] h-[484px] w-[380px] shrink-0 overflow-hidden rounded-r-[24px]">
+      <div
+        className="relative mt-[50px] flex min-h-0 w-full min-w-0 flex-col gap-4 max-[1023px]:h-auto [@media(min-width:1024px)_and_(max-width:1199px)]:flex-row [@media(min-width:1024px)_and_(max-width:1199px)]:flex-nowrap [@media(min-width:1024px)_and_(max-width:1199px)]:gap-6 [@media(min-width:1024px)_and_(max-width:1199px)]:overflow-x-auto [@media(min-width:1024px)_and_(max-width:1199px)]:overflow-y-visible [@media(min-width:1024px)_and_(max-width:1199px)]:pb-2 [@media(min-width:1024px)_and_(max-width:1199px)]:snap-x [@media(min-width:1024px)_and_(max-width:1199px)]:snap-mandatory min-[1200px]:layout-shell min-[1200px]:h-[484px] min-[1200px]:flex-row min-[1200px]:flex-nowrap min-[1200px]:items-stretch min-[1200px]:gap-6 min-[1200px]:overflow-visible min-[1200px]:px-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+        role="region"
+        aria-label="Research session photos"
+        tabIndex={0}
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <div className="h-[280px] w-full shrink-0 overflow-hidden rounded-[24px] min-[1024px]:h-[484px] min-[1024px]:w-[380px] [@media(min-width:1024px)_and_(max-width:1199px)]:snap-start min-[1200px]:-ml-[80px] min-[1200px]:rounded-r-[24px] min-[1200px]:rounded-l-none">
           <img
             src={researchLeft}
             alt="Research session"
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="h-[484px] w-[626px] shrink-0 overflow-hidden rounded-[24px]">
+        <div className="h-[280px] w-full shrink-0 overflow-hidden rounded-[24px] min-[1024px]:h-[484px] min-[1024px]:w-[626px] [@media(min-width:1024px)_and_(max-width:1199px)]:snap-start">
           <img
             src={researchCenter}
             alt="Team collaboration"
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="relative -mr-[80px] h-[484px] w-[380px] shrink-0 overflow-hidden rounded-l-[24px]">
+        <div className="relative h-[280px] w-full shrink-0 overflow-hidden rounded-[24px] min-[1024px]:h-[484px] min-[1024px]:w-[380px] [@media(min-width:1024px)_and_(max-width:1199px)]:snap-start min-[1200px]:-mr-[80px] min-[1200px]:rounded-l-[24px] min-[1200px]:rounded-r-none">
           <img
             src={researchRight}
             alt="User research"
-            className="absolute top-0 h-full max-w-none"
-            style={{ width: "147.76%", left: "-47.76%" }}
+            className="h-full w-full object-cover max-[1199px]:relative max-[1199px]:left-0 max-[1199px]:w-full min-[1200px]:absolute min-[1200px]:left-[-47.76%] min-[1200px]:top-0 min-[1200px]:h-full min-[1200px]:w-[147.76%] min-[1200px]:max-w-none min-[1200px]:object-cover"
           />
         </div>
       </div>
@@ -175,23 +185,23 @@ function DefinitionIdeationSection() {
 
 function ProblemCard({ number, title, description, quote, bgColor, children }) {
   return (
-    <div className="flex items-start justify-between">
-      <div className="flex w-[502px] flex-col gap-5 pt-[32px]">
+    <div className="flex min-w-0 flex-col items-stretch gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+      <div className="flex w-full min-w-0 max-w-[502px] flex-col gap-5 pt-0 lg:pt-[32px]">
         <p className="font-geist text-[24px] font-normal leading-7 text-dark">
           {number}
         </p>
-        <h4 className="font-geist text-[34px] font-semibold leading-[44px] text-dark">
+        <h4 className="font-geist text-[26px] font-semibold leading-[34px] text-dark md:text-[34px] md:leading-[44px]">
           {title}
         </h4>
         <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           {description}
         </p>
-        <p className="w-[430px] font-hand text-[24px] font-normal leading-8 tracking-[0.5px] text-dark">
+        <p className="w-full max-w-[430px] font-hand text-[20px] font-normal leading-8 tracking-[0.5px] text-dark md:text-[24px]">
           {quote}
         </p>
       </div>
       <div
-        className="h-[408px] w-[494px] shrink-0 overflow-hidden rounded-[36px]"
+        className="mx-auto h-[min(320px,65vh)] w-full min-w-0 max-w-[494px] shrink-0 overflow-hidden rounded-[36px] sm:h-[min(380px,70vh)] lg:mx-0 lg:h-[408px] lg:w-[494px]"
         style={{ backgroundColor: bgColor }}
       >
         {children}
@@ -215,7 +225,7 @@ function WhatWeLearnedSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[112px] flex w-full max-w-[1120px] flex-col gap-[120px]">
+      <div className="mx-auto mt-[112px] flex w-full max-w-[1120px] flex-col gap-16 md:gap-[120px]">
         <ProblemCard
           number="Problem #1"
           title="Context Loss"
@@ -294,7 +304,7 @@ function RefiningExperienceSection() {
         <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           The plan
         </p>
-        <h2 className="mx-auto mt-2 w-[1065px] font-geist text-[48px] font-semibold leading-[54px] text-dark">
+        <h2 className="mx-auto mt-2 w-full max-w-[1065px] font-geist text-[48px] font-semibold leading-[54px] text-dark">
           Refining the Experience Through User Feedback
         </h2>
         <div className="mx-auto mt-8 flex items-center justify-center gap-4">
@@ -339,11 +349,11 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex h-[794px] w-[1079px] items-center justify-center overflow-hidden rounded-[36px] bg-cream shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
         <img
           src={wireframeImg}
           alt="Wireframe explorations"
-          className="m-4 max-h-[calc(100%-32px)] max-w-[calc(100%-32px)] rounded-[36px] object-contain"
+          className="max-h-full max-w-full rounded-[36px] object-contain"
         />
       </div>
 
@@ -368,11 +378,11 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex h-[794px] w-[1079px] items-center justify-center overflow-hidden rounded-[36px] bg-cream shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
         <img
           src={planAImg}
           alt="Proposed Plan A"
-          className="m-4 max-h-[calc(100%-32px)] max-w-[calc(100%-32px)] rounded-[36px] object-contain"
+          className="max-h-full max-w-full rounded-[36px] object-contain"
         />
       </div>
 
@@ -387,11 +397,11 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex h-[794px] w-[1079px] items-center justify-center overflow-hidden rounded-[36px] bg-cream shadow-[inset_0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[inset_0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
         <img
           src={planBImg}
           alt="Proposed Plan B"
-          className="m-4 max-h-[calc(100%-32px)] max-w-[calc(100%-32px)] rounded-[36px] object-contain"
+          className="max-h-full max-w-full rounded-[36px] object-contain"
         />
       </div>
     </section>
@@ -403,7 +413,7 @@ function ABTestingSection() {
 
   return (
     <section className="layout-shell px-4 pt-[117px]">
-      <h3 className="mx-auto w-[1065px] text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
+      <h3 className="mx-auto w-full max-w-[1065px] text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
         A/B Testing
       </h3>
       <p className="mx-auto mt-[20px] w-full max-w-[1120px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
@@ -424,103 +434,110 @@ function ABTestingSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[32px] flex w-full max-w-[1120px] flex-wrap items-start pr-px">
-        {/* Metric column */}
-        <div className="mr-[-1px] flex w-[391px] shrink-0 flex-col pb-px">
-          <div className="mb-[-1px] flex h-[61px] items-center rounded-tl-[15px] border border-solid border-dark bg-teal px-[18px] py-[24px]">
-            <p className="font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white">
-              Metric
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Task Completion Time
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Error rate
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Navigation Clicks
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              User satisfaction
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center rounded-bl-[15px] border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
-              Selected solution
-            </p>
-          </div>
+      <div
+        className="mx-auto mt-[32px] grid min-h-0 w-full max-w-[1120px] grid-cols-[minmax(0,391fr)_minmax(0,345fr)_minmax(0,386fr)] grid-rows-6 pr-px max-[1150px]:[&_p]:text-[clamp(11px,1.35vw,18px)] max-[1150px]:[&_p]:leading-snug"
+        role="table"
+        aria-label="A/B testing comparison"
+      >
+        {/* Row 1 — headers */}
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[61px] min-w-0 items-center rounded-tl-[15px] border border-solid border-dark bg-teal px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white max-[1150px]:text-[clamp(11px,1.35vw,16px)]">
+            Metric
+          </p>
+        </div>
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[61px] min-w-0 items-center border border-solid border-dark bg-teal px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white max-[1150px]:text-[clamp(11px,1.35vw,16px)]">
+            Plan A (Tab-based)
+          </p>
+        </div>
+        <div className="mb-[-1px] flex min-h-[61px] min-w-0 items-center rounded-tr-[15px] border border-solid border-dark bg-teal px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white max-[1150px]:text-[clamp(11px,1.35vw,16px)]">
+            Plan B (In-node)
+          </p>
         </div>
 
-        {/* Plan A column */}
-        <div className="mr-[-1px] flex w-[345px] shrink-0 flex-col pb-px">
-          <div className="mb-[-1px] flex h-[61px] items-center border border-solid border-dark bg-teal px-[18px] py-[24px]">
-            <p className="font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white">
-              Plan A (Tab-based)
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              1.8x slower
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Higher due to manual configuration
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Frequent tab switching required
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Lower due to fragmented workflow
-            </p>
-          </div>
-          <div className="mb-[-1px] h-[70px] border border-solid border-dark bg-white/90" />
+        {/* Row 2 */}
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Task Completion Time
+          </p>
+        </div>
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            1.8x slower
+          </p>
+        </div>
+        <div className="mb-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            70% Lower than Plan A
+          </p>
         </div>
 
-        {/* Plan B column */}
-        <div className="mr-[-1px] flex w-[386px] shrink-0 flex-col pb-px">
-          <div className="mb-[-1px] flex h-[61px] items-center rounded-tr-[15px] border border-solid border-dark bg-teal px-[18px] py-[24px]">
-            <p className="font-source-sans text-[16px] font-semibold leading-6 tracking-[0.5px] text-white">
-              Plan B (In-node)
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              70% Lower than Plan A
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              35% Reduction in configuration errors.
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white/90 px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Fewer navigation actions
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center border border-solid border-dark bg-white px-[18px] py-[24px]">
-            <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-              Higher
-            </p>
-          </div>
-          <div className="mb-[-1px] flex h-[70px] items-center rounded-br-[15px] border border-solid border-dark bg-teal/10 px-[18px] py-[24px]">
-            <p className="font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
-              Plan B
-            </p>
-          </div>
+        {/* Row 3 */}
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Error rate
+          </p>
+        </div>
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Higher due to manual configuration
+          </p>
+        </div>
+        <div className="mb-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            35% Reduction in configuration errors.
+          </p>
+        </div>
+
+        {/* Row 4 */}
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Navigation Clicks
+          </p>
+        </div>
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Frequent tab switching required
+          </p>
+        </div>
+        <div className="mb-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Fewer navigation actions
+          </p>
+        </div>
+
+        {/* Row 5 */}
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            User satisfaction
+          </p>
+        </div>
+        <div className="mb-[-1px] mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Lower due to fragmented workflow
+          </p>
+        </div>
+        <div className="mb-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="break-words font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
+            Higher
+          </p>
+        </div>
+
+        {/* Row 6 — last row: single-line labels; Plan A cell matches padding */}
+        <div className="mr-[-1px] flex min-h-[70px] min-w-0 items-center rounded-bl-[15px] border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="whitespace-nowrap font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark max-[1150px]:text-[clamp(12px,1.4vw,20px)]">
+            Selected solution
+          </p>
+        </div>
+        <div className="mr-[-1px] flex min-h-[70px] min-w-0 items-center border border-solid border-dark bg-white/90 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <span className="sr-only">Plan A not selected</span>
+          <span aria-hidden="true">{'\u00A0'}</span>
+        </div>
+        <div className="flex min-h-[70px] min-w-0 items-center rounded-br-[15px] border border-solid border-dark bg-teal/10 px-[clamp(8px,1.2vw,18px)] py-[clamp(10px,1.5vw,24px)]">
+          <p className="whitespace-nowrap font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark max-[1150px]:text-[clamp(12px,1.4vw,20px)]">
+            Plan B
+          </p>
         </div>
       </div>
 
@@ -828,28 +845,28 @@ function InfoRow({ label, children }) {
 
 export default function CaseStudyApi() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen min-w-0 bg-white">
       <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[926px] rounded-t-[24px] bg-cream">
+        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
           <div className="relative px-4 pt-4">
             <div className="pt-6">
               <Navbar />
             </div>
 
-              <div className="mt-[48px]">
-              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
-                <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
+              <div className="mt-[48px] flex justify-center">
+              <div className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px] md:aspect-auto md:h-[682px] md:min-h-[682px]">
+                <div className="absolute left-1/2 top-[22%] w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2 md:top-[148px] md:h-[540px] md:px-0">
                   <img
                     src={heroLaptopMockup}
-                    alt="Laptop mockup showing Gen AI interface"
-                    className="block h-full w-full max-w-none object-contain"
+                    alt="Laptop mockup showing API configuration interface"
+                    className="block h-full w-full max-w-full object-contain"
                   />
                 </div>
-                <div className="absolute left-1/2 top-0 w-[568px] -translate-x-1/2 text-center">
-                  <p className="font-geist text-[24px] font-semibold leading-[34px] text-dark">
+                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 md:px-0">
+                  <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
                     Simplifying API Configuration: Reduced Setup Errors by 40%
                   </p>
-                  <p className="mx-auto mt-[8px] w-[560px] font-source-sans text-[16px] font-normal leading-[24px] tracking-[0.5px] text-dark">
+                  <p className="mx-auto mt-[8px] w-full max-w-[560px] font-source-sans text-[15px] font-normal leading-[22px] tracking-[0.5px] text-dark sm:text-[16px] sm:leading-[24px]">
                     Redesigned API selection and configuration to surface endpoint context clearly, helping users integrate faster and avoid configuration mistakes.
                   </p>
                 </div>

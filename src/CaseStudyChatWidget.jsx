@@ -28,39 +28,44 @@ const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45
 
 function Navbar() {
   return (
-    <nav className="mx-auto flex h-[60px] w-[589px] items-center rounded-[70px] bg-white px-6 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)]">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="ml-[97px] flex items-center gap-0">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
         <Link
           to="/"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Home
         </Link>
-        <a
-          href="#"
+        <Link
+          to="/case-studies/gen-ai"
           className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal"
         >
           Case studies
-        </a>
+        </Link>
         <Link
           to="/case-studies/about-me"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           About me
         </Link>
         <a
           href="mailto:lathalaav6@gmail.com"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
+          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Contact
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-auto rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark">
+      <a
+        href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal lg:ml-auto"
+      >
         Resume
       </a>
     </nav>
@@ -70,8 +75,8 @@ function Navbar() {
 function OverviewSection() {
   return (
     <section className="layout-shell px-4 pt-[160px]">
-      <div className="pl-[178px] pr-[177px]">
-        <div className="flex w-[925px] flex-col gap-5">
+      <div className="mx-auto flex w-full min-w-0 max-w-[1120px] flex-col items-center">
+        <div className="flex w-full min-w-0 max-w-[925px] flex-col gap-5">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Overview
           </h2>
@@ -90,7 +95,7 @@ function OverviewSection() {
           </div>
         </div>
 
-        <div className="mt-[80px] flex w-[925px] flex-col gap-5">
+        <div className="mt-[80px] flex w-full min-w-0 max-w-[925px] flex-col gap-5">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             The Problem
           </h2>
@@ -116,7 +121,7 @@ function OverviewSection() {
           </div>
         </div>
 
-        <div className="mt-[80px] flex w-[925px] flex-col gap-5">
+        <div className="mt-[80px] flex w-full min-w-0 max-w-[925px] flex-col gap-5">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             Redesign Goals
           </h2>
@@ -586,7 +591,7 @@ const whatsNextItems = [
 function WhatsNextSection() {
   return (
     <section className="layout-shell px-4 pt-[120px]">
-      <div className="mx-auto w-[1040px]">
+      <div className="mx-auto w-full min-w-0 max-w-[1120px]">
         <div className="flex flex-col items-center gap-[13px] px-8 py-8 text-center">
           <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
             What&apos;s Next
@@ -598,11 +603,11 @@ function WhatsNextSection() {
           </p>
         </div>
 
-        <div className="mt-6 flex flex-col gap-6">
+        <div className="mt-6 flex w-full min-w-0 flex-col gap-6">
           {whatsNextItems.map((item) => (
             <div
               key={item.title}
-              className="relative overflow-hidden rounded-[24px] border border-[#d2d2d3] p-8"
+              className="relative w-full min-w-0 overflow-hidden rounded-[24px] border border-[#d2d2d3] p-8"
               style={{
                 backgroundImage:
                   "radial-gradient(ellipse at 100% 100%, rgba(15,99,120,0.25) 0%, rgba(75,138,154,0.1) 30%, rgba(255,255,255,0) 60%)",
@@ -666,28 +671,28 @@ function Footer() {
 
 export default function CaseStudyChatWidget() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen min-w-0 bg-white">
       <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[926px] rounded-t-[24px] bg-cream">
+        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
           <div className="relative px-4 pt-4">
             <div className="pt-6">
               <Navbar />
             </div>
 
-            <div className="mt-[48px]">
-              <div className="layout-inner relative h-[682px] overflow-hidden rounded-[24px]">
-                <div className="absolute left-1/2 top-[148px] h-[540px] w-[1024px] -translate-x-1/2">
+            <div className="mt-[48px] flex justify-center">
+              <div className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px] md:aspect-auto md:h-[682px] md:min-h-[682px]">
+                <div className="absolute left-1/2 top-[22%] w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2 md:top-[148px] md:h-[540px] md:px-0">
                   <img
                     src={heroLaptopMockup}
-                    alt="Laptop mockup showing Gen AI interface"
-                    className="block h-full w-full max-w-none object-contain"
+                    alt="Laptop mockup showing web widget interface"
+                    className="block h-full w-full max-w-full object-contain"
                   />
                 </div>
-                <div className="absolute left-1/2 top-0 w-[568px] -translate-x-1/2 text-center">
-                  <p className="font-geist text-[24px] font-semibold leading-[34px] text-dark">
+                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 md:px-0">
+                  <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
                     Redesigning Web Widget : Improved Usability and Interaction Clarity.
                   </p>
-                  <p className="mx-auto mt-[8px] w-[560px] font-source-sans text-[16px] font-normal leading-[24px] tracking-[0.5px] text-dark">
+                  <p className="mx-auto mt-[8px] w-full max-w-[560px] font-source-sans text-[15px] font-normal leading-[22px] tracking-[0.5px] text-dark sm:text-[16px] sm:leading-[24px]">
                     Created a more intuitive chat experience that improves feature discoverability and streamlines customer interactions.
                   </p>
                 </div>
