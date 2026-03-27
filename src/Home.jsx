@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoUrl from "./assets/logo.svg";
 import caseStudyCardWebWidget from "./assets/case-study-card-web-widget.png";
@@ -712,70 +712,139 @@ function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
   );
 }
 
+const PROCESS_WHEEL_DEBOUNCE_MS = 450;
+const PROCESS_WHEEL_DELTA_THRESHOLD = 40;
+
 function ProcessSection() {
   const totalCards = PROCESS_CARDS.length;
-  /** Active stage index: 0 = Design Depth… → 1 Discovery → … → 6 Iterations, then wraps. */
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleStackClick = useCallback(() => {
-    setCurrentStep((i) => (i + 1) % totalCards);
+  const outerRef = useRef(null);
+  const currentIndexRef = useRef(0);
+  const isSectionActiveRef = useRef(false);
+  const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const root = outerRef.current;
+    if (!root) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isSectionActiveRef.current = entry.intersectionRatio >= 0.6;
+      },
+      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = outerRef.current;
+    if (!el) return;
+
+    const onWheel = (e) => {
+      if (!isSectionActiveRef.current) return;
+
+      const idx = currentIndexRef.current;
+      const delta = e.deltaY;
+
+      if (isScrollingRef.current) {
+        e.preventDefault();
+        return;
+      }
+
+      if (Math.abs(delta) < PROCESS_WHEEL_DELTA_THRESHOLD) {
+        if (
+          (delta > 0 && idx < totalCards - 1) ||
+          (delta < 0 && idx > 0)
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
+      if (delta > 0) {
+        if (idx < totalCards - 1) {
+          e.preventDefault();
+          isScrollingRef.current = true;
+          setCurrentIndex((i) => i + 1);
+          setTimeout(() => {
+            isScrollingRef.current = false;
+          }, PROCESS_WHEEL_DEBOUNCE_MS);
+        }
+        return;
+      }
+
+      if (delta < 0 && idx > 0) {
+        e.preventDefault();
+        isScrollingRef.current = true;
+        setCurrentIndex((i) => i - 1);
+        setTimeout(() => {
+          isScrollingRef.current = false;
+        }, PROCESS_WHEEL_DEBOUNCE_MS);
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
   }, [totalCards]);
 
-  const handleStackKeyDown = useCallback(
-    (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleStackClick();
-      }
-    },
-    [handleStackClick]
-  );
-
   return (
-    <ScaledCenteredSection designWidth={PROCESS_SECTION_DESIGN_WIDTH}>
-      <section className="mx-auto w-[1280px] pt-[126px]">
-        <h2 className="mx-auto w-[532px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
-          How Great Products Take Shape
-        </h2>
-        <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
-          Behind every great product is a thoughtful process that blends research,
-          strategy, and design to solve real user problems and drive business
-          success.
-        </p>
+    <div ref={outerRef} className="w-full">
+      <section
+        className="sticky top-0 flex w-full min-h-0 flex-col overflow-hidden bg-white"
+        aria-labelledby="process-section-heading"
+      >
+        <ScaledCenteredSection designWidth={PROCESS_SECTION_DESIGN_WIDTH}>
+          <section className="mx-auto w-[1280px] pt-[126px]">
+            <h2
+              id="process-section-heading"
+              className="mx-auto w-[532px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark"
+            >
+              How Great Products Take Shape
+            </h2>
+            <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+              Behind every great product is a thoughtful process that blends research,
+              strategy, and design to solve real user problems and drive business
+              success.
+            </p>
 
-        <div
-          className="relative mx-auto mt-[37px] h-[579px] w-[1120px] cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-dark/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-          role="button"
-          tabIndex={0}
-          aria-label={`Process stages. Showing ${PROCESS_CARDS[currentStep].title}. Activate for next stage.`}
-          onClick={handleStackClick}
-          onKeyDown={handleStackKeyDown}
-        >
-          {Array.from({ length: totalCards }, (_, slot) => {
-            const cardIndex = (currentStep + slot) % totalCards;
-            const spec = PROCESS_STACK_LAYER_SPECS[slot];
-            if (!spec) return null;
-            const z = 10 + (totalCards - 1 - slot);
-            return (
-              <div
-                key={slot}
-                className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
-                style={{
-                  zIndex: z,
-                  transform: `translateY(${spec.y}px) scale(${spec.scale})`,
-                  opacity: spec.opacity,
-                }}
-              >
-                <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
-              </div>
-            );
-          })}
-        </div>
+            <div
+              className="process-section-stack relative mx-auto mt-[37px] h-[579px] w-[1120px] overflow-hidden rounded-[24px]"
+              role="region"
+              aria-label={`Process stages. Scroll to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
+            >
+              {Array.from({ length: totalCards }, (_, slot) => {
+                const cardIndex = (currentIndex + slot) % totalCards;
+                const spec = PROCESS_STACK_LAYER_SPECS[slot];
+                if (!spec) return null;
+                const z = 10 + (totalCards - 1 - slot);
+                return (
+                  <div
+                    key={slot}
+                    className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
+                    style={{
+                      zIndex: z,
+                      transform: `translateY(${spec.y}px) scale(${spec.scale})`,
+                      opacity: spec.opacity,
+                    }}
+                  >
+                    <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
+                  </div>
+                );
+              })}
+            </div>
 
-        {/* Divider */}
-        <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+            {/* Divider */}
+            <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+          </section>
+        </ScaledCenteredSection>
       </section>
-    </ScaledCenteredSection>
+    </div>
   );
 }
 
@@ -902,7 +971,7 @@ function TestimonialsSection() {
   const goNext = () => setCurrentIndex((i) => (i + 1) % n);
 
   return (
-    <section className="w-full pb-12 pt-8">
+    <section className="w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:pt-8">
       {/* Below lg: fluid carousel — no absolute overlap */}
       <div className="flex min-w-0 flex-col items-center gap-6 lg:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">

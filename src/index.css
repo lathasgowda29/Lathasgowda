@@ -65,6 +65,11 @@
   }
 }
 
+/* ProcessSection: wheel-driven steps — instant snap */
+.process-section-stack .process-stack-layer {
+  transition: none !important;
+}
+
 /* Case study pages: constrain content width without editing every section */
 .layout-shell {
   width: 100%;

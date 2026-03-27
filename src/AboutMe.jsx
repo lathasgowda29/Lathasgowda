@@ -71,7 +71,7 @@ function AboutHeroSection() {
           <h1 className="font-geist text-[32px] font-semibold leading-[40px] text-dark md:text-[48px] md:leading-[54px]">
             I'm Latha !
           </h1>
-          <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-[#0c4f60]">
+          <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark-bg">
             Senior product designer at yellow.ai
           </p>
         </div>
