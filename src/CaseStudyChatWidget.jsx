@@ -21,10 +21,12 @@ import dmFormEmailWidget from "./assets/dm-form-email-widget.png";
 import dmHistoryWidget from "./assets/dm-history-widget.png";
 import dmArticlesWidget from "./assets/dm-articles-widget.png";
 import dmVoiceChatWidget from "./assets/dm-voice-chat-widget.png";
-import footerLogo from "./assets/footer-logo.svg";
-// Footer icons from Figma (assets expire in 7 days — replace with local assets if needed)
-const footerIconEmail = "https://www.figma.com/api/mcp/asset/efc137be-4607-440a-a0c4-a5de537c5aa0";
-const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45dd-90ed-bf8f61b2ec45";
+import SiteCta from "./components/SiteCta";
+import SiteFooter from "./components/SiteFooter";
+import {
+  SITE_BELOW_FOLD_COLUMN,
+  SITE_BELOW_FOLD_INSET,
+} from "./components/siteBelowFoldLayout";
 
 function Navbar() {
   return (
@@ -627,48 +629,6 @@ function WhatsNextSection() {
   );
 }
 
-function CtaSection() {
-  return (
-    <section className="layout-shell px-4 pt-[120px]">
-      <div className="layout-inner flex h-[276px] flex-col justify-center rounded-[24px] bg-teal-dark px-10">
-        <h2 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
-          Let&apos;s Build Better, Together.
-        </h2>
-        <p className="mt-4 max-w-[368px] font-source-sans text-[16px] font-normal leading-6 tracking-[0.5px] text-white">
-          Every product is unique. That&apos;s why I design tailored solutions
-          that align with your goals and deliver real results.
-        </p>
-        <a
-          href="mailto:lathalaav6@gmail.com"
-          className="mt-6 w-fit rounded-[14px] bg-teal pl-[16px] pr-[16px] py-2 font-source-sans text-[14px] font-semibold leading-6 tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)]"
-        >
-          Contact me
-        </a>
-      </div>
-    </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="layout-shell px-4 pt-[40px] pb-[40px]">
-      <div className="layout-inner">
-        <div className="h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
-        <div className="mt-10 flex items-center justify-between">
-          <img src={footerLogo} alt="Logo" className="h-8 w-8" />
-          <p className="font-inter text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
-            Latha © 2026
-          </p>
-          <div className="flex items-center gap-4">
-            <a href="https://www.linkedin.com/in/latha-s-640073119?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="group"><img src={footerIconLinkedin} alt="LinkedIn" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-            <a href="mailto:lathalaav6@gmail.com" className="group"><img src={footerIconEmail} alt="Email" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function CaseStudyChatWidget() {
   return (
     <div className="min-h-screen min-w-0 bg-white">
@@ -707,8 +667,14 @@ export default function CaseStudyChatWidget() {
       <NewWebWidgetSection />
       <DarkModeWidgetSection />
       <WhatsNextSection />
-      <CtaSection />
-      <Footer />
+      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
+        <div className={SITE_BELOW_FOLD_COLUMN}>
+          <div className="pt-[120px]">
+            <SiteCta />
+          </div>
+          <SiteFooter />
+        </div>
+      </div>
     </div>
   );
 }

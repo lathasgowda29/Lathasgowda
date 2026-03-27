@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoUrl from "./assets/logo.svg";
 import caseStudyCardWebWidget from "./assets/case-study-card-web-widget.png";
@@ -14,10 +14,12 @@ import gradientCard6 from "./assets/gradient-card-6.png";
 import gradientCard7 from "./assets/gradient-card-7.png";
 import gradientCard8 from "./assets/gradient-card-8.png";
 import gradientCard9 from "./assets/gradient-card-9.png";
-
-/** Below hero: 80px horizontal padding from viewport; column max 1280px. */
-const HOME_INSET = "px-[80px]";
-const HOME_COLUMN = "mx-auto w-full max-w-[1280px] min-w-0";
+import SiteCta from "./components/SiteCta";
+import SiteFooter from "./components/SiteFooter";
+import {
+  SITE_BELOW_FOLD_COLUMN,
+  SITE_BELOW_FOLD_INSET,
+} from "./components/siteBelowFoldLayout";
 
 /**
  * Scales fixed Figma-width artboards to fit the column without horizontal scroll.
@@ -56,6 +58,61 @@ function ScaledArtboard({ designWidth, designHeight, children, className = "" })
           }}
         >
           {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Design width for "How Great Products Take Shape" — scale as a single unit below viewport. */
+const PROCESS_SECTION_DESIGN_WIDTH = 1280;
+
+/**
+ * Centers a fixed-width block (max-w-7xl) and scales it with transform so it fits without horizontal scroll.
+ * Outer size = design × scale; inner keeps design pixel layout.
+ */
+function ScaledCenteredSection({ designWidth, children, className = '' }) {
+  const measureRef = useRef(null);
+  const contentRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  const [scaledHeight, setScaledHeight] = useState(0);
+
+  useEffect(() => {
+    const measureEl = measureRef.current;
+    const contentEl = contentRef.current;
+    if (!measureEl || !contentEl) return;
+
+    const update = () => {
+      const w = measureEl.clientWidth;
+      if (w <= 0) return;
+      const s = Math.min(1, w / designWidth);
+      setScale(s);
+      setScaledHeight(contentEl.scrollHeight * s);
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(measureEl);
+    ro.observe(contentEl);
+    return () => ro.disconnect();
+  }, [designWidth]);
+
+  const scaledW = designWidth * scale;
+
+  return (
+    <div className={`w-full max-w-7xl min-w-0 mx-auto overflow-hidden ${className}`}>
+      <div ref={measureRef} className="flex w-full min-w-0 max-w-full justify-center">
+        <div className="overflow-hidden" style={{ width: scaledW, height: scaledHeight }}>
+          <div
+            ref={contentRef}
+            className="origin-top-left will-change-transform"
+            style={{
+              width: designWidth,
+              transform: `scale(${scale})`,
+            }}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>
@@ -123,7 +180,7 @@ function HeroSection() {
   return (
     <div className="flex flex-col items-center px-0">
       <h1 className="w-full max-w-[824px] text-center font-geist text-[36px] font-semibold leading-[42px] text-dark lg:text-[48px] lg:leading-[54px]">
-        Driving Product Excellence through Strategic Design Thinking
+        Driving Product Excellence Through Strategic Design Thinking
       </h1>
 
       <p className="mt-[16px] w-full max-w-[620px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
@@ -575,6 +632,20 @@ function ProcessDesktopCardFace({ card }) {
 const PROCESS_STACK_GAP_PX = 12;
 const PROCESS_STACK_GAP_MOBILE_PX = 8;
 
+/**
+ * Stacked deck per slot (0 = top / active). Replace with Inspect values from Figma node 2:58628
+ * (file chQqUkCHyI08kdqDolaXun) when available — spacing uses PROCESS_STACK_GAP_PX steps.
+ */
+const PROCESS_STACK_LAYER_SPECS = [
+  { y: 0, scale: 1, opacity: 1 },
+  { y: PROCESS_STACK_GAP_PX * 1, scale: 0.96, opacity: 0.93 },
+  { y: PROCESS_STACK_GAP_PX * 2, scale: 0.92, opacity: 0.86 },
+  { y: PROCESS_STACK_GAP_PX * 3, scale: 0.88, opacity: 0.79 },
+  { y: PROCESS_STACK_GAP_PX * 4, scale: 0.84, opacity: 0.72 },
+  { y: PROCESS_STACK_GAP_PX * 5, scale: 0.8, opacity: 0.65 },
+  { y: PROCESS_STACK_GAP_PX * 6, scale: 0.76, opacity: 0.58 },
+];
+
 /** Full 1120×579 deck: four back layers + main face (per Figma). */
 function ProcessDeckLayer({ card }) {
   const c = card;
@@ -642,130 +713,69 @@ function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
 }
 
 function ProcessSection() {
-  const [currentCard, setCurrentCard] = useState(0);
-  const wrapperRef = useRef(null);
   const totalCards = PROCESS_CARDS.length;
+  /** Active stage index: 0 = Design Depth… → 1 Discovery → … → 6 Iterations, then wraps. */
+  const [currentStep, setCurrentStep] = useState(0);
 
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-
-    const updateStep = () => {
-      const rect = wrapper.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const wrapperHeight = totalCards * viewportHeight;
-      const scrollableHeight = wrapperHeight - viewportHeight;
-
-      if (scrollableHeight <= 0) return;
-
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollableHeight));
-      const step = Math.min(
-        Math.floor(progress * totalCards),
-        totalCards - 1
-      );
-      setCurrentCard(step);
-    };
-
-    const handleScroll = () => requestAnimationFrame(updateStep);
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    updateStep();
-    return () => window.removeEventListener("scroll", handleScroll);
+  const handleStackClick = useCallback(() => {
+    setCurrentStep((i) => (i + 1) % totalCards);
   }, [totalCards]);
 
-  const frontCard = PROCESS_CARDS[currentCard];
+  const handleStackKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleStackClick();
+      }
+    },
+    [handleStackClick]
+  );
 
   return (
-    <div
-      ref={wrapperRef}
-      className="w-full"
-      style={{ height: `${totalCards * 100}vh` }}
-    >
-      <section
-        className="sticky top-0 mx-auto w-[1280px] pt-[126px]"
-        style={{ height: "100vh" }}
-      >
-      <h2 className="mx-auto w-[532px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
-        How Great Products Take Shape
-      </h2>
-      <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
-        Behind every great product is a thoughtful process that blends research,
-        strategy, and design to solve real user problems and drive business
-        success.
-      </p>
+    <ScaledCenteredSection designWidth={PROCESS_SECTION_DESIGN_WIDTH}>
+      <section className="mx-auto w-[1280px] pt-[126px]">
+        <h2 className="mx-auto w-[532px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
+          How Great Products Take Shape
+        </h2>
+        <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+          Behind every great product is a thoughtful process that blends research,
+          strategy, and design to solve real user problems and drive business
+          success.
+        </p>
 
-      <div className="relative mx-auto mt-[37px] h-[579px] w-[1120px]">
-        {/* Back layers — Iterations: #A2E6FE, #031418, #0F6378, #093B48; Implement: #5EA2B9, #A2E6FE, #031418, #0F6378; Discovery/Analysis/Research: #093B48, #0F6378, #5EA2B9, #A2E6FE */}
         <div
-          className={`absolute left-[64px] top-[66px] h-[513px] w-[992px] rounded-[24px] ${frontCard.useIterationsBg ? "bg-[#093B48]" : frontCard.useImplementBg ? "bg-[#0F6378]" : frontCard.useTealBg ? "bg-[#A2E6FE]" : "bg-teal-light"}`}
-        />
-        <div
-          className={`absolute left-[48px] top-[92px] h-[471px] w-[1024px] rounded-[24px] ${frontCard.useIterationsBg ? "bg-[#0F6378]" : frontCard.useImplementBg ? "bg-[#031418]" : frontCard.useTealBg ? "bg-[#5EA2B9]" : "bg-teal-mid"}`}
-        />
-        <div
-          className={`absolute left-[32px] top-[60px] h-[487px] w-[1056px] rounded-[24px] ${frontCard.useIterationsBg ? "bg-[#031418]" : frontCard.useImplementBg ? "bg-[#A2E6FE]" : frontCard.useTealBg ? "bg-[#0F6378]" : "bg-teal"}`}
-        />
-        <div
-          className={`absolute left-[16px] top-[30px] h-[501px] w-[1088px] rounded-[24px] ${frontCard.useIterationsBg ? "bg-[#A2E6FE]" : frontCard.useImplementBg ? "bg-[#5EA2B9]" : frontCard.useTealBg ? "bg-[#093B48]" : "bg-teal-dark"}`}
-        />
-
-        {/* Main card — scroll-driven cycle; smooth fade + translateY transition */}
-        <div
-          key={currentCard}
-          className="relative z-10 flex h-[515px] w-[1120px] overflow-hidden rounded-[24px] transition-all duration-[450ms] ease-out animate-card-enter"
-          style={{
-            backgroundColor: frontCard.mainCardBg || (frontCard.useTealBg ? "#093B48" : "#031418"),
-          }}
+          className="relative mx-auto mt-[37px] h-[579px] w-[1120px] cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-dark/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          role="button"
+          tabIndex={0}
+          aria-label={`Process stages. Showing ${PROCESS_CARDS[currentStep].title}. Activate for next stage.`}
+          onClick={handleStackClick}
+          onKeyDown={handleStackKeyDown}
         >
-          {frontCard.layout === "imageRight" ? (
-            <>
-              <div className="flex w-[448px] flex-col gap-5 pl-[80px] pt-[192px] text-white">
-                <h3 className="font-geist text-[24px] font-semibold leading-7">
-                  {frontCard.title}
-                </h3>
-                <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
-                  {frontCard.description}
-                </p>
-              </div>
+          {Array.from({ length: totalCards }, (_, slot) => {
+            const cardIndex = (currentStep + slot) % totalCards;
+            const spec = PROCESS_STACK_LAYER_SPECS[slot];
+            if (!spec) return null;
+            const z = 10 + (totalCards - 1 - slot);
+            return (
               <div
-                className={`ml-auto mr-2 mt-2 mb-2 flex h-[499px] w-[428px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] p-3 ${frontCard.imageContainerBg === "teal-mid" ? "bg-teal-mid" : "bg-teal"}`}
+                key={slot}
+                className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
+                style={{
+                  zIndex: z,
+                  transform: `translateY(${spec.y}px) scale(${spec.scale})`,
+                  opacity: spec.opacity,
+                }}
               >
-                <img
-                  src={frontCard.image}
-                  alt={frontCard.imageAlt}
-                  className="size-full rounded-[16px] object-cover"
-                />
+                <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
               </div>
-            </>
-          ) : (
-            <>
-              <div
-                className={`m-2 flex h-[499px] w-[428px] shrink-0 items-center justify-center overflow-hidden rounded-[24px] ${frontCard.imageContainerBg === "teal" ? "bg-teal p-2" : frontCard.imageContainerBg === "teal-mid" ? "bg-teal-mid p-2" : frontCard.imageContainerBg === "teal-light" ? "bg-teal-light p-2" : "bg-teal-dark"}`}
-              >
-                <img
-                  src={frontCard.image}
-                  alt={frontCard.imageAlt}
-                  className={frontCard.imageContainerBg === "teal" || frontCard.imageContainerBg === "teal-mid" || frontCard.imageContainerBg === "teal-light" ? "size-full rounded-[16px] object-cover" : "max-h-full max-w-full object-contain"}
-                />
-              </div>
-              <div className="flex w-[413px] flex-col justify-center gap-[21px] pl-[64px] text-white">
-                <h3 className="font-geist text-[24px] font-semibold leading-7">
-                  {frontCard.title}
-                </h3>
-                <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
-                  {frontCard.description}
-                </p>
-              </div>
-            </>
-          )}
+            );
+          })}
         </div>
-      </div>
 
-      {/* Divider */}
-      <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-    </section>
-    </div>
+        {/* Divider */}
+        <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+      </section>
+    </ScaledCenteredSection>
   );
 }
 
@@ -1330,60 +1340,16 @@ function JourneySection() {
   );
 }
 
-function CtaSection() {
-  return (
-    <section className="w-full">
-      <div className="mx-auto flex min-h-[276px] w-full max-w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-6 py-10 lg:h-[276px] lg:px-10 lg:py-0">
-        <h2 className="w-full max-w-[90vw] font-geist text-[26px] font-semibold leading-[32px] tracking-[0.25px] text-white lg:whitespace-nowrap lg:text-[34px] lg:leading-[44px]">
-          Let&apos;s Build Better, Together.
-        </h2>
-        <p className="mt-4 w-full max-w-[368px] font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-white">
-          Every product is unique. That&apos;s why I design tailored solutions
-          that align with your goals and deliver real results.
-        </p>
-        <a
-          href="mailto:lathalaav6@gmail.com"
-          className="mt-6 w-fit rounded-[14px] bg-teal px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] transition-colors duration-200 hover:bg-teal-dark"
-        >
-          Contact me
-        </a>
-      </div>
-    </section>
-  );
-}
-
-// Footer icons from Figma (assets expire in 7 days — replace with local assets if needed)
-const footerIconEmail = "https://www.figma.com/api/mcp/asset/efc137be-4607-440a-a0c4-a5de537c5aa0";
-const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45dd-90ed-bf8f61b2ec45";
-
-function Footer() {
-  return (
-    <footer className="w-full pb-[40px]">
-      <div className="mx-auto my-[40px] h-px w-full max-w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-      <div className="flex w-full flex-col items-center gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <img src={logoUrl} alt="Latha" className="h-8 w-8" />
-        <p className="flex-1 text-center font-['Inter',sans-serif] text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
-          Latha © 2026
-        </p>
-        <div className="flex items-center gap-4">
-          <a href="https://www.linkedin.com/in/latha-s-640073119?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="group"><img src={footerIconLinkedin} alt="LinkedIn" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-          <a href="mailto:lathalaav6@gmail.com" className="group"><img src={footerIconEmail} alt="Email" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen min-w-0 overflow-x-hidden bg-white">
       {/*
         Hero: 16px inset from viewport (white gap), then rounded cream panel (#F1F1E6 = bg-cream).
-        Inner px-[64px] aligns text with below-fold HOME_INSET (80px) = 16 + 64.
+        Inner px-[64px] aligns text with below-fold SITE_BELOW_FOLD_INSET (80px) = 16 + 64.
       */}
       <div className="w-full bg-white px-4 pb-4 pt-4">
         <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
-          <div className={`${HOME_COLUMN} relative min-h-[1162px] px-[64px] pb-8 pt-2`}>
+          <div className={`${SITE_BELOW_FOLD_COLUMN} relative min-h-[1162px] px-[64px] pb-8 pt-2`}>
             <div className="relative w-full overflow-visible pt-6">
               <Navbar />
             </div>
@@ -1403,14 +1369,14 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={HOME_INSET}>
-        <div className={HOME_COLUMN}>
+      <div className={SITE_BELOW_FOLD_INSET}>
+        <div className={SITE_BELOW_FOLD_COLUMN}>
           <CaseStudiesSection />
           <ProcessSection />
           <TestimonialsSection />
           <JourneySection />
-          <CtaSection />
-          <Footer />
+          <SiteCta />
+          <SiteFooter />
         </div>
       </div>
     </div>

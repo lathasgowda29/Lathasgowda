@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 import logoUrl from "./assets/logo.svg";
+import SiteCta from "./components/SiteCta";
+import SiteFooter from "./components/SiteFooter";
+import {
+  SITE_BELOW_FOLD_COLUMN,
+  SITE_BELOW_FOLD_INSET,
+} from "./components/siteBelowFoldLayout";
 
 const heroLaptopMockup =
   "https://www.figma.com/api/mcp/asset/2777c8ab-6072-44c0-9ec0-b451d62d43cc";
@@ -780,56 +786,6 @@ function FutureRoadmapSection() {
   );
 }
 
-function CTABanner() {
-  return (
-    <section className="layout-shell px-4 pt-[117px]">
-      <div className="layout-inner flex flex-col items-start gap-4 rounded-[24px] bg-teal-dark px-[40px] py-[40px]">
-        <h3 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
-          Let&rsquo;s Build Better, Together.
-        </h3>
-        <p className="w-[368px] font-source-sans text-[16px] font-normal leading-6 tracking-[0.5px] text-white">
-          Every product is unique. That&rsquo;s why I design tailored solutions
-          that align with your goals and deliver real results.
-        </p>
-        <a
-          href="mailto:lathalaav6@gmail.com"
-          className="mt-4 rounded-[14px] bg-teal px-4 py-2 font-source-sans text-[14px] font-semibold leading-6 tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)]"
-        >
-          Contact me
-        </a>
-      </div>
-    </section>
-  );
-}
-
-// Footer icons from Figma (assets expire in 7 days — replace with local assets if needed)
-const footerIconEmail = "https://www.figma.com/api/mcp/asset/efc137be-4607-440a-a0c4-a5de537c5aa0";
-const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45dd-90ed-bf8f61b2ec45";
-
-function Footer() {
-  return (
-    <footer className="layout-shell px-4 pb-[40px] pt-[40px]">
-      <div className="mx-auto h-px w-full max-w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-      <div className="mx-auto mt-[40px] flex w-full max-w-[1120px] items-center">
-        <Link to="/">
-          <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
-        </Link>
-        <p className="flex-1 text-center font-[Inter,sans-serif] text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
-          Latha &copy; 2026
-        </p>
-        <div className="flex items-center gap-3">
-          <a href="https://www.linkedin.com/in/latha-s-640073119?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="group">
-            <img src={footerIconLinkedin} alt="" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" />
-          </a>
-          <a href="mailto:lathalaav6@gmail.com" aria-label="Email" className="group">
-            <img src={footerIconEmail} alt="" className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" />
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 function InfoRow({ label, children }) {
   return (
     <div className="flex items-start">
@@ -917,8 +873,14 @@ export default function CaseStudyApi() {
       <ABTestingSection />
       <FromInsightToImpactSection />
       <FutureRoadmapSection />
-      <CTABanner />
-      <Footer />
+      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
+        <div className={SITE_BELOW_FOLD_COLUMN}>
+          <div className="pt-[117px]">
+            <SiteCta />
+          </div>
+          <SiteFooter />
+        </div>
+      </div>
     </div>
   );
 }

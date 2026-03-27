@@ -35,11 +35,13 @@ import arrow1 from "./assets/case-study-genai/arrow-1.svg";
 import arrow2 from "./assets/case-study-genai/arrow-2.svg";
 import arrow3 from "./assets/case-study-genai/arrow-3.svg";
 import arrow4 from "./assets/case-study-genai/arrow-4.svg";
-import footerLogo from "./assets/case-study-genai/footer-logo.svg";
-// Footer icons from Figma (assets expire in 7 days — replace with local assets if needed)
-const footerIconEmail = "https://www.figma.com/api/mcp/asset/efc137be-4607-440a-a0c4-a5de537c5aa0";
-const footerIconLinkedin = "https://www.figma.com/api/mcp/asset/8f0085f2-dfa1-45dd-90ed-bf8f61b2ec45";
 import heroLaptopMockup from "./assets/case-study-genai/hero-laptop-mockup.png";
+import SiteCta from "./components/SiteCta";
+import SiteFooter from "./components/SiteFooter";
+import {
+  SITE_BELOW_FOLD_COLUMN,
+  SITE_BELOW_FOLD_INSET,
+} from "./components/siteBelowFoldLayout";
 
 
 function Navbar() {
@@ -1714,41 +1716,12 @@ export default function CaseStudyGenAI() {
         </div>
       </section>
 
-      {/* CTA Banner */}
-      <section className="layout-shell px-4 pb-[80px]">
-        <div className="mx-auto flex h-auto min-h-[276px] w-full min-w-0 max-w-[1120px] flex-col justify-center rounded-[24px] bg-teal-dark px-6 py-10 lg:h-[276px] lg:px-10 lg:py-0">
-          <h3 className="font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-white">
-            Let&apos;s Build Better, Together.
-          </h3>
-          <p className="mt-[16px] w-[368px] font-source-sans text-[16px] font-normal leading-[24px] tracking-[0.5px] text-white">
-            Every product is unique. That&apos;s why I design tailored
-            solutions that align with your goals and deliver real results.
-          </p>
-          <a
-            href="mailto:lathalaav6@gmail.com"
-            className="mt-[24px] w-fit rounded-[14px] bg-teal pl-[16px] pr-[16px] py-[8px] font-source-sans text-[14px] font-semibold leading-[24px] tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)]"
-          >
-            Contact me
-          </a>
+      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
+        <div className={SITE_BELOW_FOLD_COLUMN}>
+          <SiteCta />
+          <SiteFooter />
         </div>
-      </section>
-
-      {/* Footer */}
-    <footer className="layout-shell px-4 pb-[40px]">
-      <div className="mx-auto w-full min-w-0 max-w-[1120px]">
-          <div className="h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
-          <div className="mt-[40px] flex items-center justify-between">
-            <img src={footerLogo} alt="Logo" className="h-[32px] w-[32px]" />
-            <p className="font-inter text-[14px] font-normal leading-[24px] tracking-[0.25px] text-dark">
-              Latha © 2026
-            </p>
-            <div className="flex items-center gap-[16px]">
-              <a href="https://www.linkedin.com/in/latha-s-640073119?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer" className="group"><img src={footerIconLinkedin} alt="LinkedIn" className="h-[24px] w-[24px] transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-              <a href="mailto:lathalaav6@gmail.com" className="group"><img src={footerIconEmail} alt="Email" className="h-[24px] w-[24px] transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]" /></a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
