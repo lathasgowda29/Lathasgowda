@@ -6,6 +6,27 @@ import CaseStudyChatWidget from "./CaseStudyChatWidget.jsx";
 import CaseStudyGenAI from "./CaseStudyGenAI.jsx";
 import AboutMe from "./AboutMe.jsx";
 import Loader from "./Loader.jsx";
+import UnsupportedScreen from "./UnsupportedScreen.jsx";
+
+const NARROW_MEDIA = "(max-width: 999px)";
+
+function useViewportBelow1000px() {
+  const [isNarrow, setIsNarrow] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(NARROW_MEDIA).matches
+      : false
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(NARROW_MEDIA);
+    const onChange = () => setIsNarrow(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return isNarrow;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -19,6 +40,16 @@ function App() {
   const [showLoader, setShowLoader] = useState(true);
   const { pathname } = useLocation();
   const isLandingPage = pathname === "/";
+  const isNarrowViewport = useViewportBelow1000px();
+
+  if (isNarrowViewport) {
+    return (
+      <>
+        <ScrollToTop />
+        <UnsupportedScreen />
+      </>
+    );
+  }
 
   return (
     <>
