@@ -413,7 +413,7 @@ export default function CaseStudyGenAI() {
                 </div>
               </div>
 
-              <div className="min-w-0 rounded-[24px] bg-card-tan p-[24px]">
+              <div className="min-w-0 rounded-[24px] bg-card-tan p-[24px] min-[1281px]:py-[44px]">
                 <h3 className="mb-[20px] font-geist text-[20px] font-semibold leading-[28px] tracking-[0.15px] text-dark">
                   Pain Points Identified
                 </h3>
