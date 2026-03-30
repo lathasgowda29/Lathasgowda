@@ -259,6 +259,9 @@ export default function CaseStudyGenAI() {
                         card.text
                       )}&rdquo;
                     </p>
+                      <p className="absolute bottom-[24px] right-[24px] font-geist text-[14px] font-normal leading-[20px] text-[#A4A5A7]">
+                        Click to explore
+                      </p>
                     </>
                   )}
                 </div>
