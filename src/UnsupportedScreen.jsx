@@ -1,24 +1,23 @@
-import illustrationUrl from "./assets/narrow-screen-illustration.png";
+import illustrationUrl from "./assets/unsupported-illustration.png";
 
-/** Figma: “About” narrow frame — text left, illustration right (890:41570 / 891:42272–891:42290). */
+const ILLU_W = 433;
+const ILLU_H = 476;
+
 export default function UnsupportedScreen() {
   return (
-    <div className="min-h-[100dvh] bg-white p-6 min-[600px]:px-9 min-[600px]:py-8">
+    <div className="min-h-[100dvh] bg-white px-[36px] py-8">
       <div
         className={[
-          "mx-auto flex w-full max-w-[1200px] min-h-[calc(100dvh-3rem)]",
-          "flex-col items-center justify-center gap-8",
-          "min-[600px]:min-h-[calc(100dvh-4rem)] min-[600px]:flex-row min-[600px]:items-center min-[600px]:justify-center min-[600px]:gap-10",
+          "mx-auto flex w-full max-w-full min-h-[calc(100dvh-4rem)]",
+          // Narrow: text left, image right, vertically centered
+          "flex-row items-center justify-center gap-6 min-[400px]:gap-8",
+          // Wider: image top, text below with 8px between blocks
+          "min-[480px]:flex-col min-[480px]:items-center min-[480px]:gap-2",
         ].join(" ")}
       >
-        <div
-          className={[
-            "flex w-full max-w-[min(100%,432.6px)] shrink-0 flex-col gap-[22.4px]",
-            "order-2 items-center text-center min-[600px]:order-1 min-[600px]:max-w-[294px] min-[600px]:items-start min-[600px]:text-left",
-          ].join(" ")}
-        >
+        <div className="flex min-w-0 max-w-[294px] flex-[0_1_294px] flex-col items-start gap-[22.4px] min-[480px]:order-2 min-[480px]:flex-none min-[480px]:w-full min-[480px]:max-w-[294px]">
           <h1
-            className="w-full font-geist text-[24px] font-semibold leading-[28px] text-dark"
+            className="w-full font-source-sans text-[28px] font-semibold leading-[29px] tracking-[0.4306px] text-dark"
             style={{ fontFeatureSettings: "'lnum' 1, 'pnum' 1" }}
           >
             Designed for a bigger screen
@@ -31,17 +30,17 @@ export default function UnsupportedScreen() {
             }}
           >
             For the best experience, use a desktop or a screen wider than
-            1000px. Mobile version is on the way
+            1024px. Mobile version is on the way
           </p>
         </div>
 
-        <div className="order-1 flex w-full max-w-[432.6px] shrink-0 items-center justify-center min-[600px]:order-2 min-[600px]:w-auto">
+        <div className="m-4 min-[480px]:mb-0 shrink-0 min-[480px]:order-1">
           <img
             src={illustrationUrl}
             alt=""
-            className="block h-auto w-full max-w-[432.6px] object-contain object-center"
-            width={433}
-            height={476}
+            className="block h-[476px] w-[433px] object-contain object-center"
+            width={ILLU_W}
+            height={ILLU_H}
           />
         </div>
       </div>

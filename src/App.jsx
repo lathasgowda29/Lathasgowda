@@ -29,10 +29,19 @@ function useViewportBelow1000px() {
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (pathname === "/" && hash === "#case-studies") {
+      const el = document.getElementById("case-studies");
+      if (el) {
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+      return;
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 

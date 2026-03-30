@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logoUrl from "./assets/logo.svg";
+import aboutProfile from "./assets/about-profile.jpg";
+import aboutDesignJourneyTimeline from "./assets/about-design-journey-timeline.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
 import {
@@ -8,18 +10,14 @@ import {
   SITE_BELOW_FOLD_INSET,
 } from "./components/siteBelowFoldLayout";
 
-// Profile image from Figma design (asset expires in 7 days — replace with local asset if needed)
-const imgProfile =
-  "https://www.figma.com/api/mcp/asset/2bb09690-0cb8-4117-9ec3-168aa5c78f91";
-
 function Navbar() {
   return (
-    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] sm:flex-nowrap sm:justify-start sm:px-6 sm:py-0">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 sm:ml-[97px] sm:flex-none sm:justify-start">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
         <Link
           to="/"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
@@ -27,7 +25,7 @@ function Navbar() {
           Home
         </Link>
         <Link
-          to="/case-studies/gen-ai"
+          to="/#case-studies"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
         >
           Case studies
@@ -46,7 +44,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark sm:ml-auto">
+      <a href="https://drive.google.com/file/d/1DA3bWyLAUIbS1uXnKu466CxsajH9Engd/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark lg:ml-auto">
         Resume
       </a>
     </nav>
@@ -55,11 +53,11 @@ function Navbar() {
 
 function AboutHeroSection() {
   return (
-    <section className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-10 px-4 pt-[62px] md:flex-row md:items-center md:gap-[88px]">
+    <section className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-10 px-0 pt-[62px] md:flex-row md:items-center md:gap-[88px]">
       {/* Profile image — left side */}
       <div className="h-[min(60vw,400px)] w-full max-w-[516px] shrink-0 overflow-hidden rounded-[24px] sm:h-[480px] md:h-[682px] md:w-[516px]">
         <img
-          src={imgProfile}
+          src={aboutProfile}
           alt="Latha"
           className="h-full w-full object-cover object-top"
         />
@@ -99,10 +97,6 @@ function AboutHeroSection() {
   );
 }
 
-// Design journey timeline from Figma (asset expires in 7 days — replace with local asset if needed)
-const imgAboutDesignJourney =
-  "https://www.figma.com/api/mcp/asset/9103e8d4-072d-417b-865c-62925a5a58ea";
-
 function DesignJourneySection() {
   return (
     <section className="mx-auto flex w-full max-w-[1120px] flex-col gap-10 px-4 pb-[120px] pt-[120px] lg:flex-row lg:gap-[80px]">
@@ -122,7 +116,7 @@ function DesignJourneySection() {
       {/* Right: Timeline image from Figma */}
       <div className="relative min-h-[min(280px,50vh)] w-full flex-1 lg:min-h-[724px]">
         <img
-          src={imgAboutDesignJourney}
+          src={aboutDesignJourneyTimeline}
           alt="Design journey at Yellow.ai — Intern to Sr. Product Design"
           className="h-full w-full max-w-full object-contain lg:max-w-[708px]"
         />
@@ -451,11 +445,13 @@ function AboutAchievementCardsSection() {
 
 export default function AboutMe() {
   return (
-    <div className="min-h-screen min-w-0 bg-white">
-      <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
-          <div className="relative min-h-[min(100dvh,920px)] px-4 pt-4 md:min-h-[920px]">
-            <div className="pt-6">
+    <div className="min-h-screen min-w-0 overflow-x-hidden bg-white">
+      <div className="w-full bg-white px-4 pb-4 pt-4">
+        <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
+          <div
+            className={`${SITE_BELOW_FOLD_COLUMN} relative min-h-[min(100dvh,920px)] px-[64px] pb-8 pt-2 md:min-h-[920px]`}
+          >
+            <div className="relative w-full overflow-visible pt-6">
               <Navbar />
             </div>
 

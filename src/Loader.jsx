@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
 const LOADER_TEXT = "Hi, I am Latha";
+/** Characters typed in accent teal; remainder in white. */
+const LOADER_PREFIX_LEN = "Hi, I am ".length;
 const TYPING_DELAY_MS = 80;
 const LOADER_DURATION_MS = 2500;
 const FADE_DURATION_MS = 500;
@@ -32,15 +34,20 @@ export default function Loader({ onComplete }) {
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center bg-dark-bg transition-opacity duration-500 ease-out"
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-[#031418] transition-opacity duration-500 ease-out"
       style={{
         opacity: isFadingOut ? 0 : 1,
         pointerEvents: isFadingOut ? "none" : "auto",
       }}
       aria-hidden={isFadingOut}
     >
-      <p className="font-geist text-[32px] font-semibold tracking-tight text-white">
-        {LOADER_TEXT.slice(0, visibleChars)}
+      <p className="font-Caveat text-[32px] font-Regular tracking-tight">
+        <span className="text-[#5EA2B9]">
+          {LOADER_TEXT.slice(0, visibleChars).slice(0, LOADER_PREFIX_LEN)}
+        </span>
+        <span className="text-white">
+          {LOADER_TEXT.slice(0, visibleChars).slice(LOADER_PREFIX_LEN)}
+        </span>
         <span
           className="inline-block w-0.5 animate-pulse bg-white"
           style={{ opacity: visibleChars < LOADER_TEXT.length ? 1 : 0 }}

@@ -133,12 +133,17 @@ function Navbar() {
         >
           Home
         </a>
-        <Link
-          to="/case-studies/gen-ai"
+        <a
+          href="#case-studies"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("case-studies")?.scrollIntoView({ behavior: "smooth" });
+            window.history.replaceState(null, "", "/#case-studies");
+          }}
         >
           Case studies
-        </Link>
+        </a>
         <Link
           to="/case-studies/about-me"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
@@ -509,10 +514,10 @@ function CaseStudiesSection() {
 }
 
 const processRadarUrl = new URL("./assets/process-radar.png", import.meta.url).href;
-const discoveryImageUrl = "https://www.figma.com/api/mcp/asset/6f7e8427-cfa7-4f89-abb3-44f84b29c6c5";
-const analysisImageUrl = "https://www.figma.com/api/mcp/asset/57b34415-a009-4cbd-a659-5f14026f0e93";
-const researchImageUrl = "https://www.figma.com/api/mcp/asset/66cfb390-02e3-4934-893a-dbf8d5f97aef";
-const iterationsImageUrl = "https://www.figma.com/api/mcp/asset/b285f5e3-886d-4a7b-8d0d-9bc5b6e6b072";
+const discoveryImageUrl = new URL("./assets/discovery-stage.png", import.meta.url).href;
+const researchImageUrl = new URL("./assets/research-stage.png", import.meta.url).href;
+const analysisImageUrl = new URL("./assets/analysis-stage.png", import.meta.url).href;
+const iterationsImageUrl = new URL("./assets/iterations-stage.png", import.meta.url).href;
 const PROCESS_CARDS = [
   {
     title: "Design Depth Across Every Stage",
@@ -712,89 +717,16 @@ function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
   );
 }
 
-const PROCESS_WHEEL_DEBOUNCE_MS = 450;
-const PROCESS_WHEEL_DELTA_THRESHOLD = 40;
-
 function ProcessSection() {
   const totalCards = PROCESS_CARDS.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const outerRef = useRef(null);
-  const currentIndexRef = useRef(0);
-  const isSectionActiveRef = useRef(false);
-  const isScrollingRef = useRef(false);
-
-  useEffect(() => {
-    currentIndexRef.current = currentIndex;
-  }, [currentIndex]);
-
-  useEffect(() => {
-    const root = outerRef.current;
-    if (!root) return;
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        isSectionActiveRef.current = entry.intersectionRatio >= 0.6;
-      },
-      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }
-    );
-    io.observe(root);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const el = outerRef.current;
-    if (!el) return;
-
-    const onWheel = (e) => {
-      if (!isSectionActiveRef.current) return;
-
-      const idx = currentIndexRef.current;
-      const delta = e.deltaY;
-
-      if (isScrollingRef.current) {
-        e.preventDefault();
-        return;
-      }
-
-      if (Math.abs(delta) < PROCESS_WHEEL_DELTA_THRESHOLD) {
-        if (
-          (delta > 0 && idx < totalCards - 1) ||
-          (delta < 0 && idx > 0)
-        ) {
-          e.preventDefault();
-        }
-        return;
-      }
-
-      if (delta > 0) {
-        if (idx < totalCards - 1) {
-          e.preventDefault();
-          isScrollingRef.current = true;
-          setCurrentIndex((i) => i + 1);
-          setTimeout(() => {
-            isScrollingRef.current = false;
-          }, PROCESS_WHEEL_DEBOUNCE_MS);
-        }
-        return;
-      }
-
-      if (delta < 0 && idx > 0) {
-        e.preventDefault();
-        isScrollingRef.current = true;
-        setCurrentIndex((i) => i - 1);
-        setTimeout(() => {
-          isScrollingRef.current = false;
-        }, PROCESS_WHEEL_DEBOUNCE_MS);
-      }
-    };
-
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [totalCards]);
+  const advanceCard = () => {
+    setCurrentIndex((i) => (i + 1) % totalCards);
+  };
 
   return (
-    <div ref={outerRef} className="w-full">
+    <div className="w-full">
       <section
         className="sticky top-0 flex w-full min-h-0 flex-col overflow-hidden bg-white"
         aria-labelledby="process-section-heading"
@@ -814,9 +746,17 @@ function ProcessSection() {
             </p>
 
             <div
-              className="process-section-stack relative mx-auto mt-[37px] h-[579px] w-[1120px] overflow-hidden rounded-[24px]"
-              role="region"
-              aria-label={`Process stages. Scroll to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
+              className="process-section-stack relative mx-auto mt-[37px] h-[579px] w-[1120px] cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+              role="button"
+              tabIndex={0}
+              aria-label={`Process stages. Click to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
+              onClick={advanceCard}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  advanceCard();
+                }
+              }}
             >
               {Array.from({ length: totalCards }, (_, slot) => {
                 const cardIndex = (currentIndex + slot) % totalCards;
@@ -971,7 +911,7 @@ function TestimonialsSection() {
   const goNext = () => setCurrentIndex((i) => (i + 1) % n);
 
   return (
-    <section className="w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:pt-8">
+    <section className="relative z-10 w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:-mt-[440px] min-[1281px]:pt-8">
       {/* Below lg: fluid carousel — no absolute overlap */}
       <div className="flex min-w-0 flex-col items-center gap-6 lg:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
@@ -1039,7 +979,7 @@ function TestimonialsSection() {
       </p>
 
       {/* Layer 1: Light blue background (#a2e6fe, 20% opacity) */}
-      <div className="absolute left-[82px] top-[256px] h-[702px] w-[1118px] bg-teal-light opacity-20" />
+      <div className="absolute left-[82px] top-[256px] h-[702px] w-[1118px] rounded-[24px] bg-teal-light opacity-20" />
 
       {/* Layer 2: Banner / curved cover shape */}
       <div className="absolute left-[81px] top-[256px] h-[443px] w-[1120px]">
@@ -1130,9 +1070,6 @@ function TestimonialsSection() {
           <path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4v2z" fill="#1c1f24" />
         </svg>
       </button>
-
-      {/* Bottom divider */}
-      <div className="absolute left-1/2 top-[958px] h-px w-[1120px] -translate-x-1/2 rounded-[14px] bg-dark/20 opacity-50" />
     </section>
     </ScaledArtboard>
     </div>

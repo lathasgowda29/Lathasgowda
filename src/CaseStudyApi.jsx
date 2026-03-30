@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import logoUrl from "./assets/logo.svg";
+import heroLaptopMockup from "./assets/case-study-api/hero-laptop-mockup.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
 import {
   SITE_BELOW_FOLD_COLUMN,
   SITE_BELOW_FOLD_INSET,
 } from "./components/siteBelowFoldLayout";
-
-const heroLaptopMockup =
-  "https://www.figma.com/api/mcp/asset/2777c8ab-6072-44c0-9ec0-b451d62d43cc";
 
 function Navbar() {
   return (
