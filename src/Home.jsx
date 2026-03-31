@@ -911,7 +911,7 @@ function TestimonialsSection() {
   const goNext = () => setCurrentIndex((i) => (i + 1) % n);
 
   return (
-    <section className="relative z-10 w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:-mt-[440px] min-[1281px]:pt-8">
+    <section className="relative z-10 w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:pt-[80px]">
       {/* Below lg: fluid carousel — no absolute overlap */}
       <div className="flex min-w-0 flex-col items-center gap-6 lg:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
