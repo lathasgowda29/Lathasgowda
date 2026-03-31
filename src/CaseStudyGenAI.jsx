@@ -68,7 +68,7 @@ function Navbar() {
           About me
         </Link>
         <a
-          href="mailto:lathalaav6@gmail.com"
+          href="mailto:lathasgowda29@gmail.com"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Contact
@@ -612,7 +612,7 @@ export default function CaseStudyGenAI() {
               High-level requirements
             </p>
             <h2 className="font-geist text-[34px] font-semibold leading-[44px]">
-              What Worked and What didnt
+              What Worked and What Didnt
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
               Iteration 2 unlocked flexibility and control, enabling deeper AI

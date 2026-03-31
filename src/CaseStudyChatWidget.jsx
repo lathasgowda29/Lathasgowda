@@ -55,7 +55,7 @@ function Navbar() {
           About me
         </Link>
         <a
-          href="mailto:lathalaav6@gmail.com"
+          href="mailto:lathasgowda29@gmail.com"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
         >
           Contact

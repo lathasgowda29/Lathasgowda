@@ -37,7 +37,7 @@ function Navbar() {
           About me
         </Link>
         <a
-          href="mailto:lathalaav6@gmail.com"
+          href="mailto:lathasgowda29@gmail.com"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
         >
           Contact
@@ -87,7 +87,7 @@ function AboutHeroSection() {
           </p>
         </div>
         <a
-          href="mailto:lathalaav6@gmail.com"
+          href="mailto:lathasgowda29@gmail.com"
           className="mt-2 w-fit rounded-[14px] bg-teal px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] transition-colors duration-200 hover:bg-teal-dark"
         >
           Lets connect
@@ -103,7 +103,7 @@ function DesignJourneySection() {
       {/* Left: Intro text */}
       <div className="w-full min-w-0 shrink-0 lg:w-[300px]">
         <h2 className="font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
-          Design Journey at Yellow.ai
+          My Growth as a Product Designer
         </h2>
         <p className="mt-5 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
           Over the past 4+ years at Yellow.ai, I&apos;ve grown from a design intern

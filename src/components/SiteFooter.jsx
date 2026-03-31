@@ -25,7 +25,7 @@ export default function SiteFooter() {
                 className="h-6 w-6 transition-all duration-200 group-hover:[filter:brightness(0)_saturate(100%)]"
               />
             </a>
-            <a href="mailto:lathalaav6@gmail.com" className="group">
+            <a href="mailto:lathasgowda29@gmail.com" className="group">
               <img
                 src={footerIconEmail}
                 alt="Email"

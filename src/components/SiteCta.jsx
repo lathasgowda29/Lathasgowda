@@ -10,7 +10,7 @@ export default function SiteCta() {
           that align with your goals and deliver real results.
         </p>
         <a
-          href="mailto:lathalaav6@gmail.com"
+          href="mailto:lathasgowda29@gmail.com"
           className="mt-6 w-fit rounded-[14px] bg-teal px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-white shadow-[0px_1px_2px_0px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] transition-colors duration-200 hover:bg-teal-dark"
         >
           Contact me
