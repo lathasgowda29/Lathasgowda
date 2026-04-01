@@ -231,7 +231,7 @@ function AboutAchievementCardsSection() {
     <section className="mx-auto w-full max-w-[1280px] px-4 pb-16 pt-8">
       <div className="flex flex-col gap-8 lg:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
-          My journey at yellow
+          Recognition Along the Way
         </h2>
         <p className="mx-auto max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
           Designing the future of intelligent experiences. In just three years at
@@ -264,7 +264,7 @@ function AboutAchievementCardsSection() {
     <section className="relative mx-auto h-[960px] w-[1280px] min-w-[1280px] shrink-0 overflow-hidden px-4">
       {/* Title — same layout as Home JourneySection */}
       <h2 className="absolute left-1/2 top-[85px] w-[464px] max-w-[calc(100%-32px)] -translate-x-1/2 text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
-        My journey at yellow
+        Recognition Along the Way
       </h2>
 
       {/* Subtitle */}

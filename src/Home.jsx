@@ -717,11 +717,50 @@ function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
   );
 }
 
+function ProcessStepNavArrow({ direction, label, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="flex size-8 shrink-0 items-center justify-center rounded-full text-[#5c5c5c] transition-colors hover:text-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+    >
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        {direction === "prev" ? (
+          <path
+            d="M12.5 15L7.5 10L12.5 5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        ) : (
+          <path
+            d="M7.5 15L12.5 10L7.5 5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        )}
+      </svg>
+    </button>
+  );
+}
+
 function ProcessSection() {
   const totalCards = PROCESS_CARDS.length;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const advanceCard = () => {
+    setCurrentIndex((i) => (i + 1) % totalCards);
+  };
+
+  const goPrev = () => {
+    setCurrentIndex((i) => (i - 1 + totalCards) % totalCards);
+  };
+
+  const goNext = () => {
     setCurrentIndex((i) => (i + 1) % totalCards);
   };
 
@@ -745,38 +784,54 @@ function ProcessSection() {
               success.
             </p>
 
-            <div
-              className="process-section-stack relative mx-auto mt-[37px] h-[579px] w-[1120px] cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
-              role="button"
-              tabIndex={0}
-              aria-label={`Process stages. Click to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
-              onClick={advanceCard}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  advanceCard();
-                }
-              }}
-            >
-              {Array.from({ length: totalCards }, (_, slot) => {
-                const cardIndex = (currentIndex + slot) % totalCards;
-                const spec = PROCESS_STACK_LAYER_SPECS[slot];
-                if (!spec) return null;
-                const z = 10 + (totalCards - 1 - slot);
-                return (
-                  <div
-                    key={slot}
-                    className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
-                    style={{
-                      zIndex: z,
-                      transform: `translateY(${spec.y}px) scale(${spec.scale})`,
-                      opacity: spec.opacity,
-                    }}
-                  >
-                    <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
-                  </div>
-                );
-              })}
+            <div className="relative mx-auto mt-[37px] w-[1120px]">
+              <div
+                className="process-section-stack relative h-[579px] w-full cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                role="button"
+                tabIndex={0}
+                aria-label={`Process stages. Click to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
+                onClick={advanceCard}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    advanceCard();
+                  }
+                }}
+              >
+                {Array.from({ length: totalCards }, (_, slot) => {
+                  const cardIndex = (currentIndex + slot) % totalCards;
+                  const spec = PROCESS_STACK_LAYER_SPECS[slot];
+                  if (!spec) return null;
+                  const z = 10 + (totalCards - 1 - slot);
+                  return (
+                    <div
+                      key={slot}
+                      className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
+                      style={{
+                        zIndex: z,
+                        transform: `translateY(${spec.y}px) scale(${spec.scale})`,
+                        opacity: spec.opacity,
+                      }}
+                    >
+                      <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <nav
+                className="mt-6 flex items-center justify-center gap-10"
+                aria-label="Process stage"
+              >
+                <ProcessStepNavArrow direction="prev" label="Previous process stage" onClick={goPrev} />
+                <span
+                  aria-live="polite"
+                  className="min-w-[3ch] text-center font-source-sans text-lg font-normal tabular-nums leading-6 tracking-[0.5px] text-[#5c5c5c]"
+                >
+                  {currentIndex + 1}/{totalCards}
+                </span>
+                <ProcessStepNavArrow direction="next" label="Next process stage" onClick={goNext} />
+              </nav>
             </div>
 
             {/* Divider */}
@@ -1178,7 +1233,7 @@ function JourneySection() {
     <section className="w-full pb-16 pt-8">
       <div className="flex flex-col gap-8 lg:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
-          My journey at yellow
+          Recognition Along the Way
         </h2>
         <p className="mx-auto max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
           Designing the future of intelligent experiences. In just three years at
@@ -1212,7 +1267,7 @@ function JourneySection() {
     <section className="relative mx-auto h-[960px] w-[1280px] overflow-hidden">
       {/* Title */}
       <h2 className="absolute left-1/2 top-[85px] w-[464px] -translate-x-1/2 text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
-        My journey at yellow
+        Recognition Along the Way
       </h2>
 
       {/* Subtitle */}

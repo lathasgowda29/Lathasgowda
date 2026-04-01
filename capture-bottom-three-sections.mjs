@@ -14,10 +14,10 @@ await page.goto(url, { waitUntil: 'networkidle' });
 const scrollHeight = await page.evaluate(() => document.body.scrollHeight);
 console.log('Page height:', scrollHeight);
 
-// 1. Scroll to "My journey at yellow" section
+// 1. Scroll to "Recognition Along the Way" section
 await page.evaluate(() => {
   const h2 = Array.from(document.querySelectorAll('h2')).find(el =>
-    el.textContent?.includes('My journey at yellow')
+    el.textContent?.includes('Recognition Along the Way')
   );
   if (h2) h2.scrollIntoView({ block: 'start', behavior: 'instant' });
 });
