@@ -44,7 +44,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1L2ZGZBn7_6yacnqIOsvGNcfyzIT0khTx/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark lg:ml-auto">
+      <a href="https://drive.google.com/file/d/1uhROOXhPEPmMczltlfSV2KBYO5bgUZOm/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark lg:ml-auto">
         Resume
       </a>
     </nav>
@@ -75,7 +75,7 @@ function AboutHeroSection() {
         </div>
         <div className="flex flex-col gap-4 font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
           <p>
-            I'm a Senior Product Designer at Yellow.ai with over 4+ years of
+            I'm a Senior Product Designer at Yellow.ai with over 5+ years of
             experience designing user-centered digital products. I focus on
             creating experiences that are functional, scalable, and visually
             refined.
@@ -106,7 +106,7 @@ function DesignJourneySection() {
           My Growth as a Product Designer
         </h2>
         <p className="mt-5 font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
-          Over the past 4+ years at Yellow.ai, I&apos;ve grown from a design intern
+          Over the past 5+ years at Yellow.ai, I&apos;ve grown from a design intern
           to a Senior Product Designer. This journey has shaped how I approach
           complex product challenges, collaborate with teams, and design
           scalable user experiences.
