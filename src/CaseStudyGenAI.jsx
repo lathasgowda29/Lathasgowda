@@ -1057,7 +1057,7 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Evolution of the AI Builder */}
-      <section className="layout-shell px-4 pb-[80px]">
+      <section className="evolution-ai-builder-section layout-shell px-4 pb-[80px]">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Evolution of the AI Builder - Learning, Iterating,
@@ -1065,8 +1065,8 @@ export default function CaseStudyGenAI() {
             Improving
           </h2>
 
-          {/* Timeline chevrons */}
-          <div className="mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 xl:flex-nowrap xl:gap-y-0">
+          {/* Timeline chevrons — lg–xl: see index.css .evolution-chevrons-row; xl+: unchanged */}
+          <div className="evolution-chevrons-row mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 xl:flex-nowrap xl:gap-y-0">
             {/* Chevron 1: AI Within the Flow */}
             <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden xl:mr-[-40px]">
               <svg
