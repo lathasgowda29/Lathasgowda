@@ -121,7 +121,7 @@ function CaseStudyResearchSection() {
           <img
             src={researchRight}
             alt="User research"
-            className="h-full w-full object-cover max-[1199px]:relative max-[1199px]:left-0 max-[1199px]:w-full min-[1200px]:absolute min-[1200px]:left-[-47.76%] min-[1200px]:top-0 min-[1200px]:h-full min-[1200px]:w-[147.76%] min-[1200px]:max-w-none min-[1200px]:object-cover"
+            className="absolute left-[-47.76%] top-0 h-full w-[147.76%] max-w-none object-cover"
           />
         </div>
       </div>

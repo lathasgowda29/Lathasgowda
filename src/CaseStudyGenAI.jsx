@@ -1057,7 +1057,7 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Evolution of the AI Builder */}
-      <section className="evolution-ai-builder-section layout-shell px-4 pb-[80px]">
+      <section className="layout-shell px-4 pb-[80px] lg:max-xl:overflow-x-hidden">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Evolution of the AI Builder - Learning, Iterating,
@@ -1065,10 +1065,10 @@ export default function CaseStudyGenAI() {
             Improving
           </h2>
 
-          {/* Timeline chevrons — lg–xl: see index.css .evolution-chevrons-row; xl+: unchanged */}
-          <div className="evolution-chevrons-row mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 xl:flex-nowrap xl:gap-y-0">
+          {/* Timeline chevrons — lg–xl (~1024–1279px): single row, scaled to ≤900px total width */}
+          <div className="evolution-chevrons-row mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 lg:max-xl:flex-nowrap lg:max-xl:justify-center lg:max-xl:gap-y-0 xl:flex-nowrap xl:gap-y-0">
             {/* Chevron 1: AI Within the Flow */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden xl:mr-[-40px]">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1086,18 +1086,18 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px]">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-black">
+              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-black lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   AI Within the Flow
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-black/80">
+                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-black/80 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   Experimental. Promising. Constrained.
                 </p>
               </div>
             </div>
 
             {/* Chevron 2: Expanding the Canvas */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden xl:mr-[-40px]">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1115,18 +1115,18 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px]">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white">
+              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   Expanding the Canvas
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white">
+                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   More Power. More Space. More Confusion
                 </p>
               </div>
             </div>
 
             {/* Chevron 3: User-Aligned AI Builder */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden">
+            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1144,11 +1144,11 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px]">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white">
+              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   User-Aligned AI Builder
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white/90">
+                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white/90 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   Structured. Guided. Reliable.
                 </p>
               </div>
