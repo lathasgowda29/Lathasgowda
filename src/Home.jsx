@@ -1,6 +1,5 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logoUrl from "./assets/logo.svg";
 import caseStudyCardWebWidget from "./assets/case-study-card-web-widget.png";
 import caseStudyCardApiConfig from "./assets/case-study-card-api-config.png";
 import caseStudyCardGenAi from "./assets/case-study-card-gen-ai.png";
@@ -16,9 +15,9 @@ import gradientCard8 from "./assets/gradient-card-8.png";
 import gradientCard9 from "./assets/gradient-card-9.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
+import SiteNav from "./components/SiteNav";
 import {
   SITE_BELOW_FOLD_COLUMN,
-  SITE_BELOW_FOLD_INSET,
 } from "./components/siteBelowFoldLayout";
 
 /**
@@ -119,55 +118,9 @@ function ScaledCenteredSection({ designWidth, children, className = '' }) {
   );
 }
 
-function Navbar() {
-  return (
-    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
-      <Link to="/">
-        <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
-      </Link>
-
-      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
-        <a
-          href="#"
-          className="px-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-teal transition-opacity duration-200 hover:opacity-80"
-        >
-          Home
-        </a>
-        <a
-          href="#case-studies"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById("case-studies")?.scrollIntoView({ behavior: "smooth" });
-            window.history.replaceState(null, "", "/#case-studies");
-          }}
-        >
-          Case studies
-        </a>
-        <Link
-          to="/case-studies/about-me"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
-        >
-          About me
-        </Link>
-        <a
-          href="mailto:lathasgowda29@gmail.com"
-          className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark transition-opacity duration-200 hover:opacity-80"
-        >
-          Contact
-        </a>
-      </div>
-
-      <a href="https://drive.google.com/file/d/1uhROOXhPEPmMczltlfSV2KBYO5bgUZOm/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark transition-colors duration-200 hover:border-2 hover:border-teal lg:ml-auto">
-        Resume
-      </a>
-    </nav>
-  );
-}
-
 function AnnouncementBanner() {
   return (
-    <div className="mx-auto flex min-h-9 w-full max-w-[518px] flex-col items-start gap-2 rounded-[14px] border border-teal bg-warm-white px-4 py-2 lg:flex-row lg:items-center lg:gap-6 lg:py-0">
+    <div className="mx-auto flex min-h-9 w-full max-w-[518px] flex-col items-start gap-2 rounded-[14px] border border-teal bg-warm-white px-4 py-2 md:max-w-[510px] md:flex-row md:items-center md:gap-4 md:py-0 lg:max-w-[518px] lg:gap-6">
       <span className="min-w-0 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark">
         New AI Bot Builder cut build time and boosted $15M ARR
       </span>
@@ -364,18 +317,18 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
   };
 
   const textContent = (
-    <div className={`flex min-w-0 flex-col ${gap} ${textSide === "left" ? "w-full max-w-[528px] md:w-[528px]" : "w-full max-w-[432px] md:w-[432px]"}`}>
-      <h3 className="font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
+    <div className={`flex min-w-0 flex-col ${gap} md:gap-2 ${gap.replace("gap-", "lg:gap-")} ${textSide === "left" ? "w-full max-w-[528px] md:max-w-none lg:w-[528px]" : "w-full max-w-[432px] md:max-w-none lg:w-[432px]"}`}>
+      <h3 className="font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark md:text-[17px] md:leading-6 lg:text-[20px] lg:leading-7">
         {title}
       </h3>
-      <p className="font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+      <p className="font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark md:text-[14px] md:leading-5 lg:text-base lg:leading-6">
         {description}
       </p>
     </div>
   );
 
   const imagePlaceholder = (
-    <div className="h-[200px] w-full max-w-[428px] shrink-0 overflow-hidden rounded-[24px] bg-white sm:h-[280px] md:h-[374px] md:w-[428px]">
+    <div className="home-case-study-card__image h-[265px] w-full max-w-[428px] shrink-0 overflow-hidden rounded-[24px] bg-white sm:h-[280px] md:h-[260px] md:w-[300px] md:rounded-[16px] lg:h-[374px] lg:w-[428px] lg:rounded-[24px]">
       {imageSrc ? (
         <img src={imageSrc} alt="" className="h-full w-full object-cover" />
       ) : null}
@@ -384,13 +337,13 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
 
   const cardContent = textSide === "left" ? (
     <>
-      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 pt-2 md:order-1 md:w-auto md:pl-[64px] md:pr-[28px] md:pb-0 md:pt-0">{textContent}</div>
-      <div className="order-1 flex justify-center px-4 pt-4 md:order-2 md:ml-auto md:pr-2 md:pt-0">{imagePlaceholder}</div>
+      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 pt-5 md:order-1 md:items-center md:px-4 md:pb-0 md:pt-0 lg:w-auto lg:pl-[64px] lg:pr-[28px] lg:pb-0 lg:pt-0">{textContent}</div>
+      <div className="order-1 flex justify-center px-4 pt-4 md:order-2 md:pt-0 md:ml-auto lg:ml-auto lg:pr-2">{imagePlaceholder}</div>
     </>
   ) : (
     <>
-      <div className="order-1 flex justify-center px-4 pt-4 md:pl-2 md:pt-0">{imagePlaceholder}</div>
-      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 md:pl-[64px] md:pr-[64px] md:pb-0">{textContent}</div>
+      <div className="order-1 flex justify-center px-4 pt-4 md:pt-0 lg:pl-2">{imagePlaceholder}</div>
+      <div className="order-2 flex w-full min-w-0 justify-center px-4 pb-8 pt-5 md:items-center md:px-4 md:pb-0 md:pt-0 lg:pl-[64px] lg:pr-[64px] lg:pb-0">{textContent}</div>
     </>
   );
 
@@ -420,7 +373,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
               setShowPasswordModal(true);
             }
           }}
-          className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)] lg:h-[390px] lg:flex-row lg:items-center ${bg}`}
+          className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)] md:flex-row md:items-center md:min-h-0 md:py-2 md:max-w-[864px] lg:h-[390px] lg:flex-row lg:items-center lg:py-0 lg:max-w-[1120px] ${bg}`}
         >
           {cardContent}
         </Link>
@@ -438,7 +391,7 @@ function CaseStudyCard({ bg, title, description, textSide = "left", gap = "gap-4
   return (
     <div
       role={comingSoon ? "presentation" : undefined}
-      className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] lg:h-[390px] lg:flex-row lg:items-center ${comingSoon ? "cursor-not-allowed transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)]" : ""} ${bg}`}
+      className={`mx-auto flex h-auto min-h-[390px] w-full max-w-[1120px] flex-col items-stretch rounded-[24px] shadow-[0px_0px_2px_0px_rgba(0,0,0,0.3)] md:flex-row md:items-center md:min-h-0 md:py-2 md:max-w-[864px] lg:h-[390px] lg:flex-row lg:items-center lg:py-0 lg:max-w-[1120px] ${comingSoon ? "cursor-not-allowed transition-shadow duration-200 hover:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.2)]" : ""} ${bg}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -598,6 +551,27 @@ function processMainCardBg(card) {
   return card.mainCardBg || (card.useTealBg ? "#093B48" : "#031418");
 }
 
+function processDeckBackLayerColors(card) {
+  const c = card;
+  return [
+    c.useIterationsBg ? "#093B48" : c.useImplementBg ? "#0F6378" : c.useTealBg ? "#A2E6FE" : "#A2E6FE",
+    c.useIterationsBg ? "#0F6378" : c.useImplementBg ? "#031418" : c.useTealBg ? "#5EA2B9" : "#5EA2B9",
+    c.useIterationsBg ? "#031418" : c.useImplementBg ? "#A2E6FE" : c.useTealBg ? "#0F6378" : "#0F6378",
+    c.useIterationsBg ? "#A2E6FE" : c.useImplementBg ? "#5EA2B9" : c.useTealBg ? "#093B48" : "#093B48",
+  ];
+}
+
+function processMobileImageFrameClass(card) {
+  if (!card.useTealBg) return "bg-[#113b43]";
+  if (card.layout === "imageRight") {
+    return card.imageContainerBg === "teal-mid" ? "bg-teal-mid" : "bg-teal";
+  }
+  if (card.imageContainerBg === "teal-mid") return "bg-teal-mid";
+  if (card.imageContainerBg === "teal") return "bg-teal";
+  if (card.imageContainerBg === "teal-light") return "bg-teal-light";
+  return "bg-teal-dark";
+}
+
 /** Desktop 1120×515 card interior — used in scroll-linked dual layers */
 function ProcessDesktopCardFace({ card }) {
   if (card.layout === "imageRight") {
@@ -635,7 +609,21 @@ function ProcessDesktopCardFace({ card }) {
 }
 
 const PROCESS_STACK_GAP_PX = 12;
-const PROCESS_STACK_GAP_MOBILE_PX = 8;
+
+/** Mobile process card — Figma node 1106:9831 */
+const MOBILE_PROCESS_CARD_W = 357;
+const MOBILE_PROCESS_DECK_H = 579;
+const MOBILE_PROCESS_IMG_W = 283;
+const MOBILE_PROCESS_IMG_H = 226;
+const MOBILE_PROCESS_IMAGE_FRAME_H = 268;
+const MOBILE_PROCESS_IMAGE_FRAME_W = 341;
+const MOBILE_PROCESS_TEXT_MAX_W = 325;
+const MOBILE_PROCESS_BACK_LAYERS = [
+  { left: 64, top: 66, width: 229, height: 513 },
+  { left: 48, top: 92, width: 261, height: 471 },
+  { left: 32, top: 60, width: 293, height: 487 },
+  { left: 16, top: 30, width: 325, height: 501 },
+];
 
 /**
  * Stacked deck per slot (0 = top / active). Replace with Inspect values from Figma node 2:58628
@@ -678,40 +666,70 @@ function ProcessDeckLayer({ card }) {
   );
 }
 
-function ProcessMobileStackedCard({ card, stackIndex, gapPx, slideIn }) {
-  const yOff = -stackIndex * gapPx;
-  const style =
-    slideIn && stackIndex > 0
-      ? { zIndex: stackIndex + 1, ["--stack-y"]: `${yOff}px` }
-      : { zIndex: stackIndex + 1, transform: `translateY(${yOff}px)` };
+function ProcessMobileCardFace({ card, textMinHeight }) {
+  const imgCover =
+    card.useTealBg &&
+    (card.layout === "imageRight" ||
+      card.imageContainerBg === "teal" ||
+      card.imageContainerBg === "teal-mid" ||
+      card.imageContainerBg === "teal-light");
+
   return (
-    <div
-      className={`absolute inset-x-0 bottom-0 mx-auto w-full max-w-[1120px] overflow-hidden rounded-[24px] will-change-transform ${slideIn && stackIndex > 0 ? "process-stack-slide-in" : ""}`}
-      style={style}
-    >
-      <div className="absolute inset-0 rounded-[24px]" style={{ backgroundColor: processMainCardBg(card) }} />
-      <div className="relative z-10 flex flex-col gap-6 p-6">
-        {card.layout === "imageRight" ? (
-          <>
-            <div className="h-[200px] w-full min-w-0 overflow-hidden rounded-[16px] sm:h-[240px]">
-              <img src={card.image} alt="" className="h-full w-full object-cover" />
-            </div>
-            <div className="flex min-w-0 flex-col gap-3 text-white">
-              <h3 className="font-geist text-[20px] font-semibold leading-7 md:text-[24px]">{card.title}</h3>
-              <p className="font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] md:text-[18px]">{card.description}</p>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="h-[200px] w-full min-w-0 overflow-hidden rounded-[16px] sm:h-[240px]">
-              <img src={card.image} alt="" className="h-full w-full object-cover" />
-            </div>
-            <div className="flex min-w-0 flex-col gap-3 text-white">
-              <h3 className="font-geist text-[20px] font-semibold leading-7 md:text-[24px]">{card.title}</h3>
-              <p className="font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] md:text-[18px]">{card.description}</p>
-            </div>
-          </>
-        )}
+    <div className="relative z-10 flex flex-col items-center px-4 pb-6 pt-2">
+      <div
+        className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[24px] ${processMobileImageFrameClass(card)}`}
+        style={{ width: MOBILE_PROCESS_IMAGE_FRAME_W, height: MOBILE_PROCESS_IMAGE_FRAME_H }}
+      >
+        <div
+          className="relative overflow-hidden"
+          style={{ width: MOBILE_PROCESS_IMG_W, height: MOBILE_PROCESS_IMG_H }}
+        >
+          <img
+            src={card.image}
+            alt={card.imageAlt}
+            className={
+              imgCover ? "h-full w-full object-cover object-center" : "h-full w-full object-contain object-center"
+            }
+          />
+        </div>
+      </div>
+      <div
+        className="mt-7 flex w-full flex-col items-center gap-3 text-center text-white"
+        style={{
+          maxWidth: MOBILE_PROCESS_TEXT_MAX_W,
+          minHeight: textMinHeight ?? undefined,
+        }}
+      >
+        <h3 className="font-geist text-[24px] font-semibold leading-7">{card.title}</h3>
+        <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">{card.description}</p>
+      </div>
+    </div>
+  );
+}
+
+function ProcessMobileDeckLayer({ card, textMinHeight }) {
+  const colors = processDeckBackLayerColors(card);
+  return (
+    <div className="relative shrink-0" style={{ width: MOBILE_PROCESS_CARD_W, height: MOBILE_PROCESS_DECK_H }}>
+      {MOBILE_PROCESS_BACK_LAYERS.map((rect, i) => (
+        <div
+          key={i}
+          className="absolute rounded-[24px]"
+          style={{
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height,
+            backgroundColor: colors[i],
+          }}
+        />
+      ))}
+      <div
+        className="relative z-10 overflow-hidden rounded-[24px]"
+        style={{ width: MOBILE_PROCESS_CARD_W, height: 513 }}
+      >
+        <div className="absolute inset-0 rounded-[24px]" style={{ backgroundColor: processMainCardBg(card) }} />
+        <ProcessMobileCardFace card={card} textMinHeight={textMinHeight} />
       </div>
     </div>
   );
@@ -751,6 +769,18 @@ function ProcessStepNavArrow({ direction, label, onClick }) {
 function ProcessSection() {
   const totalCards = PROCESS_CARDS.length;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const mobileProcessTextMeasureRef = useRef(null);
+  const [mobileProcessTextMinH, setMobileProcessTextMinH] = useState(null);
+
+  useLayoutEffect(() => {
+    const root = mobileProcessTextMeasureRef.current;
+    if (!root) return;
+    let max = 0;
+    for (const child of root.children) {
+      max = Math.max(max, child.offsetHeight);
+    }
+    if (max > 0) setMobileProcessTextMinH(max);
+  }, []);
 
   const advanceCard = () => {
     setCurrentIndex((i) => (i + 1) % totalCards);
@@ -764,80 +794,154 @@ function ProcessSection() {
     setCurrentIndex((i) => (i + 1) % totalCards);
   };
 
+  const stackInteractive = {
+    role: "button",
+    tabIndex: 0,
+    "aria-label": `Process stages. Click to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`,
+    onClick: advanceCard,
+    onKeyDown: (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        advanceCard();
+      }
+    },
+  };
+
   return (
     <div className="w-full">
       <section
         className="sticky top-0 flex w-full min-h-0 flex-col overflow-hidden bg-white"
-        aria-labelledby="process-section-heading"
+        aria-labelledby="process-section-heading process-section-heading-md"
       >
-        <ScaledCenteredSection designWidth={PROCESS_SECTION_DESIGN_WIDTH}>
-          <section className="mx-auto w-[1280px] pt-[126px]">
-            <h2
-              id="process-section-heading"
-              className="mx-auto w-[532px] text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark"
-            >
-              How Great Products Take Shape
-            </h2>
-            <p className="mx-auto mt-4 w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
-              Behind every great product is a thoughtful process that blends research,
-              strategy, and design to solve real user problems and drive business
-              success.
-            </p>
+        <div className="md:hidden w-full pt-[80px]">
+          <h2
+            id="process-section-heading"
+            className="mx-auto max-w-[532px] px-4 text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]"
+          >
+            How Great Products Take Shape
+          </h2>
+          <p className="mx-auto mt-4 max-w-[624px] px-4 text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+            Behind every great product is a thoughtful process that blends research,
+            strategy, and design to solve real user problems and drive business
+            success.
+          </p>
 
-            <div className="relative mx-auto mt-[37px] w-[1120px]">
-              <div
-                className="process-section-stack relative h-[579px] w-full cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
-                role="button"
-                tabIndex={0}
-                aria-label={`Process stages. Click to change cards. Showing ${PROCESS_CARDS[currentIndex].title}.`}
-                onClick={advanceCard}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    advanceCard();
-                  }
-                }}
+          <div
+            ref={mobileProcessTextMeasureRef}
+            className="pointer-events-none fixed left-0 top-0 -z-50 opacity-0"
+            aria-hidden
+            style={{ width: MOBILE_PROCESS_TEXT_MAX_W }}
+          >
+            {PROCESS_CARDS.map((c) => (
+              <div key={`mpt-${c.title}`} className="flex flex-col items-center gap-3 text-center text-white">
+                <h3 className="font-geist text-[24px] font-semibold leading-7">{c.title}</h3>
+                <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">{c.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative mx-auto mt-[37px] flex w-full justify-center overflow-x-auto px-4">
+            <div
+              className="process-section-stack relative h-[579px] w-[357px] shrink-0 cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+              {...stackInteractive}
+            >
+              {Array.from({ length: totalCards }, (_, slot) => {
+                const cardIndex = (currentIndex + slot) % totalCards;
+                const spec = PROCESS_STACK_LAYER_SPECS[slot];
+                if (!spec) return null;
+                const z = 10 + (totalCards - 1 - slot);
+                return (
+                  <div
+                    key={slot}
+                    className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[357px] origin-top will-change-transform"
+                    style={{
+                      zIndex: z,
+                      transform: `translateY(${spec.y}px) scale(${spec.scale})`,
+                      opacity: spec.opacity,
+                    }}
+                  >
+                    <ProcessMobileDeckLayer card={PROCESS_CARDS[cardIndex]} textMinHeight={mobileProcessTextMinH} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <nav className="mt-6 flex items-center justify-center gap-10 px-4" aria-label="Process stage">
+            <ProcessStepNavArrow direction="prev" label="Previous process stage" onClick={goPrev} />
+            <span
+              aria-live="polite"
+              className="min-w-[3ch] text-center font-source-sans text-lg font-normal tabular-nums leading-6 tracking-[0.5px] text-[#5c5c5c]"
+            >
+              {currentIndex + 1}/{totalCards}
+            </span>
+            <ProcessStepNavArrow direction="next" label="Next process stage" onClick={goNext} />
+          </nav>
+
+          <div className="mx-auto mt-10 h-px w-full max-w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+        </div>
+
+        <div className="hidden md:block">
+          <ScaledCenteredSection designWidth={PROCESS_SECTION_DESIGN_WIDTH}>
+            <section className="mx-auto w-[1280px] pt-[126px]">
+              <h2
+                id="process-section-heading-md"
+                className="mx-auto w-[532px] text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]"
               >
-                {Array.from({ length: totalCards }, (_, slot) => {
-                  const cardIndex = (currentIndex + slot) % totalCards;
-                  const spec = PROCESS_STACK_LAYER_SPECS[slot];
-                  if (!spec) return null;
-                  const z = 10 + (totalCards - 1 - slot);
-                  return (
-                    <div
-                      key={slot}
-                      className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
-                      style={{
-                        zIndex: z,
-                        transform: `translateY(${spec.y}px) scale(${spec.scale})`,
-                        opacity: spec.opacity,
-                      }}
-                    >
-                      <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
-                    </div>
-                  );
-                })}
+                How Great Products Take Shape
+              </h2>
+              <p className="mx-auto mt-4 max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+                Behind every great product is a thoughtful process that blends research,
+                strategy, and design to solve real user problems and drive business
+                success.
+              </p>
+
+              <div className="relative mx-auto mt-[37px] w-[1120px]">
+                <div
+                  className="process-section-stack relative h-[579px] w-full cursor-pointer overflow-hidden rounded-[24px] outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
+                  {...stackInteractive}
+                >
+                  {Array.from({ length: totalCards }, (_, slot) => {
+                    const cardIndex = (currentIndex + slot) % totalCards;
+                    const spec = PROCESS_STACK_LAYER_SPECS[slot];
+                    if (!spec) return null;
+                    const z = 10 + (totalCards - 1 - slot);
+                    return (
+                      <div
+                        key={slot}
+                        className="process-stack-layer pointer-events-none absolute left-0 top-0 h-[579px] w-[1120px] origin-top will-change-transform"
+                        style={{
+                          zIndex: z,
+                          transform: `translateY(${spec.y}px) scale(${spec.scale})`,
+                          opacity: spec.opacity,
+                        }}
+                      >
+                        <ProcessDeckLayer card={PROCESS_CARDS[cardIndex]} />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <nav
+                  className="mt-6 flex items-center justify-center gap-10"
+                  aria-label="Process stage"
+                >
+                  <ProcessStepNavArrow direction="prev" label="Previous process stage" onClick={goPrev} />
+                  <span
+                    aria-live="polite"
+                    className="min-w-[3ch] text-center font-source-sans text-lg font-normal tabular-nums leading-6 tracking-[0.5px] text-[#5c5c5c]"
+                  >
+                    {currentIndex + 1}/{totalCards}
+                  </span>
+                  <ProcessStepNavArrow direction="next" label="Next process stage" onClick={goNext} />
+                </nav>
               </div>
 
-              <nav
-                className="mt-6 flex items-center justify-center gap-10"
-                aria-label="Process stage"
-              >
-                <ProcessStepNavArrow direction="prev" label="Previous process stage" onClick={goPrev} />
-                <span
-                  aria-live="polite"
-                  className="min-w-[3ch] text-center font-source-sans text-lg font-normal tabular-nums leading-6 tracking-[0.5px] text-[#5c5c5c]"
-                >
-                  {currentIndex + 1}/{totalCards}
-                </span>
-                <ProcessStepNavArrow direction="next" label="Next process stage" onClick={goNext} />
-              </nav>
-            </div>
-
-            {/* Divider */}
-            <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
-          </section>
-        </ScaledCenteredSection>
+              {/* Divider */}
+              <div className="mx-auto mt-[84px] h-px w-[1120px] rounded-[14px] bg-[#a4a5a7] opacity-50" />
+            </section>
+          </ScaledCenteredSection>
+        </div>
       </section>
     </div>
   );
@@ -962,13 +1066,49 @@ function TestimonialsSection() {
   const t = TESTIMONIALS[currentIndex];
   const n = TESTIMONIALS.length;
 
+  const mobileCardMeasureRef = useRef(null);
+  const mobileMeasureHiddenRef = useRef(null);
+  const [mobileCardWidth, setMobileCardWidth] = useState(0);
+  const [mobileBlueBodyMinHeight, setMobileBlueBodyMinHeight] = useState(null);
+
   const goPrev = () => setCurrentIndex((i) => (i - 1 + n) % n);
   const goNext = () => setCurrentIndex((i) => (i + 1) % n);
+
+  useLayoutEffect(() => {
+    const el = mobileCardMeasureRef.current;
+    if (!el || typeof window === "undefined") return;
+
+    const updateWidth = () => {
+      if (window.matchMedia("(min-width: 768px)").matches) return;
+      const w = el.offsetWidth;
+      if (w > 0) setMobileCardWidth(w);
+    };
+
+    updateWidth();
+    const ro = new ResizeObserver(updateWidth);
+    ro.observe(el);
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const root = mobileMeasureHiddenRef.current;
+    if (!root || mobileCardWidth <= 0) return;
+
+    let maxH = 0;
+    for (const child of root.children) {
+      maxH = Math.max(maxH, child.offsetHeight);
+    }
+    if (maxH > 0) setMobileBlueBodyMinHeight(maxH);
+  }, [mobileCardWidth]);
 
   return (
     <section className="relative z-10 w-full pb-12 max-[1280px]:pt-[80px] min-[1281px]:pt-[80px]">
       {/* Below lg: fluid carousel — no absolute overlap */}
-      <div className="flex min-w-0 flex-col items-center gap-6 lg:hidden">
+      <div className="flex min-w-0 flex-col items-center gap-6 md:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
           Words from Collaborators
         </h2>
@@ -976,50 +1116,106 @@ function TestimonialsSection() {
           Insights from those who&apos;ve worked together to turn complex
           challenges into intuitive digital experiences.
         </p>
-        <div className="relative h-[180px] w-[180px] shrink-0 overflow-hidden rounded-full sm:h-[220px] sm:w-[220px]">
-          <img
-            src={`${base}${t.mainImg}`}
-            alt={t.name}
-            className="h-full w-full object-cover object-top"
-          />
-        </div>
-        <p className="text-center font-geist text-[20px] font-semibold leading-8 text-dark sm:text-[24px]">
-          {t.name}
-        </p>
-        <p className="max-w-[90vw] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-caption">
-          {t.role}
-        </p>
-        <p className="max-h-[50vh] w-full max-w-[624px] overflow-y-auto px-1 text-center font-source-sans text-[16px] font-normal leading-7 tracking-[0.5px] text-dark sm:text-[18px] whitespace-pre-line">
-          &ldquo;{t.quote.replace(/\n\n/g, "\n")}&rdquo;
-        </p>
-        <div className="flex w-full max-w-sm items-center justify-between gap-4 px-2">
-          <button
-            type="button"
-            onClick={goPrev}
-            aria-label="Previous testimonial"
-            className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none focus:ring-2 focus:ring-teal active:bg-teal/10 sm:h-[72px] sm:w-[72px]"
+
+        <div
+          ref={mobileCardMeasureRef}
+          className="relative w-full overflow-hidden rounded-[24px] bg-teal-light-tint"
+        >
+          {/* Top grey: banner only — no text (tint underlay matches body; no double alpha vs inner) */}
+          <div className="relative z-0 h-[118px] w-full shrink-0 overflow-hidden">
+            <img src={bannerSvg} alt="" className="block h-full w-full object-cover object-top" />
+          </div>
+
+          {/* Sky blue body: transparent so one tint shows through; overlap hides SVG/white wedge under slanted edge */}
+          <div
+            className="relative z-10 -mt-4 rounded-b-[24px] bg-transparent px-4 pb-8"
+            style={
+              mobileBlueBodyMinHeight != null
+                ? { minHeight: mobileBlueBodyMinHeight }
+                : undefined
+            }
           >
-            <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
-            <svg className="relative" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#1c1f24" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={goNext}
-            aria-label="Next testimonial"
-            className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none focus:ring-2 focus:ring-teal active:bg-teal/10 sm:h-[72px] sm:w-[72px]"
-          >
-            <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
-            <svg className="relative" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4v2z" fill="#1c1f24" />
-            </svg>
-          </button>
+            <div className="absolute left-1/2 top-0 z-20 h-[98px] w-[98px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full">
+              <img
+                src={`${base}${t.mainImg}`}
+                alt={t.name}
+                className="absolute max-w-none"
+                style={t.mainImgStyle}
+              />
+            </div>
+
+            <div className="relative z-10 flex flex-col items-center pt-[57px]">
+              <div className="flex w-full items-center justify-between px-1">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  aria-label="Previous testimonial"
+                  className="relative flex h-[23px] w-[23px] shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none"
+                >
+                  <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
+                  <svg className="relative" width="8" height="8" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#1c1f24" />
+                  </svg>
+                </button>
+
+                <p className="text-center font-geist text-[24px] font-semibold leading-8 text-dark">
+                  {t.name}
+                </p>
+
+                <button
+                  type="button"
+                  onClick={goNext}
+                  aria-label="Next testimonial"
+                  className="relative flex h-[23px] w-[23px] shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:ring-[1px] hover:ring-teal focus:outline-none"
+                >
+                  <img src={arrowCircle} alt="" className="absolute inset-0 block h-full w-full rounded-full" />
+                  <svg className="relative" width="8" height="8" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4v2z" fill="#1c1f24" />
+                  </svg>
+                </button>
+              </div>
+
+              <p className="mt-2 max-w-[289px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-[#494c50]">
+                {t.role}
+              </p>
+
+              <p className="mt-6 w-full text-center font-source-sans text-[14px] font-normal leading-6 tracking-[0.5px] text-dark whitespace-pre-line">
+                &ldquo;{t.quote.replace(/\n\n/g, "\n")}&rdquo;
+              </p>
+            </div>
+          </div>
         </div>
+
+        {/* Off-screen clones: same typography as blue body to compute max height (no per-slide resize). */}
+        <div
+          ref={mobileMeasureHiddenRef}
+          className="pointer-events-none fixed left-0 top-0 -z-50 overflow-hidden opacity-0"
+          aria-hidden
+          style={{ width: mobileCardWidth > 0 ? mobileCardWidth : 0 }}
+        >
+          {TESTIMONIALS.map((item) => (
+            <div key={`measure-${item.name}`} className="flex flex-col items-center px-4 pb-8 pt-[57px]">
+              <div className="flex w-full items-center justify-between px-1">
+                <span className="inline-block h-[23px] w-[23px] shrink-0" />
+                <p className="text-center font-geist text-[24px] font-semibold leading-8 text-dark">
+                  {item.name}
+                </p>
+                <span className="inline-block h-[23px] w-[23px] shrink-0" />
+              </div>
+              <p className="mt-2 max-w-[289px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-[#494c50]">
+                {item.role}
+              </p>
+              <p className="mt-6 w-full text-center font-source-sans text-[14px] font-normal leading-6 tracking-[0.5px] text-dark whitespace-pre-line">
+                &ldquo;{item.quote.replace(/\n\n/g, "\n")}&rdquo;
+              </p>
+            </div>
+          ))}
+        </div>
+
         <div className="h-px w-full max-w-[1120px] rounded-[14px] bg-dark/20 opacity-50" />
       </div>
 
-    <div className="hidden w-full min-w-0 lg:block">
+    <div className="hidden w-full min-w-0 md:block">
     <ScaledArtboard designWidth={1280} designHeight={1000}>
     <section className="relative mx-auto h-[1000px] w-[1280px]">
       {/* Title */}
@@ -1158,19 +1354,24 @@ function JourneySection() {
   const cardShadow = "drop-shadow(0px 6px 25px rgba(0,0,0,0.08)) drop-shadow(0px 0px 2px rgba(0,0,0,0.5))";
 
   const cardsRef = useRef(null);
+  const mobileJourneyRowRef = useRef(null);
+  const mobileJourneyScrollRef = useRef(null);
   const offsetRef = useRef(0);
   const directionRef = useRef(-1);
   const pausedRef = useRef(false);
   const lastManualRef = useRef(0);
 
   useEffect(() => {
-    const el = cardsRef.current;
-    if (!el) return;
-
     let animId;
     const speed = 0.3;
     const maxDrift = 150;
     const resumeDelay = 2000;
+
+    const applyTranslateX = (px) => {
+      const t = `translateX(${px}px)`;
+      if (cardsRef.current) cardsRef.current.style.transform = t;
+      if (mobileJourneyRowRef.current) mobileJourneyRowRef.current.style.transform = t;
+    };
 
     const animate = () => {
       const now = Date.now();
@@ -1178,7 +1379,7 @@ function JourneySection() {
         offsetRef.current += speed * directionRef.current;
         if (offsetRef.current <= -maxDrift) directionRef.current = 1;
         if (offsetRef.current >= 0) directionRef.current = -1;
-        el.style.transform = `translateX(${offsetRef.current}px)`;
+        applyTranslateX(offsetRef.current);
       }
       animId = requestAnimationFrame(animate);
     };
@@ -1188,50 +1389,30 @@ function JourneySection() {
         e.preventDefault();
         lastManualRef.current = Date.now();
         offsetRef.current = Math.max(-maxDrift, Math.min(0, offsetRef.current - e.deltaX));
-        el.style.transform = `translateX(${offsetRef.current}px)`;
+        applyTranslateX(offsetRef.current);
       }
     };
 
-    el.addEventListener('wheel', handleWheel, { passive: false });
+    const desktopEl = cardsRef.current;
+    const mobileScrollEl = mobileJourneyScrollRef.current;
+    if (desktopEl) desktopEl.addEventListener("wheel", handleWheel, { passive: false });
+    if (mobileScrollEl) mobileScrollEl.addEventListener("wheel", handleWheel, { passive: false });
     animId = requestAnimationFrame(animate);
 
     return () => {
       cancelAnimationFrame(animId);
-      el.removeEventListener('wheel', handleWheel);
+      if (desktopEl) desktopEl.removeEventListener("wheel", handleWheel);
+      if (mobileScrollEl) mobileScrollEl.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
-  const journeyMobileItems = [
-    {
-      label: "Best designer",
-      body: "Q4 2023 for driving impactful design improvements across Goal Node, API Simplification, & Knowledge Base",
-      photo: photo4,
-    },
-    {
-      label: "Best designer",
-      body: "Q1 2025 for leading design initiatives across Gen AI, Copilot Experience, Website, and Access Control.",
-      photo: photo5,
-    },
-    {
-      label: "Quick designer",
-      body: "Q4 2022 for driving impactful design improvements across Inbox & Studio Builder",
-      photo: photo3,
-    },
-    {
-      label: "Hackathon winner",
-      body: "Winner – Hackathon for conceptualizing and building an innovative Prompt Debugger solution.",
-      photo: photo2,
-    },
-    {
-      label: "Best designer",
-      body: "Q3 2024 for elevating the Inbox experience and enhancing Studio Builder with intuitive, scalable design solutions.",
-      photo: photo1,
-    },
-  ];
+  const MOBILE_CARD_SCALE = 0.62;
+  const MOBILE_CARD_VW = Math.round(336 * MOBILE_CARD_SCALE);
+  const MOBILE_CARD_VH = Math.round(350 * MOBILE_CARD_SCALE) + 43;
 
   return (
     <section className="w-full pb-16 pt-8">
-      <div className="flex flex-col gap-8 lg:hidden">
+      <div className="flex flex-col gap-8 md:hidden">
         <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
           Recognition Along the Way
         </h2>
@@ -1242,27 +1423,127 @@ function JourneySection() {
           technical depth with bold creativity, I build user-centric solutions that
           drive real impact, earning four Best Designer awards along the journey.
         </p>
-        <div className="flex flex-col gap-6">
-          {journeyMobileItems.map((item, idx) => (
-            <article
-              key={idx}
-              className="flex min-w-0 flex-col gap-3 rounded-[24px] border border-teal/25 bg-warm-white p-4 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.08)]"
-            >
-              <p className="font-source-sans text-[18px] font-semibold uppercase leading-normal text-dark">
-                {item.label}
-              </p>
-              <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px] text-dark">
-                {item.body}
-              </p>
-              <div className="h-[160px] w-full min-w-0 overflow-hidden rounded-[12px] sm:h-[200px]">
-                <img src={item.photo} alt="" className="h-full w-full object-cover" />
+        <div
+          ref={mobileJourneyScrollRef}
+          className="-mx-4 overflow-x-auto"
+          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        >
+          <div
+            ref={mobileJourneyRowRef}
+            className="flex will-change-transform items-center pl-6 pr-8"
+            style={{ width: "max-content" }}
+          >
+
+            <div className="relative z-[5] shrink-0" style={{ width: MOBILE_CARD_VW, height: MOBILE_CARD_VH }}>
+              <div className="absolute" style={{ left: '50%', top: '50%', transform: `translate(-50%, -50%) rotate(1deg) scale(${MOBILE_CARD_SCALE})`, filter: cardShadow }}>
+                <div className="relative h-[350px] w-[336px]" style={{ clipPath: cardClipPath }}>
+                  <img src={bg4} alt="" className="absolute inset-0 block h-full w-full" />
+                  <div className="absolute left-[-96px] top-[14.5px] flex h-[377px] w-[427px] items-center justify-center" style={{ transform: "scaleY(-1) rotate(180deg)" }}>
+                    <img src={wave4} alt="" className="block h-[89.66%] w-[94.79%]" />
+                  </div>
+                  <div className="absolute left-[30.38px] top-[36.01px] flex w-[276px] flex-col gap-[10px] text-dark">
+                    <p className="font-source-sans text-[22px] font-semibold uppercase leading-normal">Best designer</p>
+                    <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px]">Q4 2023 for driving impactful design improvements across Goal Node, API Simplification, &amp; Knowledge Base</p>
+                  </div>
+                  <div className="absolute left-[28.53px] top-[141.91px] h-[173px] w-[284px] overflow-hidden rounded-[12px]">
+                    <img src={photo4} alt="" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="absolute bottom-[6px] right-[7px] h-[38px] w-[38px]" style={{ transform: "scaleY(-1)" }}>
+                    <img src={badge4} alt="" className="block h-full w-full" />
+                  </div>
+                </div>
               </div>
-            </article>
-          ))}
+            </div>
+
+            <div className="relative z-[4] -ml-10 shrink-0" style={{ width: MOBILE_CARD_VW, height: MOBILE_CARD_VH }}>
+              <div className="absolute" style={{ left: '50%', top: '50%', transform: `translate(-50%, -50%) rotate(-10deg) scale(${MOBILE_CARD_SCALE})`, filter: cardShadow }}>
+                <div className="relative h-[350px] w-[336px]" style={{ clipPath: cardClipPath }}>
+                  <img src={bg5} alt="" className="absolute inset-0 block h-full w-full" />
+                  <div className="absolute left-[-96px] top-[14.5px] h-[377px] w-[427px]">
+                    <img src={wave5} alt="" className="absolute inset-[3.56%_0.34%_6.43%_4.87%] block h-auto w-auto" />
+                  </div>
+                  <div className="absolute left-[28.61px] top-[21.19px] flex w-[276px] flex-col gap-[10px] text-dark">
+                    <p className="font-source-sans text-[22px] font-semibold uppercase leading-normal">Best designer</p>
+                    <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px]">Q1 2025 for leading design initiatives across Gen AI, Copilot Experience, Website, and Access Control.</p>
+                  </div>
+                  <div className="absolute left-[23.19px] top-[126.76px] h-[173px] w-[284px] overflow-hidden rounded-[12px]">
+                    <img src={photo5} alt="" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="absolute bottom-[6px] right-[7px] h-[38px] w-[38px]" style={{ transform: "scaleY(-1)" }}>
+                    <img src={badge5} alt="" className="block h-full w-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-[3] -ml-10 shrink-0" style={{ width: MOBILE_CARD_VW, height: MOBILE_CARD_VH }}>
+              <div className="absolute" style={{ left: '50%', top: '50%', transform: `translate(-50%, -50%) rotate(-8deg) scale(${MOBILE_CARD_SCALE})`, filter: cardShadow }}>
+                <div className="relative h-[350px] w-[336px]" style={{ clipPath: cardClipPath }}>
+                  <img src={bg3} alt="" className="absolute inset-0 block h-full w-full" />
+                  <div className="absolute left-[-36px] top-[-175.5px] flex h-[388.5px] w-[427px] items-center justify-center" style={{ transform: "rotate(180deg)" }}>
+                    <img src={wave3} alt="" className="block h-[94.7%] w-[94.79%]" />
+                  </div>
+                  <div className="absolute left-[31.08px] top-[31.01px] flex w-[276px] flex-col gap-[10px] text-dark">
+                    <p className="font-source-sans text-[22px] font-semibold uppercase leading-normal">Quick designer</p>
+                    <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px]">Q4 2022 for driving impactful design improvements across Inbox &amp; Studio Builder</p>
+                  </div>
+                  <div className="absolute left-[32.71px] top-[130.41px] h-[173px] w-[284px] overflow-hidden rounded-[12px]">
+                    <img src={photo3} alt="" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="absolute bottom-[6px] right-[7px] h-[38px] w-[38px]" style={{ transform: "scaleY(-1)" }}>
+                    <img src={badge3} alt="" className="block h-full w-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-[2] -ml-10 shrink-0" style={{ width: MOBILE_CARD_VW, height: MOBILE_CARD_VH }}>
+              <div className="absolute" style={{ left: '50%', top: '50%', transform: `translate(-50%, -50%) rotate(8deg) scale(${MOBILE_CARD_SCALE})`, filter: cardShadow }}>
+                <div className="relative h-[350px] w-[336px]" style={{ clipPath: cardClipPath }}>
+                  <img src={bg2} alt="" className="absolute inset-0 block h-full w-full" />
+                  <div className="absolute left-[-96px] top-[14.5px] flex h-[377px] w-[427px] items-center justify-center" style={{ transform: "scaleY(-1) rotate(180deg)" }}>
+                    <img src={wave2} alt="" className="block h-[89.66%] w-[94.79%]" />
+                  </div>
+                  <div className="absolute left-[30.13px] top-[31.07px] flex w-[276px] flex-col gap-[10px] text-dark opacity-80">
+                    <p className="font-source-sans text-[22px] font-semibold uppercase leading-normal">Hackathon winner</p>
+                    <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px]">Winner – Hackathon for conceptualizing and building an innovative Prompt Debugger solution.</p>
+                  </div>
+                  <div className="absolute left-[30.98px] top-[131.72px] h-[173px] w-[284px] overflow-hidden rounded-[12px]">
+                    <img src={photo2} alt="" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="absolute bottom-[6px] right-[7px] h-[38px] w-[38px]" style={{ transform: "scaleY(-1)" }}>
+                    <img src={badge2} alt="" className="block h-full w-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-[1] -ml-10 shrink-0" style={{ width: MOBILE_CARD_VW, height: MOBILE_CARD_VH }}>
+              <div className="absolute" style={{ left: '50%', top: '50%', transform: `translate(-50%, -50%) scale(${MOBILE_CARD_SCALE})`, filter: cardShadow }}>
+                <div className="relative h-[350px] w-[336px]" style={{ clipPath: cardClipPath }}>
+                  <img src={bg1} alt="" className="absolute inset-0 block h-full w-full" />
+                  <div className="absolute left-[-193.62px] top-[-195.53px] flex h-[716.716px] w-[691.741px] items-center justify-center" style={{ transform: "scaleY(-1) rotate(130.86deg)" }}>
+                    <img src={wave1} alt="" className="block h-[60.78%] w-[89.84%]" />
+                  </div>
+                  <div className="absolute left-[38.06px] top-[25.46px] flex w-[276px] flex-col gap-[10px] text-dark">
+                    <p className="font-source-sans text-[22px] font-semibold uppercase leading-normal">Best designer</p>
+                    <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px]">Q3 2024 for elevating the Inbox experience and enhancing Studio Builder with intuitive, scalable design solutions.</p>
+                  </div>
+                  <div className="absolute left-[37.44px] top-[141.38px] h-[173px] w-[284px] overflow-hidden">
+                    <img src={photo1} alt="" className="absolute left-[-1.94%] top-0 h-full w-[104.21%] max-w-none" />
+                  </div>
+                  <div className="absolute bottom-[6px] right-[7px] h-[38px] w-[38px]" style={{ transform: "scaleY(-1)" }}>
+                    <img src={badge1} alt="" className="block h-full w-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
-    <div className="hidden w-full min-w-0 lg:block">
+    <div className="hidden w-full min-w-0 md:block">
     <ScaledArtboard designWidth={1280} designHeight={960}>
     <section className="relative mx-auto h-[960px] w-[1280px] overflow-hidden">
       {/* Title */}
@@ -1404,18 +1685,14 @@ function JourneySection() {
 export default function Home() {
   return (
     <div className="min-h-screen min-w-0 overflow-x-hidden bg-white">
-      {/*
-        Hero: 16px inset from viewport (white gap), then rounded cream panel (#F1F1E6 = bg-cream).
-        Inner px-[64px] aligns text with below-fold SITE_BELOW_FOLD_INSET (80px) = 16 + 64.
-      */}
       <div className="w-full bg-white px-4 pb-4 pt-4">
         <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
-          <div className={`${SITE_BELOW_FOLD_COLUMN} relative min-h-[1162px] px-[64px] pb-8 pt-2`}>
-            <div className="relative w-full overflow-visible pt-6">
-              <Navbar />
+          <div className={`${SITE_BELOW_FOLD_COLUMN} relative px-6 pb-8 pt-2 lg:min-h-[1162px] lg:px-[64px]`}>
+            <div className="relative w-full overflow-visible pt-0 md:pt-6">
+              <SiteNav variant="home" />
             </div>
 
-            <div className="mt-[146px]">
+            <div className="mt-20 lg:mt-[146px]">
               <AnnouncementBanner />
             </div>
 
@@ -1423,14 +1700,14 @@ export default function Home() {
               <HeroSection />
             </div>
 
-            <div className="mt-[100px]">
+            <div className="mt-16 lg:mt-[100px]">
               <GradientCard />
             </div>
           </div>
         </div>
       </div>
 
-      <div className={SITE_BELOW_FOLD_INSET}>
+      <div className="px-4 md:px-6 lg:px-[80px]">
         <div className={SITE_BELOW_FOLD_COLUMN}>
           <CaseStudiesSection />
           <ProcessSection />

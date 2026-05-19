@@ -1,23 +1,68 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logoUrl from "./assets/logo.svg";
 import aboutProfile from "./assets/about-profile.jpg";
 import aboutDesignJourneyTimeline from "./assets/about-design-journey-timeline.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
-import {
-  SITE_BELOW_FOLD_COLUMN,
-  SITE_BELOW_FOLD_INSET,
-} from "./components/siteBelowFoldLayout";
+import SiteNav from "./components/SiteNav";
+import JourneyRecognitionSection from "./components/JourneyRecognitionSection";
+import { SITE_BELOW_FOLD_COLUMN } from "./components/siteBelowFoldLayout";
 
-function Navbar() {
+const TABLET_SCALE_DESKTOP_REF = 1024;
+
+/** Scale whole page on 768–1023px; @container + @lg: use desktop layout inside a 1024px-wide canvas. */
+function useAboutMeTabletScale() {
+  const innerRef = useRef(null);
+  const [scale, setScale] = useState(1);
+  const [outerHeight, setOuterHeight] = useState(null);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w >= 768 && w <= 1023) {
+        setScale(w / TABLET_SCALE_DESKTOP_REF);
+      } else {
+        setScale(1);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  useEffect(() => {
+    const el = innerRef.current;
+    if (!el || scale >= 1) {
+      queueMicrotask(() => setOuterHeight(null));
+      return;
+    }
+    const apply = () => {
+      setOuterHeight(el.scrollHeight * scale);
+    };
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    queueMicrotask(apply);
+    return () => ro.disconnect();
+  }, [scale]);
+
+  return {
+    innerRef,
+    scale,
+    isScaled: scale < 1,
+    outerHeight,
+  };
+}
+
+/** Viewport lg+ only: desktop About retains container-query layout (unchanged for ≥1024px). */
+function AboutDesktopNavbar() {
   return (
-    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] lg:flex-nowrap lg:justify-start lg:px-6 lg:py-0">
+    <nav className="mx-auto flex min-h-[60px] w-full max-w-[589px] flex-wrap items-center justify-center gap-y-2 rounded-[70px] bg-white px-3 py-2 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.2)] @lg:flex-nowrap @lg:justify-start @lg:px-6 @lg:py-0">
       <Link to="/">
         <img src={logoUrl} alt="Logo" className="h-8 w-8 shrink-0" />
       </Link>
 
-      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 lg:ml-[97px] lg:flex-none lg:justify-start">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center justify-center gap-0 @lg:ml-[97px] @lg:flex-none @lg:justify-start">
         <Link
           to="/"
           className="px-2 font-source-sans text-sm font-normal leading-6 tracking-[0.25px] text-dark"
@@ -44,7 +89,7 @@ function Navbar() {
         </a>
       </div>
 
-      <a href="https://drive.google.com/file/d/1uhROOXhPEPmMczltlfSV2KBYO5bgUZOm/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark lg:ml-auto">
+      <a href="https://drive.google.com/file/d/1uhROOXhPEPmMczltlfSV2KBYO5bgUZOm/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="ml-0 shrink-0 rounded-[14px] border border-teal bg-white px-4 py-2 font-source-sans text-sm font-semibold leading-6 tracking-[0.25px] text-dark @lg:ml-auto">
         Resume
       </a>
     </nav>
@@ -99,9 +144,9 @@ function AboutHeroSection() {
 
 function DesignJourneySection() {
   return (
-    <section className="mx-auto flex w-full max-w-[1120px] flex-col gap-10 px-4 pb-[120px] pt-[120px] lg:flex-row lg:gap-[80px]">
-      {/* Left: Intro text */}
-      <div className="w-full min-w-0 shrink-0 lg:w-[300px]">
+    <section className="mx-auto flex w-full max-w-[1120px] flex-col gap-10 px-4 pb-[120px] pt-[120px] md:flex-row md:gap-[80px]">
+      {/* Intro text */}
+      <div className="w-full min-w-0 shrink-0 md:w-[300px]">
         <h2 className="font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
           My Growth as a Product Designer
         </h2>
@@ -113,12 +158,12 @@ function DesignJourneySection() {
         </p>
       </div>
 
-      {/* Right: Timeline image from Figma */}
-      <div className="relative min-h-[min(280px,50vh)] w-full flex-1 lg:min-h-[724px]">
+      {/* Timeline image below intro on narrow viewports */}
+      <div className="relative min-h-[min(280px,50vh)] w-full flex-1 md:min-h-[724px]">
         <img
           src={aboutDesignJourneyTimeline}
           alt="Design journey at Yellow.ai — Intern to Sr. Product Design"
-          className="h-full w-full max-w-full object-contain lg:max-w-[708px]"
+          className="h-full w-full max-w-full object-contain md:max-w-[708px]"
         />
       </div>
     </section>
@@ -199,69 +244,16 @@ function AboutAchievementCardsSection() {
     };
   }, []);
 
-  const journeyMobileItems = [
-    {
-      label: "Best designer",
-      body: "Q4 2023 for driving impactful design improvements across Goal Node, API Simplification, & Knowledge Base",
-      photo: photo4,
-    },
-    {
-      label: "Best designer",
-      body: "Q1 2025 for leading design initiatives across Gen AI, Copilot Experience, Website, and Access Control.",
-      photo: photo5,
-    },
-    {
-      label: "Quick designer",
-      body: "Q4 2022 for driving impactful design improvements across Inbox & Studio Builder",
-      photo: photo3,
-    },
-    {
-      label: "Hackathon winner",
-      body: "Winner – Hackathon for conceptualizing and building an innovative Prompt Debugger solution.",
-      photo: photo2,
-    },
-    {
-      label: "Best designer",
-      body: "Q3 2024 for elevating the Inbox experience and enhancing Studio Builder with intuitive, scalable design solutions.",
-      photo: photo1,
-    },
-  ];
-
   return (
-    <section className="mx-auto w-full max-w-[1280px] px-4 pb-16 pt-8">
-      <div className="flex flex-col gap-8 lg:hidden">
-        <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] tracking-[0.25px] text-dark sm:text-[34px] sm:leading-[44px]">
-          Recognition Along the Way
-        </h2>
-        <p className="mx-auto max-w-[624px] text-center font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
-          Designing the future of intelligent experiences. In just three years at
-          Yellow.ai, I&apos;ve grown from Designer to Senior Designer —
-          transforming complex systems into intuitive, scalable products. Blending
-          technical depth with bold creativity, I build user-centric solutions that
-          drive real impact, earning four Best Designer awards along the journey.
-        </p>
-        <div className="flex flex-col gap-6">
-          {journeyMobileItems.map((item, idx) => (
-            <article
-              key={idx}
-              className="flex min-w-0 flex-col gap-3 rounded-[24px] border border-teal/25 bg-warm-white p-4 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.08)]"
-            >
-              <p className="font-source-sans text-[18px] font-semibold uppercase leading-normal text-dark">
-                {item.label}
-              </p>
-              <p className="font-geist text-[14px] font-normal leading-[18px] tracking-[0.1px] text-dark">
-                {item.body}
-              </p>
-              <div className="h-[160px] w-full min-w-0 overflow-hidden rounded-[12px] sm:h-[200px]">
-                <img src={item.photo} alt="" className="h-full w-full object-cover" />
-              </div>
-            </article>
-          ))}
-        </div>
+    <>
+      {/* Matches Home Recognition for viewports below lg (1024px). */}
+      <div className="px-4 md:px-6 lg:hidden">
+        <JourneyRecognitionSection />
       </div>
 
-    <div className="hidden w-full min-w-0 overflow-x-auto lg:flex lg:justify-center">
-    <section className="relative mx-auto h-[960px] w-[1280px] min-w-[1280px] shrink-0 overflow-hidden px-4">
+      <section className="mx-auto hidden w-full max-w-[1280px] px-4 pb-16 pt-8 lg:block">
+        <div className="flex w-full min-w-0 justify-center overflow-x-auto">
+          <section className="relative mx-auto h-[960px] w-[1280px] min-w-[1280px] shrink-0 overflow-hidden px-4">
       {/* Title — same layout as Home JourneySection */}
       <h2 className="absolute left-1/2 top-[85px] w-[464px] max-w-[calc(100%-32px)] -translate-x-1/2 text-center font-geist text-[34px] font-semibold leading-[44px] tracking-[0.25px] text-dark">
         Recognition Along the Way
@@ -437,39 +429,83 @@ function AboutAchievementCardsSection() {
           </div>
         </div>
       </div>
-    </section>
-    </div>
-    </section>
+          </section>
+        </div>
+      </section>
+    </>
   );
 }
 
 export default function AboutMe() {
+  const { innerRef, scale, isScaled, outerHeight } = useAboutMeTabletScale();
+
   return (
     <div className="min-h-screen min-w-0 overflow-x-hidden bg-white">
-      <div className="w-full bg-white px-4 pb-4 pt-4">
-        <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
-          <div
-            className={`${SITE_BELOW_FOLD_COLUMN} relative min-h-[min(100dvh,920px)] px-[64px] pb-8 pt-2 md:min-h-[920px]`}
-          >
-            <div className="relative w-full overflow-visible pt-6">
-              <Navbar />
+      <div
+        className={
+          isScaled
+            ? "flex w-full justify-center overflow-x-hidden"
+            : undefined
+        }
+        style={
+          isScaled
+            ? outerHeight != null
+              ? { height: outerHeight }
+              : { minHeight: "100vh" }
+            : undefined
+        }
+      >
+        <div
+          ref={innerRef}
+          className={
+            isScaled
+              ? "@container w-[1024px] min-w-[1024px] shrink-0"
+              : "@container w-full min-w-0"
+          }
+          style={
+            isScaled
+              ? {
+                  transform: `scale(${scale})`,
+                  transformOrigin: "top center",
+                }
+              : undefined
+          }
+        >
+          <div className="min-w-0 bg-white">
+            <div className="w-full bg-white px-4 pb-4 pt-4">
+              <div className="w-full min-w-0 overflow-hidden rounded-[24px] bg-cream">
+                <div
+                  className={`${SITE_BELOW_FOLD_COLUMN} relative min-h-[min(100dvh,920px)] px-6 pb-8 pt-2 min-[768px]:px-[64px] md:min-h-[920px]`}
+                >
+                  <div className="relative w-full overflow-visible pt-0 md:pt-6 lg:pt-6">
+                    {/* Below 1024px: same SiteNav as Home (mobile menu under md; pill from md). */}
+                    <div className="lg:hidden">
+                      <SiteNav variant="about" />
+                    </div>
+                    <div className="hidden lg:block">
+                      <AboutDesktopNavbar />
+                    </div>
+                  </div>
+
+                  <AboutHeroSection />
+                </div>
+              </div>
             </div>
 
-            <AboutHeroSection />
+            <div className="mx-auto w-full max-w-[1280px]">
+              <DesignJourneySection />
+              <AboutAchievementCardsSection />
+            </div>
+            {/* Same inset + CTA spacing as Home: px-4/md:px-6/lg:px-[80]; extra pt only lg+. */}
+            <div className="w-full px-4 md:px-6 lg:px-[80px]">
+              <div className={SITE_BELOW_FOLD_COLUMN}>
+                <div className="pt-0 lg:pt-[80px]">
+                  <SiteCta />
+                </div>
+                <SiteFooter />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div className="mx-auto w-full max-w-[1280px]">
-        <DesignJourneySection />
-        <AboutAchievementCardsSection />
-      </div>
-      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
-        <div className={SITE_BELOW_FOLD_COLUMN}>
-          <div className="pt-[80px]">
-            <SiteCta />
-          </div>
-          <SiteFooter />
         </div>
       </div>
     </div>

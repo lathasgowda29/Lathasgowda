@@ -22,8 +22,13 @@
   --color-teal-dark: #093b48;
   --color-teal-mid: #5ea2b9;
   --color-teal-light: #a2e6fe;
+  /* Solid mix of teal-light at 15% on white — use where layered semi-transparent fills would “double up”. */
+  --color-teal-light-tint: #f1fbff;
   --color-caption: #494c50;
 }
+
+/* Tablet-only breakpoint for CaseStudyChatWidget (768–1023px). Used via cw-tablet:* only in that page. */
+@custom-variant cw-tablet (@media (min-width: 768px) and (max-width: 1023px));
 
 @keyframes card-enter {
   from {
@@ -68,6 +73,19 @@
 /* ProcessSection: wheel-driven steps — instant snap */
 .process-section-stack .process-stack-layer {
   transition: none !important;
+}
+
+/* Home case study cards: scale preview images proportionally on mobile (no crop). */
+@media (max-width: 767px) {
+  .home-case-study-card__image {
+    height: auto !important;
+  }
+
+  .home-case-study-card__image img {
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+  }
 }
 
 /* Case study pages: constrain content width without editing every section */

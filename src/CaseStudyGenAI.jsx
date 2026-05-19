@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import "./evolution-chevrons.css";
 import logoUrl from "./assets/logo.svg";
 import brainstorming1 from "./assets/case-study-genai/brainstorming-1.jpg";
 import brainstorming2 from "./assets/case-study-genai/brainstorming-2.jpg";
@@ -38,10 +39,8 @@ import arrow4 from "./assets/case-study-genai/arrow-4.svg";
 import heroLaptopMockup from "./assets/case-study-genai/hero-laptop-mockup.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
-import {
-  SITE_BELOW_FOLD_COLUMN,
-  SITE_BELOW_FOLD_INSET,
-} from "./components/siteBelowFoldLayout";
+import SiteNav from "./components/SiteNav";
+import { SITE_BELOW_FOLD_COLUMN } from "./components/siteBelowFoldLayout";
 
 
 function Navbar() {
@@ -102,26 +101,85 @@ const CARD_POSITIONS = [
 export default function CaseStudyGenAI() {
   const [isFrameFlipped, setIsFrameFlipped] = useState(false);
   const [frontCardIndex, setFrontCardIndex] = useState(0);
+  const chevronScaleHostRef = useRef(null);
+  const chevronScaleClipRef = useRef(null);
+
+  useEffect(() => {
+    const host = chevronScaleHostRef.current;
+    const clip = chevronScaleClipRef.current;
+    if (!host || !clip) return;
+    const row = host.querySelector(".evolution-chevrons-row");
+    if (!row) return;
+
+    const designWidth = 1120;
+    const designHeight = 345;
+    const mq = window.matchMedia("(max-width: 1023px)");
+
+    const update = () => {
+      if (!mq.matches) {
+        clip.style.width = "";
+        clip.style.height = "";
+        clip.style.marginLeft = "";
+        clip.style.marginRight = "";
+        row.style.width = "";
+        row.style.transform = "";
+        row.style.transformOrigin = "";
+        return;
+      }
+      row.style.width = `${designWidth}px`;
+      row.style.transformOrigin = "top left";
+      const contentWidth = row.scrollWidth || designWidth;
+      const contentHeight = row.scrollHeight || designHeight;
+      const availableWidth = host.clientWidth;
+      if (availableWidth <= 0) return;
+      const scale = Math.min(1, availableWidth / contentWidth);
+      clip.style.width = `${contentWidth * scale}px`;
+      clip.style.height = `${contentHeight * scale}px`;
+      clip.style.marginLeft = "auto";
+      clip.style.marginRight = "auto";
+      row.style.transform = `scale(${scale})`;
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(host);
+    mq.addEventListener("change", update);
+    return () => {
+      ro.disconnect();
+      mq.removeEventListener("change", update);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen min-w-0 bg-white">
+    <div className="min-h-screen min-w-0 bg-white cw-tablet:overflow-x-clip max-[767px]:overflow-x-clip">
       <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
+        <div className="relative w-full rounded-t-[24px] bg-cream max-[767px]:min-h-0 max-[767px]:pb-20 min-[768px]:min-h-[926px]">
           <div className="relative px-4 pt-4">
-            <div className="pt-6">
+            <div className="relative w-full overflow-visible pt-0 md:pt-6 min-[1024px]:hidden">
+              <SiteNav variant="case-study-chat" />
+            </div>
+            <div className="hidden min-[1024px]:block pt-6">
               <Navbar />
             </div>
 
-              <div className="mt-[48px] flex justify-center">
-              <div className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px] md:aspect-auto md:h-[682px] md:min-h-[682px]">
-                <div className="absolute left-1/2 top-[22%] w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2 md:top-[148px] md:h-[540px] md:px-0">
+            <div className="mt-[48px] flex justify-center">
+              <div
+                className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px]
+                max-[767px]:flex max-[767px]:min-h-0 max-[767px]:flex-col max-[767px]:gap-12 max-[767px]:px-2 max-[767px]:py-2 max-[767px]:aspect-auto
+                md:aspect-auto md:block md:h-[682px] md:min-h-[682px] md:gap-0 md:px-0 md:py-0"
+              >
+                <div
+                  className="absolute left-1/2 top-[22%] z-0 w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2
+                  max-[767px]:relative max-[767px]:order-2 max-[767px]:left-0 max-[767px]:top-0 max-[767px]:w-full max-[767px]:max-w-none max-[767px]:translate-x-0 max-[767px]:px-0
+                  md:absolute md:left-1/2 md:top-[148px] md:h-[540px] md:-translate-x-1/2 md:px-0"
+                >
                   <img
                     src={heroLaptopMockup}
                     alt="Laptop mockup showing Gen AI interface"
-                    className="block h-full w-full max-w-full object-contain"
+                    className="block h-auto w-full max-w-full object-contain md:h-full md:max-h-full"
                   />
                 </div>
-                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 md:px-0">
+                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 max-[767px]:relative max-[767px]:inset-auto max-[767px]:order-1 md:absolute md:inset-x-0 md:top-0 md:px-0">
                   <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
                     From Long Prompts to Structured AI Workflows : Boosted Adoption by 61%
                   </p>
@@ -344,7 +402,7 @@ export default function CaseStudyGenAI() {
             <p className="font-geist text-[24px] font-normal leading-[28px] text-dark">
               MVP launch
             </p>
-            <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
+            <h2 className="font-geist text-[28px] font-semibold leading-[36px] text-dark lg:text-[48px] lg:leading-[54px]">
               Embedding AI in the Node
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
@@ -463,7 +521,7 @@ export default function CaseStudyGenAI() {
             <p className="font-geist text-[24px] font-normal leading-[32px]">
               Phase 1
             </p>
-            <h2 className="w-full max-w-[941px] font-geist text-[48px] font-semibold leading-[54px]">
+            <h2 className="w-full max-w-[941px] font-geist text-[28px] font-semibold leading-[36px] lg:text-[48px] lg:leading-[54px]">
               From Node to Dedicated Authoring Page
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
@@ -476,42 +534,42 @@ export default function CaseStudyGenAI() {
 
           <div className="mt-[48px] h-px w-full bg-[#a4a5a7]" />
 
-          <div className="mt-[49px] flex items-start gap-[80px]">
+          <div className="mt-[49px] flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-[80px]">
             {/* Left: User research quotes */}
-            <div className="flex w-[530px] shrink-0 flex-col gap-[28px]">
-              <div className="ml-[58px] w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[461px] font-hand text-[20px] leading-[26px] text-white">
+            <div className="flex w-full min-w-0 shrink-0 flex-col gap-[28px] lg:w-[530px]">
+              <div className="ml-0 w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:ml-[58px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[461px]">
                   &ldquo;The prompt box is too small. I can&apos;t even see what
                   I&apos;ve written once it gets long.&rdquo;
                 </p>
               </div>
-              <div className="ml-[101px] w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[280px] font-hand text-[20px] leading-[26px] text-white">
+              <div className="ml-0 w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:ml-[101px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[280px]">
                   &ldquo;I didn&apos;t even realize this node could do AI at
                   first.&rdquo;
                 </p>
               </div>
-              <div className="w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[426px] font-hand text-[20px] leading-[26px] text-white">
+              <div className="w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[426px]">
                   &ldquo;I&apos;m not sure when this AI node actually gets
                   triggered in the conversation.&rdquo;
                 </p>
               </div>
-              <div className="ml-[85px] w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[425px] font-hand text-[20px] leading-[26px] text-white">
+              <div className="ml-0 w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:ml-[85px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[425px]">
                   &ldquo;If something goes wrong, I don&apos;t know where to
                   debug—inside the node or somewhere else?&rdquo;
                 </p>
               </div>
-              <div className="ml-[16px] w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[463px] font-hand text-[20px] leading-[26px] text-white">
+              <div className="ml-0 w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:ml-[16px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[463px]">
                   &ldquo;It feels powerful, but I don&apos;t fully understand
                   how to use it properly. I&apos;m afraid I&apos;ll break
                   something.&rdquo;
                 </p>
               </div>
-              <div className="ml-[36px] w-fit overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px]">
-                <p className="w-[485px] font-hand text-[20px] leading-[26px] text-white">
+              <div className="ml-0 w-full max-w-full overflow-hidden rounded-[24px] border border-[#a4a5a7] bg-[#0f6378] px-[16px] py-[20px] lg:ml-[36px] lg:w-fit lg:max-w-none">
+                <p className="w-full font-hand text-[20px] leading-[26px] text-white lg:w-[485px]">
                   &ldquo;I have to keep switching tabs to check variables and
                   then come back here—it breaks my flow.&rdquo;
                 </p>
@@ -519,7 +577,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Right: Research description */}
-            <div className="flex flex-1 flex-col gap-[24px] text-dark">
+            <div className="flex min-w-0 flex-1 flex-col gap-[24px] text-dark">
               <p className="font-geist text-[24px] font-normal leading-[28px]">
                 Research , brainstorming
               </p>
@@ -559,27 +617,27 @@ export default function CaseStudyGenAI() {
           </div>
 
           {/* Research photo collage */}
-          <div className="mt-[60px] flex gap-[5px]">
-            <div className="flex w-[550px] shrink-0 flex-col gap-[5px]">
+          <div className="mt-[60px] flex flex-col gap-[5px] lg:flex-row">
+            <div className="flex w-full min-w-0 shrink-0 flex-col gap-[5px] lg:w-[550px]">
               <img
                 src={research1}
                 alt="Research session with sticky notes"
-                className="h-[400px] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover"
+                className="h-[min(280px,55vw)] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover sm:h-[320px] lg:h-[400px]"
               />
               <img
                 src={research2}
                 alt="Whiteboard mapping user flows"
-                className="h-[335px] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover"
+                className="h-[min(240px,50vw)] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover sm:h-[280px] lg:h-[335px]"
               />
               <div className="flex flex-col gap-[5px]">
-                <div className="relative h-[324px] w-full overflow-hidden rounded-[24px] border-2 border-[#d2d2d3]">
+                <div className="relative h-[min(220px,45vw)] w-full overflow-hidden rounded-[24px] border-2 border-[#d2d2d3] sm:h-[260px] lg:h-[324px]">
                   <img
                     src={research3Top}
                     alt="Research whiteboard with sticky notes"
                     className="absolute left-0 top-[-94.39%] h-[304.53%] w-[100.91%] max-w-none object-cover object-left-top"
                   />
                 </div>
-                <div className="relative h-[337px] w-full overflow-hidden rounded-[24px] border-2 border-[#d2d2d3]">
+                <div className="relative h-[min(220px,45vw)] w-full overflow-hidden rounded-[24px] border-2 border-[#d2d2d3] sm:h-[280px] lg:h-[337px]">
                   <img
                     src={research3Bottom}
                     alt="Team collaboration and AI agent configuration"
@@ -588,16 +646,16 @@ export default function CaseStudyGenAI() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-1 flex-col gap-[4px]">
+            <div className="flex min-w-0 flex-1 flex-col gap-[4px]">
               <img
                 src={research4}
                 alt="Detailed research board"
-                className="h-[980px] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover"
+                className="h-[min(400px,70vh)] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover lg:h-[980px]"
               />
               <img
                 src={research5}
                 alt="User interview notes"
-                className="h-[427px] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover"
+                className="h-[min(260px,45vw)] w-full rounded-[24px] border-2 border-[#d2d2d3] object-cover lg:h-[427px]"
               />
             </div>
           </div>
@@ -736,15 +794,29 @@ export default function CaseStudyGenAI() {
 
           {/* Iteration 2 Interface */}
           <div
-            className="relative mt-[60px] cursor-pointer overflow-hidden rounded-[24px] border-[20px] border-white bg-cream p-[12px] backdrop-blur-[40px]"
+            className="relative mt-[60px] cursor-pointer overflow-hidden rounded-[24px] border-[10px] border-white bg-cream backdrop-blur-[40px] max-[1023px]:p-[16px] lg:border-[20px] lg:p-[12px]"
             style={{
               boxShadow:
                 "inset 0px 0px 6px 0px rgba(255, 255, 255, 0.5), 0px 4px 8px 0px rgba(0, 0, 0, 0.25)",
             }}
             onClick={() => setIsFrameFlipped((prev) => !prev)}
           >
+            {/* Below 1024px: Structured Prompt Builder container pattern — natural height, no crop */}
+            <div className="min-[1024px]:hidden">
+              <img
+                src={isFrameFlipped ? flipImage : iteration2Interface}
+                alt={
+                  isFrameFlipped
+                    ? "Conversations builder interface"
+                    : "Iteration 2 interface showing the dedicated AI bot builder page"
+                }
+                className="w-full rounded-[16px]"
+              />
+            </div>
+
+            {/* Desktop (≥1024px): unchanged 3D flip card */}
             <div
-              className="relative h-[739px] w-full"
+              className="relative hidden h-[739px] w-full min-[1024px]:block"
               style={{ perspective: "1000px" }}
             >
               <div
@@ -795,7 +867,7 @@ export default function CaseStudyGenAI() {
       {/* Refining the Experience Through User Feedback */}
       <section className="layout-shell px-4 pb-[80px]">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
-          <h2 className="mx-auto text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
+          <h2 className="mx-auto text-center font-geist text-[28px] font-semibold leading-[36px] text-dark lg:text-[48px] lg:leading-[54px]">
             Refining the Experience Through User
             <br />
             Feedback
@@ -1057,7 +1129,7 @@ export default function CaseStudyGenAI() {
       </section>
 
       {/* Evolution of the AI Builder */}
-      <section className="layout-shell px-4 pb-[80px] lg:max-xl:overflow-x-hidden">
+      <section className="layout-shell overflow-x-hidden px-4 pb-[80px] lg:overflow-x-visible lg:max-xl:overflow-x-hidden">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
           <h2 className="text-center font-geist text-[34px] font-semibold leading-[44px] text-dark">
             Evolution of the AI Builder - Learning, Iterating,
@@ -1065,10 +1137,12 @@ export default function CaseStudyGenAI() {
             Improving
           </h2>
 
-          {/* Timeline chevrons — lg–xl (~1024–1279px): single row, scaled to ≤900px total width */}
-          <div className="evolution-chevrons-row mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 lg:max-xl:flex-nowrap lg:max-xl:justify-center lg:max-xl:gap-y-0 xl:flex-nowrap xl:gap-y-0">
+          {/* Timeline chevrons — ≤1023px: proportional scale; ≥1024px: responsive row unchanged */}
+          <div className="evolution-chevrons-scale-host" ref={chevronScaleHostRef}>
+          <div className="evolution-chevrons-scale-clip" ref={chevronScaleClipRef}>
+          <div className="evolution-chevrons-row mt-[60px] flex min-w-0 flex-wrap items-center justify-center gap-y-6 max-md:mt-0 max-md:flex-nowrap max-md:gap-y-0 lg:max-xl:flex-nowrap lg:max-xl:justify-center lg:max-xl:gap-y-0 xl:flex-nowrap xl:gap-y-0">
             {/* Chevron 1: AI Within the Flow */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
+            <div className="evolution-chevron-card relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden max-md:mr-[-40px] max-md:h-[345px] max-md:w-[400px] max-md:max-w-[400px] lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1086,18 +1160,18 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-black lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
+              <div className="evolution-chevron-copy absolute left-[max(24px,min(48%,120px))] top-1/2 flex w-[min(46%,160px)] -translate-y-1/2 flex-col gap-[6px] max-md:left-[190px] max-md:w-[175px] lg:left-[190px] lg:w-[175px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="evolution-chevron-title font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-black lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   AI Within the Flow
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-black/80 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
+                <p className="evolution-chevron-subtitle font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-black/80 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   Experimental. Promising. Constrained.
                 </p>
               </div>
             </div>
 
             {/* Chevron 2: Expanding the Canvas */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
+            <div className="evolution-chevron-card relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden max-md:mr-[-40px] max-md:h-[345px] max-md:w-[400px] max-md:max-w-[400px] lg:max-xl:mr-[-29px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px] xl:mr-[-40px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1115,18 +1189,18 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
+              <div className="evolution-chevron-copy absolute left-[max(24px,min(48%,120px))] top-1/2 flex w-[min(46%,160px)] -translate-y-1/2 flex-col gap-[6px] max-md:left-[190px] max-md:w-[175px] lg:left-[190px] lg:w-[175px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="evolution-chevron-title font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   Expanding the Canvas
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
+                <p className="evolution-chevron-subtitle font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   More Power. More Space. More Confusion
                 </p>
               </div>
             </div>
 
             {/* Chevron 3: User-Aligned AI Builder */}
-            <div className="relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px]">
+            <div className="evolution-chevron-card relative h-[min(345px,50vw)] w-full max-w-[400px] shrink-0 overflow-hidden max-md:h-[345px] max-md:w-[400px] max-md:max-w-[400px] lg:max-xl:h-[250px] lg:max-xl:w-[290px] lg:max-xl:max-w-[290px]">
               <svg
                 viewBox="0 0 398.565 200"
                 className="absolute"
@@ -1144,19 +1218,21 @@ export default function CaseStudyGenAI() {
                   <ellipse cx="124" cy="100" rx="70" ry="70" fill="white" fillOpacity="0.1" />
                 </g>
               </svg>
-              <div className="absolute left-[190px] top-1/2 flex w-[175px] -translate-y-1/2 flex-col gap-[6px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
-                <p className="font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
+              <div className="evolution-chevron-copy absolute left-[max(24px,min(48%,120px))] top-1/2 flex w-[min(46%,160px)] -translate-y-1/2 flex-col gap-[6px] max-md:left-[190px] max-md:w-[175px] lg:left-[190px] lg:w-[175px] lg:max-xl:left-[138px] lg:max-xl:w-[127px] lg:max-xl:gap-1">
+                <p className="evolution-chevron-title font-geist text-[20px] font-semibold uppercase leading-[22px] tracking-[0.8px] text-white lg:max-xl:text-[14px] lg:max-xl:leading-[16px] lg:max-xl:tracking-[0.5px]">
                   User-Aligned AI Builder
                 </p>
-                <p className="font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white/90 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
+                <p className="evolution-chevron-subtitle font-source-sans text-[18px] leading-[18px] tracking-[0.8px] text-white/90 lg:max-xl:text-[12px] lg:max-xl:leading-[14px] lg:max-xl:tracking-[0.4px]">
                   Structured. Guided. Reliable.
                 </p>
               </div>
             </div>
           </div>
+          </div>
+          </div>
 
           {/* Three-column comparison */}
-          <div className="flex gap-[20px]">
+          <div className="flex flex-col gap-12 lg:flex-row lg:gap-[20px]">
             {/* Column 1: AI Within the Flow */}
             <div className="flex flex-1 flex-col gap-[24px] text-dark">
               <div className="flex flex-col gap-[16px]">
@@ -1279,7 +1355,7 @@ export default function CaseStudyGenAI() {
             <p className="font-geist text-[24px] font-normal leading-[28px]">
               Phase 3: Final iteration
             </p>
-            <h2 className="font-geist text-[48px] font-semibold leading-[54px]">
+            <h2 className="font-geist text-[28px] font-semibold leading-[36px] lg:text-[48px] lg:leading-[54px]">
               Scaling Intelligence Beyond the Prompt
             </h2>
             <p className="font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px]">
@@ -1333,7 +1409,7 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="mt-[200px] flex flex-col gap-[20px] text-dark">
+          <div className="mt-[72px] flex flex-col gap-[20px] text-dark lg:mt-[200px]">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               Prompt Analysis
             </h3>
@@ -1371,7 +1447,7 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="mt-[200px] flex flex-col gap-[20px] text-dark">
+          <div className="mt-[72px] flex flex-col gap-[20px] text-dark lg:mt-[200px]">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               Help, Examples &amp; Contextual Learning
             </h3>
@@ -1408,7 +1484,7 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="mt-[200px] flex flex-col gap-[20px] text-dark">
+          <div className="mt-[72px] flex flex-col gap-[20px] text-dark lg:mt-[200px]">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               Pre-processing Workflows
             </h3>
@@ -1450,7 +1526,7 @@ export default function CaseStudyGenAI() {
       {/* Post-Launch Performance Tracking */}
       <section className="layout-shell px-4 pb-[80px]">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
-          <h2 className="font-geist text-[48px] font-semibold leading-[54px] text-dark">
+          <h2 className="font-geist text-[28px] font-semibold leading-[36px] text-dark lg:text-[48px] lg:leading-[54px]">
             Post-Launch Performance Tracking
           </h2>
           <p className="mt-[20px] font-source-sans text-[18px] font-normal leading-7 tracking-[0.5px] text-dark">
@@ -1480,25 +1556,25 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="mt-[40px] flex gap-[8px]">
+          <div className="mt-[40px] flex flex-col gap-4 lg:flex-row lg:gap-[8px]">
             <img
               src={interview1}
               alt="User interview session 1"
-              className="h-[276px] w-[368px] rounded-[24px] object-cover"
+              className="h-auto w-full max-w-[368px] rounded-[24px] object-cover lg:h-[276px] lg:w-[368px]"
             />
             <img
               src={interview2}
               alt="User interview session 2"
-              className="h-[276px] w-[368px] rounded-[24px] object-cover"
+              className="h-auto w-full max-w-[368px] rounded-[24px] object-cover lg:h-[276px] lg:w-[368px]"
             />
             <img
               src={interview3}
               alt="User interview session 3"
-              className="h-[276px] w-[368px] rounded-[24px] object-cover"
+              className="h-auto w-full max-w-[368px] rounded-[24px] object-cover lg:h-[276px] lg:w-[368px]"
             />
           </div>
 
-          <div className="mt-[120px] flex flex-col gap-[12px] text-dark">
+          <div className="mt-[64px] flex flex-col gap-[12px] text-dark lg:mt-[120px]">
             <h3 className="font-geist text-[34px] font-semibold leading-[44px]">
               2. Hotjar Recordings &amp; Heatmaps
             </h3>
@@ -1524,15 +1600,15 @@ export default function CaseStudyGenAI() {
             </div>
           </div>
 
-          <div className="mt-[40px] flex gap-[8px]">
-            <div className="relative h-[276px] w-[368px] shrink-0 overflow-hidden rounded-[24px] border border-[#d2d2d3]">
+          <div className="mt-[40px] flex flex-col gap-4 lg:flex-row lg:gap-[8px]">
+            <div className="relative mx-auto h-[min(240px,55vw)] w-full max-w-[368px] shrink-0 overflow-hidden rounded-[24px] border border-[#d2d2d3] lg:mx-0 lg:h-[276px] lg:w-[368px]">
               <img
                 src={hotjar1}
                 alt="Hotjar heatmap recording 1"
                 className="absolute left-0 top-0 h-[104.92%] w-full max-w-none object-cover object-left-top"
               />
             </div>
-            <div className="relative h-[276px] w-[368px] shrink-0 overflow-hidden rounded-[24px] border border-[#d2d2d3]">
+            <div className="relative mx-auto h-[min(240px,55vw)] w-full max-w-[368px] shrink-0 overflow-hidden rounded-[24px] border border-[#d2d2d3] lg:mx-0 lg:h-[276px] lg:w-[368px]">
               <img
                 src={hotjar2}
                 alt="Hotjar heatmap recording 2"
@@ -1542,7 +1618,7 @@ export default function CaseStudyGenAI() {
             <img
               src={hotjar3}
               alt="Hotjar heatmap recording 3"
-              className="h-[276px] w-[368px] rounded-[24px] border border-[#d2d2d3] object-cover"
+              className="mx-auto h-auto w-full max-w-[368px] rounded-[24px] border border-[#d2d2d3] object-cover lg:mx-0 lg:h-[276px] lg:w-[368px]"
             />
           </div>
         </div>
@@ -1551,7 +1627,7 @@ export default function CaseStudyGenAI() {
       {/* Outcome and Impact */}
       <section className="layout-shell px-4 pb-[80px]">
         <div className="mx-auto w-full min-w-0 max-w-[1120px] pt-[80px]">
-          <h2 className="text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
+          <h2 className="text-center font-geist text-[28px] font-semibold leading-[36px] text-dark lg:text-[48px] lg:leading-[54px]">
             Outcome and Impact - What Changed?
             <br />
             Efficiency, Accuracy, Adoption
@@ -1559,8 +1635,8 @@ export default function CaseStudyGenAI() {
 
           <div className="mt-[60px] flex flex-wrap justify-center gap-[24px]">
             {/* Card 1: Faster Prompt Creation */}
-            <div className="relative h-[430px] w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
-              <div className="absolute left-[25px] top-[25px] flex w-[333px] flex-col gap-[12px]">
+            <div className="relative mx-auto h-[430px] w-full max-w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
+              <div className="absolute left-4 right-4 top-[25px] flex flex-col gap-[12px] lg:left-[25px] lg:right-auto lg:w-[333px] lg:flex-col">
                 <h4 className="text-center font-geist text-[22px] font-bold leading-[28px] text-dark">
                   Faster Prompt Creation
                 </h4>
@@ -1569,7 +1645,7 @@ export default function CaseStudyGenAI() {
                   configuring prompts.
                 </p>
               </div>
-              <div className="absolute left-[25px] top-[148px] h-[247px] w-[333px] overflow-hidden rounded-[24px] bg-white">
+              <div className="absolute left-4 right-4 top-[148px] h-[247px] overflow-hidden rounded-[24px] bg-white lg:left-[25px] lg:right-auto lg:w-[333px]">
                 <img
                   src={card1Illustration}
                   alt="Faster Prompt Creation - 40% reduction in time for bot creation"
@@ -1579,9 +1655,9 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Card 2: Higher Prompt Accuracy */}
-            <div className="relative h-[430px] w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
-              <div className="absolute left-[25px] top-[25px] flex w-[333px] flex-col gap-[12px]">
-                <h4 className="pl-[37px] font-geist text-[22px] font-bold leading-[38px] tracking-[0.21px] text-dark">
+            <div className="relative mx-auto h-[430px] w-full max-w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
+              <div className="absolute left-4 right-4 top-[25px] flex flex-col gap-[12px] lg:left-[25px] lg:right-auto lg:w-[333px]">
+                <h4 className="pl-0 text-center font-geist text-[22px] font-bold leading-[38px] tracking-[0.21px] text-dark lg:pl-[37px] lg:text-left">
                   Higher Prompt Accuracy
                 </h4>
                 <p className="text-center font-geist text-[15px] font-normal leading-[24px] tracking-[0.16px] text-[#494c50]">
@@ -1590,7 +1666,7 @@ export default function CaseStudyGenAI() {
                   improved prompt clarity
                 </p>
               </div>
-              <div className="absolute left-[25px] top-[148px] h-[257px] w-[333px] overflow-hidden rounded-[24px] bg-white">
+              <div className="absolute left-4 right-4 top-[148px] h-[257px] overflow-hidden rounded-[24px] bg-white lg:left-[25px] lg:right-auto lg:w-[333px]">
                 <img
                   src={card2Illustration}
                   alt="Higher Prompt Accuracy - 2x better accuracy in bot responses"
@@ -1600,8 +1676,8 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Card 3: Fewer Support Issues */}
-            <div className="relative h-[430px] w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
-              <div className="absolute left-[25px] top-[25px] flex w-[333px] flex-col gap-[12px]">
+            <div className="relative mx-auto h-[430px] w-full max-w-[383px] overflow-hidden rounded-[15px] bg-[#d5dfe3]">
+              <div className="absolute left-4 right-4 top-[25px] flex flex-col gap-[12px] lg:left-[25px] lg:right-auto lg:w-[333px]">
                 <h4 className="text-center font-geist text-[22px] font-bold leading-[28px] text-dark">
                   Fewer Support Issues
                 </h4>
@@ -1610,7 +1686,7 @@ export default function CaseStudyGenAI() {
                   usability &amp; fewer AI errors
                 </p>
               </div>
-              <div className="absolute left-[25px] top-[148px] h-[256px] w-[333px] overflow-hidden rounded-[24px] bg-white">
+              <div className="absolute left-4 right-4 top-[148px] h-[256px] overflow-hidden rounded-[24px] bg-white lg:left-[25px] lg:right-auto lg:w-[333px]">
                 <img
                   src={card3Illustration}
                   alt="Fewer Support Issues - 30% reduction in support tickets"
@@ -1637,9 +1713,9 @@ export default function CaseStudyGenAI() {
             </p>
           </div>
 
-          <div className="mt-[60px] grid grid-cols-4 gap-[20px]">
+          <div className="mt-[60px] grid grid-cols-1 justify-items-center gap-12 lg:grid-cols-4 lg:gap-[20px] lg:justify-items-stretch">
             {/* Metric 1: 93% - from Figma 657:40954 */}
-            <div className="relative flex w-[265px] flex-col">
+            <div className="relative flex w-full max-w-[265px] flex-col lg:w-[265px]">
               <p className="text-center font-geist text-[80px] font-semibold leading-[70px] text-teal">
                 93%
               </p>
@@ -1660,7 +1736,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Metric 2: 60% */}
-            <div className="flex flex-col">
+            <div className="flex w-full max-w-[265px] flex-col items-center lg:w-[265px] lg:items-stretch">
               <p className="font-geist text-[80px] font-semibold leading-[70px] text-teal">
                 60%
               </p>
@@ -1679,7 +1755,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Metric 3: 30% */}
-            <div className="flex flex-col">
+            <div className="flex w-full max-w-[265px] flex-col items-center lg:w-[265px] lg:items-stretch">
               <p className="font-geist text-[80px] font-semibold leading-[70px] text-teal">
                 30%
               </p>
@@ -1698,7 +1774,7 @@ export default function CaseStudyGenAI() {
             </div>
 
             {/* Metric 4: 25% */}
-            <div className="flex flex-col">
+            <div className="flex w-full max-w-[265px] flex-col items-center lg:w-[265px] lg:items-stretch">
               <p className="font-geist text-[80px] font-semibold leading-[70px] text-teal">
                 25%
               </p>
@@ -1719,7 +1795,7 @@ export default function CaseStudyGenAI() {
         </div>
       </section>
 
-      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
+      <div className="w-full px-4 md:px-6 lg:px-[80px]">
         <div className={SITE_BELOW_FOLD_COLUMN}>
           <SiteCta />
           <SiteFooter />

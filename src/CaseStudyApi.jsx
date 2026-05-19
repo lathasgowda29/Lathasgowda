@@ -3,10 +3,8 @@ import logoUrl from "./assets/logo.svg";
 import heroLaptopMockup from "./assets/case-study-api/hero-laptop-mockup.png";
 import SiteCta from "./components/SiteCta";
 import SiteFooter from "./components/SiteFooter";
-import {
-  SITE_BELOW_FOLD_COLUMN,
-  SITE_BELOW_FOLD_INSET,
-} from "./components/siteBelowFoldLayout";
+import SiteNav from "./components/SiteNav";
+import { SITE_BELOW_FOLD_COLUMN } from "./components/siteBelowFoldLayout";
 
 function Navbar() {
   return (
@@ -159,10 +157,10 @@ function DefinitionIdeationSection() {
       </div>
 
       <div className="mx-auto mt-[40px] w-full max-w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
-        <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
+        <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark max-[1023px]:px-4 max-[1023px]:pt-6">
           Iteration 1
         </h4>
-        <div className="px-[32px] pt-[16px]">
+        <div className="px-[32px] pt-[16px] max-[1023px]:px-4">
           <img
             src={iteration1Flow}
             alt="Iteration 1 — API node user flow diagram"
@@ -172,10 +170,10 @@ function DefinitionIdeationSection() {
       </div>
 
       <div className="mx-auto mt-[24px] w-full max-w-[1120px] rounded-[24px] bg-white pb-[40px] shadow-[0px_1px_4px_0px_rgba(0,0,0,0.15),0px_0px_1px_0px_rgba(0,0,0,0.5)]">
-        <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark">
+        <h4 className="px-[32px] pt-[32px] font-geist text-[20px] font-semibold leading-7 tracking-[0.15px] text-dark max-[1023px]:px-4 max-[1023px]:pt-6">
           Iteration 2
         </h4>
-        <div className="px-[32px] pt-[16px]">
+        <div className="px-[32px] pt-[16px] max-[1023px]:px-4">
           <img
             src={iteration2Flow}
             alt="Iteration 2 — API node user flow diagram"
@@ -311,8 +309,8 @@ function RefiningExperienceSection() {
         <h2 className="mx-auto mt-2 w-full max-w-[1065px] font-geist text-[48px] font-semibold leading-[54px] text-dark">
           Refining the Experience Through User Feedback
         </h2>
-        <div className="mx-auto mt-8 flex items-center justify-center gap-4">
-          <span className="font-geist text-[34px] font-semibold leading-[44px] text-teal">
+        <div className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-4 max-[1023px]:gap-3">
+          <span className="font-geist text-[34px] font-semibold leading-[44px] text-teal max-[1023px]:text-[28px] max-[1023px]:leading-[36px]">
             Wireframe
           </span>
           <svg
@@ -320,7 +318,7 @@ function RefiningExperienceSection() {
             height="56"
             viewBox="0 0 56 56"
             fill="none"
-            className="text-teal"
+            className="shrink-0 text-teal max-[1023px]:h-10 max-[1023px]:w-10"
           >
             <path
               d="M30 18L40 28L30 38"
@@ -336,7 +334,7 @@ function RefiningExperienceSection() {
               strokeLinecap="round"
             />
           </svg>
-          <span className="font-geist text-[34px] font-semibold leading-[44px] text-teal">
+          <span className="font-geist text-[34px] font-semibold leading-[44px] text-teal max-[1023px]:text-[28px] max-[1023px]:leading-[36px]">
             Solution
           </span>
         </div>
@@ -353,7 +351,7 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white max-[1023px]:border-[12px] max-[1023px]:p-3">
         <img
           src={wireframeImg}
           alt="Wireframe explorations"
@@ -382,7 +380,7 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white max-[1023px]:border-[12px] max-[1023px]:p-3">
         <img
           src={planAImg}
           alt="Proposed Plan A"
@@ -401,7 +399,7 @@ function RefiningExperienceSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[inset_0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white">
+      <div className="mx-auto mt-[40px] flex w-full min-w-0 max-w-[1120px] aspect-[1079/794] items-center justify-center rounded-[36px] bg-cream p-4 shadow-[inset_0px_0px_6px_0px_rgba(255,255,255,0.5),0px_4px_8px_0px_rgba(0,0,0,0.25)] backdrop-blur-[40px] border-[20px] border-white max-[1023px]:border-[12px] max-[1023px]:p-3">
         <img
           src={planBImg}
           alt="Proposed Plan B"
@@ -427,7 +425,7 @@ function ABTestingSection() {
         sessions and behavioral analytics.
       </p>
 
-      <div className="mx-auto mt-[48px] flex w-full max-w-[1120px] items-start gap-4">
+      <div className="mx-auto mt-[48px] flex w-full max-w-[1120px] flex-wrap items-start gap-4 max-[1023px]:gap-3">
         <img
           src={braceImg}
           alt=""
@@ -439,7 +437,11 @@ function ABTestingSection() {
       </div>
 
       <div
-        className="mx-auto mt-[32px] grid min-h-0 w-full max-w-[1120px] grid-cols-[minmax(0,391fr)_minmax(0,345fr)_minmax(0,386fr)] grid-rows-6 pr-px max-[1150px]:[&_p]:text-[clamp(11px,1.35vw,18px)] max-[1150px]:[&_p]:leading-snug"
+        className="relative mx-auto mt-[32px] w-full max-w-[1120px] max-[1023px]:overflow-x-auto max-[1023px]:overscroll-x-contain max-[1023px]:pb-1"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+      <div
+        className="mx-auto grid min-h-0 w-full grid-cols-[minmax(0,391fr)_minmax(0,345fr)_minmax(0,386fr)] grid-rows-6 pr-px max-[1150px]:[&_p]:text-[clamp(11px,1.35vw,18px)] max-[1150px]:[&_p]:leading-snug max-[1023px]:min-w-[680px]"
         role="table"
         aria-label="A/B testing comparison"
       >
@@ -544,6 +546,7 @@ function ABTestingSection() {
           </p>
         </div>
       </div>
+      </div>
 
       <div className="mx-auto mt-[60px] flex w-full max-w-[1120px] flex-col gap-5">
         <h4 className="font-geist text-[24px] font-semibold leading-7 text-dark">
@@ -602,9 +605,9 @@ function FromInsightToImpactSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-[80px] flex w-full max-w-[1120px] justify-center gap-[64px]">
-        <div className="flex w-[361px] shrink-0 flex-col gap-[20px]">
-          <div className="h-[340px] w-full overflow-hidden rounded-[24px]">
+      <div className="mx-auto mt-[80px] flex w-full max-w-[1120px] flex-col items-stretch justify-center gap-10 min-[1024px]:flex-row min-[1024px]:items-start min-[1024px]:gap-[64px]">
+        <div className="flex w-full shrink-0 flex-col gap-[20px] max-[1023px]:max-w-full min-[1024px]:w-[361px]">
+          <div className="w-full overflow-hidden rounded-[24px] max-[1023px]:aspect-square max-[1023px]:h-auto min-[1024px]:h-[340px]">
             <img
               src={chartA}
               alt="Existing users migration behavior — 5875 API actions recorded"
@@ -619,8 +622,8 @@ function FromInsightToImpactSection() {
           </p>
         </div>
 
-        <div className="flex w-[360px] shrink-0 flex-col gap-[20px]">
-          <div className="h-[340px] w-full overflow-hidden rounded-[24px]">
+        <div className="flex w-full shrink-0 flex-col gap-[20px] max-[1023px]:max-w-full min-[1024px]:w-[360px]">
+          <div className="w-full overflow-hidden rounded-[24px] max-[1023px]:aspect-square max-[1023px]:h-auto min-[1024px]:h-[340px]">
             <img
               src={chartB}
               alt="New users adoption pattern — 7200 API actions recorded"
@@ -680,9 +683,9 @@ function DesignProcessSection() {
 
 function MetricCard({ stat, description }) {
   return (
-    <div className="flex w-[360px] flex-col gap-8 overflow-hidden rounded-[24px] bg-dark-bg px-6 py-8">
-      <div className="flex h-[177px] items-center rounded-[24px] bg-[#80C4DB] px-[25px]">
-        <h4 className="w-[251px] font-geist text-[34px] font-semibold leading-[44px] text-black">
+    <div className="flex w-[360px] max-w-full flex-col gap-8 overflow-hidden rounded-[24px] bg-dark-bg px-6 py-8 max-[1023px]:w-full">
+      <div className="flex h-[177px] min-h-0 items-center rounded-[24px] bg-[#80C4DB] px-[25px] max-[1023px]:h-auto max-[1023px]:min-h-[177px] max-[1023px]:py-6">
+        <h4 className="w-[251px] max-w-full font-geist text-[34px] font-semibold leading-[44px] text-black max-[1023px]:w-full">
           {stat}
         </h4>
       </div>
@@ -720,7 +723,7 @@ function DeploymentIterationSection() {
         </ul>
       </div>
 
-      <div className="mx-auto mt-[40px] flex w-full max-w-[1120px] gap-5">
+      <div className="mx-auto mt-[40px] flex w-full max-w-[1120px] flex-col gap-5 max-[1023px]:items-stretch min-[1024px]:flex-row min-[1024px]:flex-nowrap">
         <MetricCard
           stat="70% Reduction in API Setup Time"
           description="Eliminated tab switching and enabled inline configuration within the builder."
@@ -768,7 +771,7 @@ function FutureRoadmapSection() {
         Future Roadmap
       </h3>
 
-      <div className="mx-auto mt-[80px] flex w-[740px] flex-col gap-[56px]">
+      <div className="mx-auto mt-[80px] flex w-full max-w-[740px] flex-col gap-[56px] max-[1023px]:gap-10 min-[1024px]:w-[740px]">
         {items.map((item, i) => (
           <div key={item.title} className="flex flex-col gap-3">
             <h4 className="font-geist text-[24px] font-semibold leading-7 text-dark">
@@ -786,11 +789,11 @@ function FutureRoadmapSection() {
 
 function InfoRow({ label, children }) {
   return (
-    <div className="flex items-start">
-      <h3 className="w-[209px] shrink-0 font-geist text-[24px] font-semibold leading-7 text-dark">
+    <div className="flex items-start max-[1023px]:flex-col max-[1023px]:gap-3">
+      <h3 className="w-[209px] shrink-0 font-geist text-[24px] font-semibold leading-7 text-dark max-[1023px]:w-full">
         {label}
       </h3>
-      <p className="w-[527px] font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark">
+      <p className="w-[527px] min-w-0 font-source-sans text-base font-normal leading-6 tracking-[0.5px] text-dark max-[1023px]:w-full">
         {children}
       </p>
     </div>
@@ -799,30 +802,41 @@ function InfoRow({ label, children }) {
 
 export default function CaseStudyApi() {
   return (
-    <div className="min-h-screen min-w-0 bg-white">
+    <div className="min-h-screen min-w-0 bg-white cw-tablet:overflow-x-clip max-[767px]:overflow-x-clip">
       <div className="w-full px-4 pt-4">
-        <div className="relative w-full min-h-[min(100dvh,926px)] rounded-t-[24px] bg-cream md:min-h-[926px]">
+        <div className="relative w-full rounded-t-[24px] bg-cream max-[767px]:min-h-0 max-[767px]:pb-20 min-[768px]:min-h-[926px]">
           <div className="relative px-4 pt-4">
-            <div className="pt-6">
+            <div className="relative w-full overflow-visible pt-0 md:pt-6 min-[1024px]:hidden">
+              <SiteNav variant="case-study-chat" />
+            </div>
+            <div className="hidden min-[1024px]:block pt-6">
               <Navbar />
             </div>
 
-              <div className="mt-[48px] flex justify-center">
-              <div className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px] md:aspect-auto md:h-[682px] md:min-h-[682px]">
-                <div className="absolute left-1/2 top-[22%] w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2 md:top-[148px] md:h-[540px] md:px-0">
-                  <img
-                    src={heroLaptopMockup}
-                    alt="Laptop mockup showing API configuration interface"
-                    className="block h-full w-full max-w-full object-contain"
-                  />
-                </div>
-                <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 md:px-0">
-                  <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
-                    Simplifying API Configuration: Reduced Setup Errors by 40%
-                  </p>
-                  <p className="mx-auto mt-[8px] w-full max-w-[560px] font-source-sans text-[15px] font-normal leading-[22px] tracking-[0.5px] text-dark sm:text-[16px] sm:leading-[24px]">
-                    Redesigned API selection and configuration to surface endpoint context clearly, helping users integrate faster and avoid configuration mistakes.
-                  </p>
+            <div className="mt-[48px] flex justify-center">
+                <div
+                  className="relative aspect-[1120/682] w-full max-w-[1120px] min-h-[260px] overflow-hidden rounded-[24px]
+                max-[767px]:flex max-[767px]:min-h-0 max-[767px]:flex-col max-[767px]:gap-12 max-[767px]:px-2 max-[767px]:py-2 max-[767px]:aspect-auto
+                md:aspect-auto md:block md:h-[682px] md:min-h-[682px] md:gap-0 md:px-0 md:py-0"
+                >
+                  <div
+                    className="absolute left-1/2 top-[22%] z-0 w-[min(100%,1024px)] max-w-[1024px] -translate-x-1/2 px-2
+                  max-[767px]:relative max-[767px]:order-2 max-[767px]:left-0 max-[767px]:top-0 max-[767px]:w-full max-[767px]:max-w-none max-[767px]:translate-x-0 max-[767px]:px-0
+                  md:absolute md:left-1/2 md:top-[148px] md:h-[540px] md:-translate-x-1/2 md:px-0"
+                  >
+                    <img
+                      src={heroLaptopMockup}
+                      alt="Laptop mockup showing API configuration interface"
+                      className="block h-auto w-full max-w-full object-contain md:h-full md:max-h-full"
+                    />
+                  </div>
+                  <div className="absolute inset-x-0 top-0 z-10 mx-auto w-full max-w-[min(95vw,568px)] px-3 text-center sm:px-4 max-[767px]:relative max-[767px]:inset-auto max-[767px]:order-1 md:absolute md:inset-x-0 md:top-0 md:px-0">
+                    <p className="font-geist text-[20px] font-semibold leading-[28px] text-dark sm:text-[24px] sm:leading-[34px]">
+                      Simplifying API Configuration: Reduced Setup Errors by 40%
+                    </p>
+                    <p className="mx-auto mt-[8px] w-full max-w-[560px] font-source-sans text-[15px] font-normal leading-[22px] tracking-[0.5px] text-dark sm:text-[16px] sm:leading-[24px]">
+                      Redesigned API selection and configuration to surface endpoint context clearly, helping users integrate faster and avoid configuration mistakes.
+                    </p>
                 </div>
               </div>
             </div>
@@ -831,12 +845,12 @@ export default function CaseStudyApi() {
       </div>
 
       <section className="layout-shell flex px-4 flex-col items-center pb-[80px] pt-[120px]">
-        <h1 className="w-[803px] text-center font-geist text-[48px] font-semibold leading-[54px] text-dark">
+        <h1 className="w-[803px] max-w-full text-center font-geist text-[48px] font-semibold leading-[54px] text-dark max-[1023px]:w-full max-[1023px]:text-[clamp(1.75rem,5.5vw,3rem)] max-[1023px]:leading-tight">
           Simplified API Node Experience: &ldquo;3x Faster Integrations&rdquo;
           and &ldquo;70% Less Setup Time&rdquo;
         </h1>
 
-        <div className="mt-[56px] flex w-[736px] flex-col gap-[40px]">
+        <div className="mt-[56px] flex w-[736px] max-w-full flex-col gap-[40px] max-[1023px]:w-full">
           <InfoRow label="Context">
             API node allows you to integrate APIs from third-party systems and
             use them within conversational flows. It acts as a gateway for
@@ -871,9 +885,10 @@ export default function CaseStudyApi() {
       <ABTestingSection />
       <FromInsightToImpactSection />
       <FutureRoadmapSection />
-      <div className={`w-full ${SITE_BELOW_FOLD_INSET}`}>
+      {/* Same below-fold wrapper classes as CaseStudyChatWidget; CTA top padding keeps API lg+ at 117px (was default). */}
+      <div className="w-full px-4 md:px-6 lg:px-[80px]">
         <div className={SITE_BELOW_FOLD_COLUMN}>
-          <div className="pt-[117px]">
+          <div className="pt-[112px] lg:pt-[117px]">
             <SiteCta />
           </div>
           <SiteFooter />

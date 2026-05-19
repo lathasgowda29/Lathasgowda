@@ -7,7 +7,7 @@ export default function SiteFooter() {
     <footer className="w-full pb-[40px]">
       <div className="mx-auto w-full max-w-[1120px]">
         <div className="my-[40px] h-px w-full rounded-[14px] bg-[#a4a5a7] opacity-50" />
-        <div className="flex w-full flex-col items-center gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex w-full flex-row items-center justify-between gap-4 md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
           <img src={logoUrl} alt="Latha" className="h-8 w-8" />
           <p className="flex-1 text-center font-['Inter',sans-serif] text-[14px] font-normal leading-6 tracking-[0.25px] text-dark">
             Latha © 2026

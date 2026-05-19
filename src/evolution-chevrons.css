@@ -1,0 +1,52 @@
+/* Below desktop (1024px): lock chevron row to xl desktop layout, scaled via JS transform */
+@media (max-width: 1023px) {
+  .evolution-chevrons-scale-host {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .evolution-chevrons-scale-clip {
+    overflow: hidden;
+    /* Spacing lives on the clip, not the scaled row — margin-top is not transformed. */
+    margin-top: 60px;
+  }
+
+  .evolution-chevrons-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    row-gap: 0;
+    margin-top: 0 !important;
+  }
+
+  .evolution-chevron-card {
+    flex-shrink: 0;
+    width: 400px !important;
+    max-width: 400px !important;
+    height: 345px !important;
+  }
+
+  .evolution-chevron-card:not(:last-child) {
+    margin-right: -40px;
+  }
+
+  .evolution-chevron-copy {
+    left: 190px !important;
+    width: 175px !important;
+    gap: 6px !important;
+  }
+
+  .evolution-chevron-title {
+    font-size: 20px !important;
+    line-height: 22px !important;
+    letter-spacing: 0.8px !important;
+  }
+
+  .evolution-chevron-subtitle {
+    font-size: 18px !important;
+    line-height: 18px !important;
+    letter-spacing: 0.8px !important;
+  }
+}
